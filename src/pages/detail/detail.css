@@ -9,51 +9,84 @@
 /* 头部预告片 End */
 /* 上部分详情 Begin */
 .movie-bgimg{
+	position:fixed;
 	width: 100%;
-	height: 350upx;
-	filter: blur(30upx);
+	height: 100%;
+	background-size: 100%;
+	filter: blur(30rpx);
+	z-index: -1;
+	/* background-color: #40454e; */
+
 	/* position: absolute; */
-	background-repeat: no-repeat;
+	/* background-repeat: no-repeat; */
 	/* background-size: 100% 100%; */
+}
+.movie-mask {
+	background-color: rgba(64, 69, 78, 0.55);
+	width:100%;
 }
 .movie-detail{
 	display: flex;
 	flex-direction: row;
 	padding: 30upx 30upx;
-	position: absolute;
+	
 	top: 0;
+
+
 }
+.detail-star image {
+		width:36upx;
+		height: 36upx;
+		margin-right: 5upx;
+} 
 .detail-img-ico{
 	width: 206upx;
 	height: 286upx;
+	border: 1px solid #fff;
 }
 
 .detail-info{
-	color: #C0C0C0;
+	color: #e5e5e5;
 	display: flex;
 	flex-direction: column;
 	padding-left: 30upx;
-	font-size: 14px;
-	line-height: 22px;
+	font-size: 22rpx;
+
 }
 .detail-info-nm{
 	color: #FFFFFF;
-	font-size: 18px;
+  font-size: 36rpx;
+}
+.detail-info-enm {
+	margin-bottom: 12upx;
 }
 /* 上部分详情 End */
 
 /* 中间简介 Begin */
-
+.movie-body {
+	background-color: #fff;
+}
+.movie-info-titile{
+	padding: 20rpx 30rpx 10rpx;
+	font-size: 32rpx;
+	color: #444;
+}
 .movie-info-texthide{
-	height: 50upx;
-	padding: 50upx 30upx;
-	margin-top: 30upx;
+	line-height: 1.42;
+	text-indent: 2em;
+	height: 101upx;
+	padding: 20upx 20upx;
 	overflow: hidden;
+	font-size: 30rpx;
+	color:#555;
 }
 .movie-info-textauto{
-	padding: 50upx 30upx;
-	margin-top: 30upx;
+	line-height: 1.42;
+	text-indent: 2em;
+	padding: 20upx 20upx;
 	height: auto;
+	font-size: 30rpx;
+	color:#555;
 }
 .movie-info-text-btn{
 	text-align: center;

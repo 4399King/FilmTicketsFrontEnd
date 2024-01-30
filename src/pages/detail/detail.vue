@@ -1,11 +1,8 @@
 <template>
 	<view class="page">
-
-
-
-		<!-- 头部图片和信息 -->
-		<view class="movie-bgimg " :style="{ backgroundImage: 'url(' + Imagesrc + ')' }"></view>
-
+	<!-- 头部图片和信息 -->
+	<view class="movie-bgimg " :style="{ backgroundImage: 'url(' + Moviedetail.img + ')' }"></view>
+	<view class="movie-mask">	
 		<view class="movie-detail">
 			<view class="detail-img">
 				<image :src="Moviedetail.img" class="detail-img-ico"></image>
@@ -17,7 +14,7 @@
 				<view class="detail-info-enm">
 					{{ Moviedetail.enm }}
 				</view>
-				<TraillerStars innerScore="8.9"></TraillerStars>
+		    <view  class='detail-star'>	<image v-for='item in Moviedetail.stars' :key='item' :src="'../../static/image/star/'+ item+'.png'"></image></view>
 				<view class="detail-info-snum">
 					({{ Moviedetail.snum }}人评分)
 				</view>
@@ -32,8 +29,11 @@
 				</view>
 			</view>
 		</view>
+	</view>
 
-		<!-- 中部 影片介绍 -->
+		<view class="movie-body">
+			<!-- 中部 影片介绍 -->
+		<view class="movie-info-titile">剧情简介</view>
 		<view :class="fold == true ? 'movie-info-texthide page-block' : 'movie-info-textauto page-block'">
 			{{ Moviedetail.dra }}
 		</view>
@@ -89,6 +89,7 @@
 			<view class="search-all" v-show="allcomments > 0 ? true : false">
 				查看全部{{ allcomments }}条评论
 			</view>
+		</view>
 		</view>
 	</view>
 </template>
@@ -181,6 +182,8 @@ export default {
 					for (let i = 0; i < this.Moviedetail.photos.length; i++) {
 						this.Moviedetail.photos[i] = this.Moviedetail.photos[i].replace('w.h/', '')
 					};
+					this.Moviedetail.stars = this.formatStar(this.Moviedetail.sc)
+					console.log(this.Moviedetail, "@@@@@@@kkk");
 					this.Imagesrc = this.Moviedetail.photos[2];
 
 				},
@@ -240,7 +243,20 @@ export default {
 				this.commentslist[i].startTime = time;
 
 			}
-		}
+		},
+		formatStar(sc){
+    //1分对应满星，0.5对应半星
+		sc /= 2;
+    let stars = new Array(5).fill('star-empty')
+    const fullStars = Math.floor(sc)  //满星的个数
+    const halfStar = sc % 1 ? 'star-half' : 'star-empty' //半星的个数，半星最多1个
+    stars.fill('star-full', 0, fullStars)              //填充满星
+    if (fullStars < 5) {
+      stars[fullStars] = halfStar;           //填充半星
+    }
+		console.log(stars,"stars")
+    return stars
+  },
 
 	},
 	components: {
