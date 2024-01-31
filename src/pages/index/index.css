@@ -113,6 +113,20 @@
 	text-overflow: ellipsis;
 	font-size: 18px;
 }
+.movie-score {
+	display: flex;
+	justify-content: space-between;
+	font-size: 26rpx;
+	color: #666;
+}
+.movie-score label{
+	font-weight: 700;
+	color: #faaf00;
+	font-size: 30rpx;
+	margin-right:30upx;
+}
+
+
 .movie-info{
 	color: #808080;
 	font-size: 14px;

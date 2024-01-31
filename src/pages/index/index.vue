@@ -27,7 +27,8 @@
 					<view class="movie-name">
 						{{ item.nm }}
 					</view>
-					<traillerStars :innerScore="item.sc" ShowNum=1></traillerStars>
+					 <view class="movie-score">观众评分 <label>{{ item.sc }}</label> </view>
+			
 				</view>
 			</view>
 		</scroll-view>
@@ -75,7 +76,7 @@
 					<view class="movie-title">
 						{{ Item.Name }}
 					</view>
-					<traillerStars innerScore="9.1" ShowNum=0></traillerStars>
+					<view class="movie-score">{{ Item.sc }}</view>
 					<view class="movie-info">
 						{{ Item.Mtype }}
 					</view>
@@ -180,6 +181,7 @@ export default {
 					return;
 				}
 				this.SuperHotList = res.data.movieList;
+				console.log(res.data.movieList,"wuhuwuhu")
 				for (let i = 0; i < this.SuperHotList.length; i++) {
 					this.SuperHotList[i].img = this.SuperHotList[i].img.replace('w.h/', '')
 				}
@@ -214,6 +216,7 @@ export default {
 				},
 				success: (res) => {
 					this.UlikeMovieList = res.data.Data;
+					console.log(this.UlikeMovieList,"hrer")
 				},
 				complete: () => {
 					uni.stopPullDownRefresh();
