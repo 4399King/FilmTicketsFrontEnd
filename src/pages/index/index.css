@@ -65,10 +65,11 @@
 }
 
 .movie-name{
-	width: 100%;
 	margin-top: 10upx;
-	font-size: 14px;
 	font-weight: bold;
+	width: 168rpx;
+	margin-top: 10rpx;
+	font-size: 26rpx;
 	/* 对名字过长进行处理 */
 	white-space: nowrap;
 	overflow: hidden;
