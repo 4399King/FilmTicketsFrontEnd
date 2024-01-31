@@ -33,14 +33,14 @@
 
 		<view class="movie-body">
 			<!-- 中部 影片介绍 -->
-		<view class="movie-info-titile">剧情简介</view>
+	<view class="movie-intro">	<view class="movie-info-titile">剧情简介</view>
 		<view :class="fold == true ? 'movie-info-texthide page-block' : 'movie-info-textauto page-block'">
 			{{ Moviedetail.dra }}
 		</view>
 		<view class="movie-info-text-btn page-block" @click="changeText">
 			<image :src="fold == true ? '../../static/detail/down.png' : '../../static/detail/top.png'"
 				class="movie-info-text-btn-img"></image>
-		</view>
+		</view></view>
 
 		<view class="movie-detail-vedio">
 			<video id="movievedio" :src="Moviedetail.videourl" :poster="Moviedetail.videoImg" class="movie-vedio"></video>
@@ -61,7 +61,7 @@
 
 		<!-- 电影评论展示 -->
 		<view class="movie-comment page-block">
-			<view class="movie-detail-photos-text">热门评论</view>
+			<view class="movie-detail-comment-text">热门评论</view>
 			<view class="movie-comment-item" v-for="(item, index) in commentslist" :key="index">
 				<view class="movie-comment-user">
 					<view>
