@@ -20,6 +20,7 @@
 				</view>
 			</view>
 		</view>
+	<view class="hot-box">
 		<scroll-view scroll-x="true" class="hot page-block">
 			<view class="signle-poster" v-for=" (item, index) in SuperHotList" :key="index" @click="goDetail(item.id)">
 				<view class="poster-wapper">
@@ -27,11 +28,13 @@
 					<view class="movie-name">
 						{{ item.nm }}
 					</view>
-					 <view class="movie-score">观众评分 <label>{{ item.sc }}</label> </view>
+					 <view class="movie-score" v-if="item.sc != 0">观众评分 <label>{{ (item.sc - 0) % 1 == 0 ?item.sc+'.0':item.sc }}</label> </view>
+					 <view class="movie-score" v-else>暂无评分</view>
 			
 				</view>
 			</view>
 		</scroll-view>
+	</view>
 		<!--热门视频 End -->
 
 		<!-- 热门预告 Begin -->
@@ -45,7 +48,7 @@
 		</view>
 		<view class='most-expected'>
 			<scroll-view class='scroll-view_H' scroll-x>
-				<view @click="goDetail('/pages/subPages/movie-detail/movie-detail?movieId={{movie.id}}')"
+				<view @click="goDetail(movie.id)"
 					v-for='(movie, index) in mostExpectedList' :key="index" class='expected-item'>
 					<image :src='movie.img' class='poster'></image>
 					<view class='name line-ellipsis'>{{ movie.nm }}</view>

@@ -36,14 +36,22 @@
 	font-weight: bold;
 }
 
+.hot-box {
+	padding: 0 19rpx;
+	padding-bottom: 20rpx;
+}
+
 .hot{
+
 	width: 100%;
 	white-space: nowrap;
+	
 }
 
 .signle-poster{
 	display: inline-block;
-	margin-left: 20upx;
+	margin-right: 20upx;
+
 }
 
 .poster-wapper{
@@ -52,12 +60,12 @@
 }
 
 .hot-movie-jpg{
-	width:200upx ;
-	height:270upx;
+	width:170upx;
+	height:230upx;
 }
 
 .movie-name{
-	width: 200upx;
+	width: 100%;
 	margin-top: 10upx;
 	font-size: 14px;
 	font-weight: bold;
@@ -116,13 +124,13 @@
 .movie-score {
 	display: flex;
 	justify-content: space-between;
-	font-size: 26rpx;
+	font-size: 22rpx;
 	color: #666;
 }
 .movie-score label{
 	font-weight: 700;
 	color: #faaf00;
-	font-size: 30rpx;
+	font-size: 24rpx;
 	margin-right:30upx;
 }
 
@@ -176,7 +184,7 @@
   
   .most-expected {
 	position: relative;
-	padding: 0 30rpx;
+	padding: 0 19rpx;
 	padding-bottom: 20rpx;
 	border-bottom: 20rpx solid #f5f5f5;
 	white-space: nowrap;
