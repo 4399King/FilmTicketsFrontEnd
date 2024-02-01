@@ -9,9 +9,7 @@
 		},
 		{
 			"path": "pages/me/me",
-			"style": {
-				
-			}
+			"style": {}
 		},
 		{
 			"path": "pages/detail/detail",
@@ -19,25 +17,47 @@
 				"navigationBarTitleText": "uni-app"
 			}
 		},
+		{
+			"path": "pages/cinema/cinema",
+			"style": {
+				"navigationBarTitleText": "影院"
+			}
+		},
+		{
+			"path": "pages/theater/theater",
+			"style": {
+				"navigationBarTitleText": "theater"
+			}
+		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
-	
 	},
 	"tabBar": {
-		"list": [{
-			"pagePath": "pages/index/index",
-			"iconPath": "static/image/tab-bar/cinema.png",
-			"selectedIconPath": "static/image/tab-bar/cinemaSelect.png",
-			"text": "首页"
-			},{
+		"color": "#696969",
+		"selectedColor": "#e54847",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/image/tab-bar/movie.png",
+				"selectedIconPath": "static/image/tab-bar/movieSelect.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/theater/theater",
+				"iconPath": "static/image/tab-bar/cinema.png",
+				"selectedIconPath": "static/image/tab-bar/cinemaSelect.png",
+				"text": "影院"
+			},
+			{
 				"pagePath": "pages/me/me",
 				"iconPath": "static/image/tab-bar/user.png",
 				"selectedIconPath": "static/image/tab-bar/userSelect.png",
 				"text": "我的"
-				}]
+			}
+		]
 	}
 }
