@@ -221,7 +221,7 @@
       >
         <view class="name-price line-ellipsis"
           >{{ cinema.nm }}
-          <text class="sell-price" wx:if="{{cinema.sellPrice}}"
+          <text class="sell-price" v-if="cinema.sellPrice"
             ><text class="price">{{ cinema.sellPrice }}</text> 元起</text
           >
         </view>
@@ -230,10 +230,8 @@
           <text class="distance">{{ cinema.distance }}</text>
         </view>
         <view class="feature-tags">
-          <text wx:if="{{cinema.endorse || cinema.tag.endorse}}">退</text>
-          <text wx:if="{{cinema.allowRefund || cinema.tag.allowRefund}}"
-            >改签</text
-          >
+          <text v-if="cinema.endorse || cinema.tag.endorse">退</text>
+          <text v-if="cinema.allowRefund || cinema.tag.allowRefund">改签</text>
           <text
             v-for="item in cinema.hallType || cinema.tag.hallType"
             :key="item"
@@ -242,19 +240,17 @@
           <text class="featrue" wx:if="{{cinema.snack || cinema.tag.snack}}"
             >小吃</text
           >
-          <text
-            class="featrue"
-            wx:if="{{cinema.vipDesc ||cinema.tag.vipTag}}"
-            >{{ cinema.vipDesc || cinema.tag.vipTag }}</text
-          >
+          <text class="featrue" v-if="cinema.vipDesc || cinema.tag.vipTag">{{
+            cinema.vipDesc || cinema.tag.vipTag
+          }}</text>
         </view>
-        <view wx:if="{{!!cinema.promotion.cardPromotionTag}}">
+        <view v-if="cinema.promotion.cardPromotionTag">
           <text class="card"></text>
           <text class="discount-label-text">{{
             cinema.promotion.cardPromotionTag
           }}</text>
         </view>
-        <view wx:if="{{cinema.showTimes}}" class="showTimes"
+        <view v-if="cinema.showTimes" class="showTimes"
           >近期场次：{{ cinema.showTimes }}</view
         >
       </view>
@@ -430,9 +426,7 @@ export default {
       if (brand.id === -1) {
         brandName = '品牌'
       }
-      this.triggerEvent('change', {
-        brandId: brand.id
-      })
+      this.params.brandId = brand.id
       this.selectBrandId = brand.id
       this.itemName2 = brandName
       this.itemNum = -1
@@ -453,11 +447,8 @@ export default {
     },
     //特色确定按钮
     specialConfirm() {
-      const { selectServiceId, selectHallTypeId } = this
-      this.triggerEvent('change', {
-        serviceId: selectServiceId,
-        hallType: selectHallTypeId
-      })
+      this.params.serviceId = this.selectServiceId
+      this.params.hallType = this.selectHallTypeId
       this.itemNum = -1
     },
     //“全城”的item点击事件
@@ -499,12 +490,11 @@ export default {
       if (item === 0) {
         //点击“全部”时关闭下拉框
         if (side.id === -1 && selectDistrictId !== -1) {
-          this.triggerEvent('change', {
-            districtId: -1,
-            lineId: selectLineId,
-            areaId: -1,
-            stationId: selectStationId
-          })((this.itemNum = -1))
+          this.params.districtId = -1
+          this.params.lineId = selectLineId
+          this.params.areaId = -1
+          this.params.stationId = selectStationId
+          this.itemNum = -1
           this.itemName1 = '全城'
           this.selectRegion = {
             ...this.selectRegion,
@@ -518,12 +508,10 @@ export default {
         obj.list = side.subItems ? side.subItems : []
       } else {
         if (side.id === -1 && selectLineId !== -1) {
-          this.triggerEvent('change', {
-            districtId: selectDistrictId,
-            lineId: -1,
-            areaId: selectAreaId,
-            stationId: -1
-          })
+          this.params.districtId = selectDistrictId
+          this.params.lineId = -1
+          this.params.areaId = selectAreaId
+          this.params.stationId = -1
           this.itemNum = -1
           this.itemName1 = '全城'
           this.selectRegion = {
@@ -548,12 +536,11 @@ export default {
       } else {
         obj.selectStationId = item.id
       }
-      this.triggerEvent('change', {
-        districtId: obj.selectDistrictId,
-        lineId: obj.selectLineId,
-        areaId: obj.selectAreaId,
-        stationId: obj.selectStationId
-      })
+
+      this.params.districtId = obj.selectDistrictId
+      this.params.lineId = obj.selectLineId
+      this.params.areaId = obj.selectAreaId
+      this.params.stationId = obj.selectStationId
       this.selectRegion = obj
       this.itemNum = -1
       this.itemName1 = item.name
