@@ -5,12 +5,12 @@
         <text class="city-name">{{ city }}</text>
         <text class="city-entry-arrow"></text>
       </view>
-      <view
+      <input
         url="../../subPages/search-page/search-page?stype=2"
         class="search-input"
-      >
-        <text class="iconfont icon-sousuo"></text>搜影院</view
-      >
+        placeholder="搜影院"
+      />
+      <button class="iconfont icon-sousuo">搜索</button>
     </view>
     <view class="nav-wrapper">
       <!-- <filter-nav
@@ -21,7 +21,7 @@
       <view class="nav">
         <view class="tab">
           <view
-            :class="'nav-item ' + (itemNum === 1 ? 'select-item' : '')"
+            :class="['nav-item', itemNum === 1 ? 'select-item' : '']"
             @click="selectItemNum"
             :data-item-num="1"
           >
@@ -29,9 +29,11 @@
             <text class="city-entry-arrow"></text>
           </view>
           <view
-            :class="
-              'nav-item have-border ' + itemNum === 2 ? 'select-item' : ''
-            "
+            :class="[
+              'nav-item',
+              'have-border',
+              itemNum === 2 ? 'select-item' : ''
+            ]"
             @click="selectItemNum"
             :data-item-num="2"
           >
@@ -39,7 +41,7 @@
             <text class="city-entry-arrow"></text>
           </view>
           <view
-            :class="'nav-item ' + itemNum === 3 ? 'select-item' : ''"
+            :class="['nav-item', itemNum == 3 ? 'select-item' : '']"
             @click="selectItemNum"
             :data-item-num="3"
           >
@@ -54,13 +56,13 @@
           >
             <view class="tab">
               <view
-                :class="'nav-item ' + selectRegion.item === 0 ? 'active' : ''"
+                :class="['nav-item', selectRegion.item === 0 ? 'active' : '']"
                 @click="selectRegionItem"
                 :data-index="0"
                 >商区</view
               >
               <view
-                :class="'nav-item ' + selectRegion.item === 1 ? 'active' : ''"
+                :class="['nav-item', selectRegion.item === 1 ? 'active' : '']"
                 @click="selectRegionItem"
                 :data-index="1"
                 >地铁站</view
@@ -71,15 +73,17 @@
                 <view
                   v-for="item in selectRegion.sideList"
                   :key="item.id"
-                  :class="
-                    'line-ellipsis side-item ' + selectRegion.item === 0
+                  :class="[
+                    'line-ellipsis',
+                    'side-item',
+                    selectRegion.item === 0
                       ? item.id === selectRegion.selectDistrictId
                         ? 'active'
                         : ''
                       : item.id === selectRegion.selectLineId
                       ? 'active'
                       : ''
-                  "
+                  ]"
                   @click="regionSideClick"
                   :data-side="item"
                   >{{ item.name }}({{ item.count }})</view
@@ -89,16 +93,16 @@
                 <view
                   v-for="item in selectRegion.list"
                   :key="item.id"
-                  :class="
-                    'item ' +
-                    (selectRegion.item === 0
+                  :class="[
+                    'item',
+                    selectRegion.item === 0
                       ? item.id === selectRegion.selectAreaId
                         ? 'red'
                         : ''
                       : item.id === selectRegion.selectStationId
                       ? 'red'
-                      : '')
-                  "
+                      : ''
+                  ]"
                   @click="regionListClick"
                   :data-item="item"
                 >
@@ -131,7 +135,7 @@
               <view
                 v-for="item in cityCinemaInfo.brand.subItems"
                 :key="item.id"
-                :class="'brand-item ' + selectBrandId === item.id ? 'red' : ''"
+                :class="['brand-item ', selectBrandId === item.id ? 'red' : '']"
                 @click="selectBrand"
                 :data-brand="item"
               >
@@ -158,11 +162,11 @@
                 <view
                   v-for="item in cityCinemaInfo.service.subItems"
                   :key="item.id"
-                  :class="
-                    'btn line-ellipsis ' + selectServiceId === item.id
-                      ? 'select'
-                      : ''
-                  "
+                  :class="[
+                    'btn',
+                    'line-ellipsis',
+                    selectServiceId === item.id ? 'select' : ''
+                  ]"
                   @click="specialSelectItem"
                   :data-type-id="item.id"
                   data-type="service"
@@ -174,11 +178,11 @@
                 <view
                   v-for="item in cityCinemaInfo.hallType.subItems"
                   :key="item.id"
-                  :class="
-                    'btn line-ellipsis ' + selectHallTypeId === item.id
-                      ? 'select'
-                      : ''
-                  "
+                  :class="[
+                    'btn',
+                    'line-ellipsis',
+                    selectHallTypeId === item.id ? 'select' : ''
+                  ]"
                   @click="specialSelectItem"
                   :data-type-id="item.id"
                   data-type="hallType"
@@ -386,8 +390,7 @@ export default {
       })
     },
     //导航下拉框状态变化时的处理
-    toggleShow(e) {
-      const item = e.detail.item
+    toggleShow(item) {
       this.isShow = item !== -1
     },
     //上拉触底加载更多
@@ -557,19 +560,17 @@ export default {
     }
   },
   watch: {
-    cityCinemaInfo: (newVal, oldVal, changedPath) => {
+    cityCinemaInfo(newVal, oldVal, changedPath) {
       const sideList = newVal.district ? newVal.district.subItems : []
       this.selectRegion = { ...this.selectRegion, sideList }
     },
-    hidden: (newVal) => {
+    hidden(newVal) {
       if (newVal) {
         this.itemNum = -1
       }
     },
-    itemNum: (value) => {
-      this.triggerEvent('toggleShow', {
-        item: value
-      })
+    itemNum(value) {
+      this.toggleShow(value)
     }
   },
 
@@ -745,7 +746,7 @@ export default {
 }
 
 /* filter-nav */
-@import '/assets/font/icon.wxss';
+/* @import '/assets/font/icon.wxss'; */
 
 .line-ellipsis {
   text-overflow: ellipsis;
@@ -758,6 +759,7 @@ export default {
 .tab {
   display: flex;
   align-items: center;
+
   width: 100vw;
   height: 80rpx;
   border-bottom: 1px solid #e6e6e6;
