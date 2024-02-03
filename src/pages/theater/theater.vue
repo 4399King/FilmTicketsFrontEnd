@@ -341,27 +341,26 @@ export default {
         title: '正在加载...'
       })
 
-      this.getCinemas(this.params).then(() => {
+      this.cinemaList(this.params).then(() => {
         wx.hideLoading()
       })
       wx.request({
         url: 'https://m.maoyan.com/ajax/filterCinemas',
         success: (res) => {
           this.cityCinemaInfo = res.data
-          console.log(this.cityCinemaInfo, '46464')
         }
       })
     },
     //获取影院列表
-    getCinemas(params) {
+    cinemaList(params) {
       return new Promise((resolve, reject) => {
         wx.request({
           url: 'https://m.maoyan.com/ajax/cinemaList',
           data: params,
           success: (res) => {
             resolve(res.data.cinemas)
-            console.log(res, 'wakakak')
-            this.cinemas = this.cinemas.concat(res.data.cinemas)
+            // this.cinemas = this.cinemas.concat(res.data.cinemas)
+            this.cinemas = res.data.cinemas
             this.loadComplete = !res.data.paging.hasMore
           }
         })
@@ -378,7 +377,7 @@ export default {
       this.cinemas = []
       this.nothing = false
 
-      this.getCinemas(this.params).then((list) => {
+      this.cinemaList(this.params).then((list) => {
         if (!list.length) {
           this.nothing = true
         }
@@ -395,7 +394,7 @@ export default {
         return
       }
       const params = { ...this.params, offset: this.cinemas.length }
-      this.getCinemas(params)
+      this.cinemaList(params)
     },
     //转发
     onShareAppMessage(res) {
@@ -530,6 +529,7 @@ export default {
     //“全城”详细list的点击事件
     regionListClick(e) {
       const item = e.currentTarget.dataset.item
+      console.log(item, '55555555555')
       let obj = { ...this.selectRegion }
       if (this.selectRegion.item === 0) {
         obj.selectAreaId = item.id
@@ -544,6 +544,7 @@ export default {
       this.selectRegion = obj
       this.itemNum = -1
       this.itemName1 = item.name
+      this.cinemaList(this.params)
     }
   },
   watch: {
