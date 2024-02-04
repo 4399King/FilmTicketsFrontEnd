@@ -18,7 +18,13 @@
         bindchange="changeCondition"
         bindtoggleShow="toggleShow"
       ></filter-nav> -->
-      <view class="nav">
+      <filterBar
+        @toggleShow="toggleShow"
+        @cinemaList="cinemaList"
+        :params="params"
+        :cityCinemaInfo="cityCinemaInfo"
+      ></filterBar>
+      <!-- <view class="nav">
         <view class="tab">
           <view
             :class="['nav-item', itemNum === 1 ? 'select-item' : '']"
@@ -202,7 +208,7 @@
           :style="{ display: itemNum === -1 ? 'none' : 'block' }"
           catchtap="cancal"
         ></view>
-      </view>
+      </view> -->
     </view>
     <view class="cinema-list">
       <!-- <template
@@ -212,7 +218,8 @@
         wx:key="id"
         data="{{cinema}}"
       /> -->
-      <view
+      <cinemaListItem :cinemas="cinemas"></cinemaListItem>
+      <!--   <view
         v-for="cinema in cinemas"
         :key="cinema.id"
         class="cinema-section"
@@ -237,7 +244,7 @@
             :key="item"
             >{{ item }}</text
           >
-          <text class="featrue" wx:if="{{cinema.snack || cinema.tag.snack}}"
+          <text class="featrue" v-if="cinema.snack || cinema.tag.snack"
             >小吃</text
           >
           <text class="featrue" v-if="cinema.vipDesc || cinema.tag.vipTag">{{
@@ -253,7 +260,7 @@
         <view v-if="cinema.showTimes" class="showTimes"
           >近期场次：{{ cinema.showTimes }}</view
         >
-      </view>
+      </view>-->
     </view>
     <view v-if="!loadComplete && cinemas.length">
       <!-- <template is="loadingMore" /> -->
@@ -266,8 +273,10 @@
 
 <script>
 import { getToday } from '../../utils/util'
+import filterBar from '../../components/filter-bar/filter-bar.vue'
+import cinemaListItem from '../../components/cinema-list-item/cinema-list-item.vue'
 export default {
-  components: {},
+  components: { filterBar, cinemaListItem },
   data() {
     return {
       //cinema
@@ -344,6 +353,7 @@ export default {
       this.cinemaList(this.params).then(() => {
         wx.hideLoading()
       })
+
       wx.request({
         url: 'https://m.maoyan.com/ajax/filterCinemas',
         success: (res) => {
@@ -353,6 +363,7 @@ export default {
     },
     //获取影院列表
     cinemaList(params) {
+      console.log('!!!!!')
       return new Promise((resolve, reject) => {
         wx.request({
           url: 'https://m.maoyan.com/ajax/cinemaList',
@@ -429,6 +440,7 @@ export default {
       this.selectBrandId = brand.id
       this.itemName2 = brandName
       this.itemNum = -1
+      this.cinemaList(this.params)
     },
     //特色重置按钮
     specialReset() {
@@ -449,6 +461,7 @@ export default {
       this.params.serviceId = this.selectServiceId
       this.params.hallType = this.selectHallTypeId
       this.itemNum = -1
+      this.cinemaList(this.params)
     },
     //“全城”的item点击事件
     selectRegionItem(e) {
