@@ -261,7 +261,6 @@ export default {
       this.itemNum = -1
 
       this.$emit('cinemaList', this.params)
-      //this.cinemaList(this.params)
     },
     //特色重置按钮
     specialReset() {

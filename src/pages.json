@@ -25,12 +25,6 @@
       }
     },
     {
-      "path": "pages/choose-cinema/choose-cinema",
-      "style": {
-        "navigationBarTitleText": "请选择影城"
-      }
-    },
-    {
       "path": "pages/select/select",
       "style": {
         "navigationBarTitleText": "select"

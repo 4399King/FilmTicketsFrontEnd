@@ -20,9 +20,11 @@
         <view>
           <filterBar
             :city-cinema-info="cityCinemaInfo"
+            @cinemaList="getCinemas"
             @change="changeCondition"
             @toggleShow="toggleShow"
             :hidden="!isShow"
+            :params="params"
           ></filterBar>
         </view>
       </view>
@@ -40,10 +42,12 @@
         <view v-if="!loadComplete && cinemas.length">
           <!-- <template is="loadingMore" /> -->
         </view>
-        <view :hidden="!nothing">
+        <view v-else-if="!cinemas.length">
+          <nothing message="暂无符合条件的影院"></nothing>
           <!-- <template is="nothing" data='{{message:"暂无符合条件的影院"}}' /> -->
         </view>
         <view :hidden="!noSchedule">
+          <nothing message="当天暂无场次"></nothing>
           <!-- <template is="nothing" data='{{message:"当天暂无场次"}}' /> -->
         </view>
       </view>
@@ -55,8 +59,9 @@
 import chooseDate from '../../components/choose-date/choose-date.vue'
 import filterBar from '../../components/filter-bar/filter-bar.vue'
 import cinemaListItem from '../../components/cinema-list-item/cinema-list-item.vue'
+import nothing from '../../components/nothing/nothing.vue'
 export default {
-  components: { chooseDate, filterBar, cinemaListItem },
+  components: { chooseDate, filterBar, cinemaListItem, nothing },
   data() {
     return {
       showTime: '', //影片上映日期
@@ -129,7 +134,8 @@ export default {
           success: (res) => {
             // 缺少了城市ID所以返回值缺少showDays，只能自己模拟时间了
             resolve(res.data.cinemas)
-            this.cinemas = this.cinemas.concat(res.data.cinemas)
+            this.cinemas = res.data.cinemas
+            console.log(this.cinemas, 'changedCinemas')
             this.loadComplete = !res.data.paging.hasMore
           }
         })
@@ -161,7 +167,7 @@ export default {
         if (!list.length) {
           this.noSchedule = true
         }
-        this.cinemas = list
+
         console.log(this.cinemas, 'cinemas??')
       })
       this.getFilter()
@@ -183,6 +189,7 @@ export default {
         if (!list.length) {
           this.nothing = true
         }
+
         wx.hideLoading()
       })
     },
