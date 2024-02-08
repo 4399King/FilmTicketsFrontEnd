@@ -13,7 +13,7 @@
       "style": {}
     },
     {
-      "path": "pages/detail/detail",
+      "path": "pages/film-detail/film-detail",
       "style": {
         "navigationBarTitleText": "uni-app"
       }
@@ -26,6 +26,12 @@
     },
     {
       "path": "pages/select/select",
+      "style": {
+        "navigationBarTitleText": "select"
+      }
+    },
+    {
+      "path": "pages/cinema-detail/cinema-detail",
       "style": {
         "navigationBarTitleText": "select"
       }

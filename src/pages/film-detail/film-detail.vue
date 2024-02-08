@@ -336,7 +336,7 @@ export default {
 </script>
 
 <style>
-@import url('detail.css');
+@import url('film-detail.css');
 .purchase {
   position: fixed;
   bottom: 0;

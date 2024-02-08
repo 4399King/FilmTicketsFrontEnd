@@ -29,8 +29,14 @@
         </view>
       </view>
       <view class="main-content">
-        <view class="cinema-list">
-          <cinemaListItem :cinemas="cinemas"></cinemaListItem>
+        <view class="cinema-list" v-if="loadComplete && cinemas.length">
+          <cinemaListItem
+            :movieId="movieId"
+            :cinemas="cinemas"
+            :day="params.day"
+            @navTo="navTo"
+          ></cinemaListItem>
+
           <!-- <template
             is="cinemaSection"
             v-for="cinemas"
@@ -39,14 +45,14 @@
             data="{{cinema,movieId:params.movieId,day:params.day}}"
           /> -->
         </view>
-        <view v-if="!loadComplete && cinemas.length">
-          <!-- <template is="loadingMore" /> -->
-        </view>
+        <!-- <view v-if="!loadComplete && cinemas.length">
+          <template is="loadingMore" />
+        </view> -->
         <view v-else-if="!cinemas.length">
           <nothing message="暂无符合条件的影院"></nothing>
           <!-- <template is="nothing" data='{{message:"暂无符合条件的影院"}}' /> -->
         </view>
-        <view :hidden="!noSchedule">
+        <view v-else>
           <nothing message="当天暂无场次"></nothing>
           <!-- <template is="nothing" data='{{message:"当天暂无场次"}}' /> -->
         </view>
@@ -64,6 +70,7 @@ export default {
   components: { chooseDate, filterBar, cinemaListItem, nothing },
   data() {
     return {
+      movieId: 0,
       showTime: '', //影片上映日期
       isShow: false, //导航下拉框是否展开
       cityCinemaInfo: {
@@ -111,7 +118,7 @@ export default {
   methods: {
     initPage(options) {
       //跳转路由时传参进入options
-      const movieId = options.movieId
+      this.movieId = options.movieId
       const movieName = options.movieName
       this.showTime = options.showTime //影片上映日期
 
@@ -120,7 +127,7 @@ export default {
       })
       this.params = {
         ...this.params,
-        movieId
+        movieId: this.movieId
       }
       //select-time会触发事件来调用changeTime初始化数据
     },
@@ -167,8 +174,6 @@ export default {
         if (!list.length) {
           this.noSchedule = true
         }
-
-        console.log(this.cinemas, 'cinemas??')
       })
       this.getFilter()
     },
@@ -207,6 +212,11 @@ export default {
         offset: this.cinemas.length
       }
       this.getCinemas(params)
+    },
+    navTo({ movieId, cinemaId, day }) {
+      uni.navigateTo({
+        url: `/pages/cinema-detail/cinema-detail?cinemaId=${cinemaId}&movieId=${movieId}&day=${day}`
+      })
     }
   },
   watch: {},

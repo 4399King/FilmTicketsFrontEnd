@@ -6,6 +6,7 @@
       class="cinema-section"
       url="/pages/subPages/cinema-detail/cinema-detail?cinemaId={{cinema.id}}&movieId={{movieId}}&day={{day}}"
       hover-class="none"
+      @click="navTo(cinema.id)"
     >
       <view class="name-price line-ellipsis"
         >{{ cinema.nm }}
@@ -48,12 +49,21 @@
 <script>
 export default {
   name: 'cinema-list-item',
-  props: ['cinemas'],
+  props: ['cinemas', 'movieId', 'day'],
   data() {
     return {}
   },
   computed: {},
-  methods: {},
+  methods: {
+    navTo(id) {
+      console.log('htttttt')
+      this.$emit('navTo', {
+        movieId: this.movieId,
+        cinemaId: id,
+        day: this.day
+      })
+    }
+  },
   watch: {},
 
   // 组件周期函数--监听组件挂载完毕
