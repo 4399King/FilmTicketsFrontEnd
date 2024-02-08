@@ -13,254 +13,15 @@
       <button class="iconfont icon-sousuo">搜索</button>
     </view>
     <view class="nav-wrapper">
-      <!-- <filter-nav
-        city-cinema-info="{{cityCinemaInfo}}"
-        bindchange="changeCondition"
-        bindtoggleShow="toggleShow"
-      ></filter-nav> -->
       <filterBar
         @toggleShow="toggleShow"
         @cinemaList="cinemaList"
         :params="params"
         :cityCinemaInfo="cityCinemaInfo"
       ></filterBar>
-      <!-- <view class="nav">
-        <view class="tab">
-          <view
-            :class="['nav-item', itemNum === 1 ? 'select-item' : '']"
-            @click="selectItemNum"
-            :data-item-num="1"
-          >
-            <text class="title line-ellipsis">{{ itemName1 }}</text>
-            <text class="city-entry-arrow"></text>
-          </view>
-          <view
-            :class="[
-              'nav-item',
-              'have-border',
-              itemNum === 2 ? 'select-item' : ''
-            ]"
-            @click="selectItemNum"
-            :data-item-num="2"
-          >
-            <text class="title line-ellipsis">{{ itemName2 }}</text>
-            <text class="city-entry-arrow"></text>
-          </view>
-          <view
-            :class="['nav-item', itemNum == 3 ? 'select-item' : '']"
-            @click="selectItemNum"
-            :data-item-num="3"
-          >
-            <text class="title line-ellipsis">{{ itemName3 }}</text>
-            <text class="city-entry-arrow"></text>
-          </view>
-        </view>
-        <view class="nav-content">
-          <view
-            class="nav-content-item region"
-            :style="{ display: itemNum === 1 ? 'block' : 'none' }"
-          >
-            <view class="tab">
-              <view
-                :class="['nav-item', selectRegion.item === 0 ? 'active' : '']"
-                @click="selectRegionItem"
-                :data-index="0"
-                >商区</view
-              >
-              <view
-                :class="['nav-item', selectRegion.item === 1 ? 'active' : '']"
-                @click="selectRegionItem"
-                :data-index="1"
-                >地铁站</view
-              >
-            </view>
-            <view class="region-list">
-              <scroll-view class="region-sidenav" scroll-y>
-                <view
-                  v-for="item in selectRegion.sideList"
-                  :key="item.id"
-                  :class="[
-                    'line-ellipsis',
-                    'side-item',
-                    selectRegion.item === 0
-                      ? item.id === selectRegion.selectDistrictId
-                        ? 'active'
-                        : ''
-                      : item.id === selectRegion.selectLineId
-                      ? 'active'
-                      : ''
-                  ]"
-                  @click="regionSideClick"
-                  :data-side="item"
-                  >{{ item.name }}({{ item.count }})</view
-                >
-              </scroll-view>
-              <scroll-view class="region-list-item" scroll-y>
-                <view
-                  v-for="item in selectRegion.list"
-                  :key="item.id"
-                  :class="[
-                    'item',
-                    selectRegion.item === 0
-                      ? item.id === selectRegion.selectAreaId
-                        ? 'red'
-                        : ''
-                      : item.id === selectRegion.selectStationId
-                      ? 'red'
-                      : ''
-                  ]"
-                  @click="regionListClick"
-                  :data-item="item"
-                >
-                  <view>
-                    <text
-                      class="iconfont icon-hook"
-                      :style="{
-                        visibility:
-                          selectRegion.item === 0
-                            ? item.id === selectRegion.selectAreaId
-                              ? ''
-                              : 'hidden'
-                            : item.id === selectRegion.selectStationId
-                            ? ''
-                            : 'hidden'
-                      }"
-                    ></text>
-                    {{ item.name }}
-                  </view>
-                  <view>{{ item.count }}</view>
-                </view>
-              </scroll-view>
-            </view>
-          </view>
-          <view
-            class="nav-content-item brand"
-            :style="{ display: itemNum === 2 ? 'block' : 'none' }"
-          >
-            <scroll-view class="brand-scroll-view" scroll-y>
-              <view
-                v-for="item in cityCinemaInfo.brand.subItems"
-                :key="item.id"
-                :class="['brand-item ', selectBrandId === item.id ? 'red' : '']"
-                @click="selectBrand"
-                :data-brand="item"
-              >
-                <view>
-                  <text
-                    class="iconfont icon-hook"
-                    :style="{
-                      visibility: selectBrandId === item.id ? '' : 'hidden'
-                    }"
-                  ></text>
-                  {{ item.name }}
-                </view>
-                <view class="brand-count">{{ item.count }}</view>
-              </view>
-            </scroll-view>
-          </view>
-          <view
-            class="nav-content-item special"
-            :style="{ display: itemNum === 3 ? 'block' : 'none' }"
-          >
-            <scroll-view class="special-scroll-view" scroll-y>
-              <view class="item-title">特色功能</view>
-              <view class="item-list">
-                <view
-                  v-for="item in cityCinemaInfo.service.subItems"
-                  :key="item.id"
-                  :class="[
-                    'btn',
-                    'line-ellipsis',
-                    selectServiceId === item.id ? 'select' : ''
-                  ]"
-                  @click="specialSelectItem"
-                  :data-type-id="item.id"
-                  data-type="service"
-                  >{{ item.name }}</view
-                >
-              </view>
-              <view class="item-title">特殊厅</view>
-              <view class="item-list">
-                <view
-                  v-for="item in cityCinemaInfo.hallType.subItems"
-                  :key="item.id"
-                  :class="[
-                    'btn',
-                    'line-ellipsis',
-                    selectHallTypeId === item.id ? 'select' : ''
-                  ]"
-                  @click="specialSelectItem"
-                  :data-type-id="item.id"
-                  data-type="hallType"
-                  >{{ item.name }}</view
-                >
-              </view>
-            </scroll-view>
-            <view class="special-btn">
-              <view class="btn" @click="specialReset">重置</view>
-              <view class="btn confirm-btn" @click="specialConfirm">确定</view>
-            </view>
-          </view>
-        </view>
-        <view
-          class="mask"
-          @click="cancal"
-          :style="{ display: itemNum === -1 ? 'none' : 'block' }"
-          catchtap="cancal"
-        ></view>
-      </view> -->
     </view>
     <view class="cinema-list">
-      <!-- <template
-        is="cinemaSection"
-        wx:for="{{cinemas}}"
-        wx:for-item="cinema"
-        wx:key="id"
-        data="{{cinema}}"
-      /> -->
       <cinemaListItem :cinemas="cinemas"></cinemaListItem>
-      <!--   <view
-        v-for="cinema in cinemas"
-        :key="cinema.id"
-        class="cinema-section"
-        url="/pages/subPages/cinema-detail/cinema-detail?cinemaId={{cinema.id}}&movieId={{movieId}}&day={{day}}"
-        hover-class="none"
-      >
-        <view class="name-price line-ellipsis"
-          >{{ cinema.nm }}
-          <text class="sell-price" v-if="cinema.sellPrice"
-            ><text class="price">{{ cinema.sellPrice }}</text> 元起</text
-          >
-        </view>
-        <view class="address">
-          <text class="line-ellipsis">{{ cinema.addr }}</text>
-          <text class="distance">{{ cinema.distance }}</text>
-        </view>
-        <view class="feature-tags">
-          <text v-if="cinema.endorse || cinema.tag.endorse">退</text>
-          <text v-if="cinema.allowRefund || cinema.tag.allowRefund">改签</text>
-          <text
-            v-for="item in cinema.hallType || cinema.tag.hallType"
-            :key="item"
-            >{{ item }}</text
-          >
-          <text class="featrue" v-if="cinema.snack || cinema.tag.snack"
-            >小吃</text
-          >
-          <text class="featrue" v-if="cinema.vipDesc || cinema.tag.vipTag">{{
-            cinema.vipDesc || cinema.tag.vipTag
-          }}</text>
-        </view>
-        <view v-if="cinema.promotion.cardPromotionTag">
-          <text class="card"></text>
-          <text class="discount-label-text">{{
-            cinema.promotion.cardPromotionTag
-          }}</text>
-        </view>
-        <view v-if="cinema.showTimes" class="showTimes"
-          >近期场次：{{ cinema.showTimes }}</view
-        >
-      </view>-->
     </view>
     <view v-if="!loadComplete && cinemas.length">
       <!-- <template is="loadingMore" /> -->
@@ -299,7 +60,7 @@ export default {
       },
       nothing: false, //结果是否为空
       cinemas: [], //影院列表
-      cityCinemaInfo: {}, //城市影院信息
+      //城市影院信息
       loadComplete: false, //数据是否加载完
       isShow: false, //导航下拉框是否展开
       // filter-nav
@@ -396,8 +157,8 @@ export default {
       })
     },
     //导航下拉框状态变化时的处理
-    toggleShow(item) {
-      this.isShow = item !== -1
+    toggleShow(value) {
+      this.isShow = value !== -1
     },
     //上拉触底加载更多
     onReachBottom() {

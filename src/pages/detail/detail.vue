@@ -326,7 +326,9 @@ export default {
       return stars
     },
     navToChooseCinema() {
-      uni.navigateTo({ url: '/pages/select-cinema/select-cinema' })
+      uni.navigateTo({
+        url: `/pages/select/select?movieId=${this.Moviedetail.id}&movieName=${this.Moviedetail.nm}&showTime=${this.Moviedetail.rt}`
+      })
     }
   },
   components: {}

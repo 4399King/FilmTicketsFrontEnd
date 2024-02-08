@@ -1,70 +1,70 @@
 {
-	"pages": [
-		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "uni-app",
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/me/me",
-			"style": {}
-		},
-		{
-			"path": "pages/detail/detail",
-			"style": {
-				"navigationBarTitleText": "uni-app"
-			}
-		},
-		{
-			"path": "pages/cinema/cinema",
-			"style": {
-				"navigationBarTitleText": "影院"
-			}
-		},
-		{
-			"path": "pages/choose-cinema/choose-cinema",
-			"style": {
-				"navigationBarTitleText": "请选择影城"
-			}
-		},
-		{
-			"path": "pages/select-cinema/select-cinema",
-			"style": {
-				"navigationBarTitleText": "select-cinema"
-			}
-		}
-	],
-	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
-	},
-	"tabBar": {
-		"color": "#696969",
-		"selectedColor": "#e54847",
-		"list": [
-			{
-				"pagePath": "pages/index/index",
-				"iconPath": "static/image/tab-bar/movie.png",
-				"selectedIconPath": "static/image/tab-bar/movieSelect.png",
-				"text": "影片"
-			},
-			{
-				"pagePath": "pages/cinema/cinema",
-				"iconPath": "static/image/tab-bar/cinema.png",
-				"selectedIconPath": "static/image/tab-bar/cinemaSelect.png",
-				"text": "影城"
-			},
-			{
-				"pagePath": "pages/me/me",
-				"iconPath": "static/image/tab-bar/user.png",
-				"selectedIconPath": "static/image/tab-bar/userSelect.png",
-				"text": "我的"
-			}
-		]
-	}
+  "pages": [
+    //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "uni-app",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/me/me",
+      "style": {}
+    },
+    {
+      "path": "pages/detail/detail",
+      "style": {
+        "navigationBarTitleText": "uni-app"
+      }
+    },
+    {
+      "path": "pages/cinema/cinema",
+      "style": {
+        "navigationBarTitleText": "影院"
+      }
+    },
+    {
+      "path": "pages/choose-cinema/choose-cinema",
+      "style": {
+        "navigationBarTitleText": "请选择影城"
+      }
+    },
+    {
+      "path": "pages/select/select",
+      "style": {
+        "navigationBarTitleText": "select"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#696969",
+    "selectedColor": "#e54847",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/image/tab-bar/movie.png",
+        "selectedIconPath": "static/image/tab-bar/movieSelect.png",
+        "text": "影片"
+      },
+      {
+        "pagePath": "pages/cinema/cinema",
+        "iconPath": "static/image/tab-bar/cinema.png",
+        "selectedIconPath": "static/image/tab-bar/cinemaSelect.png",
+        "text": "影城"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "iconPath": "static/image/tab-bar/user.png",
+        "selectedIconPath": "static/image/tab-bar/userSelect.png",
+        "text": "我的"
+      }
+    ]
+  }
 }
