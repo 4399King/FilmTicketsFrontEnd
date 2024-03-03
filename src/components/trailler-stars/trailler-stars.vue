@@ -3,16 +3,16 @@
 		 <image 
 			v-for="(itemStar,index) in Star"
 			:key="index"
-			src="../static/super-hot/star.png" 
+			src="@/static/super-hot/star.png" 
 			class="movie-star-ico"></image>
 		<image 
 			v-for="(itemnoStar,index) in noStar"
 			:key="index"
-			src="../static/super-hot/nostar.png" 
+			src="@/static/super-hot/nostar.png" 
 			class="movie-star-ico"></image>
 		<view class="movie-score" v-show="ShowNum == 1? true:false">
 					 <image :src="SImg" class="movie-star-ico"></image>
-					 <image src="../static/super-hot/moviescore/dian.png" class="movie-star-dian" v-show="Scoretype == 0?true:false"></image>
+					 <image src="@/static/super-hot/moviescore/dian.png" class="movie-star-dian" v-show="Scoretype == 0?true:false"></image>
 					 <image :src="GImg" class="movie-star-ico"></image>
 		</view>
 			

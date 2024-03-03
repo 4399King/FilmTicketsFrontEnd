@@ -1,6 +1,6 @@
 <template>
-  <div class="cinema-detail">
-    <import src="../../../templates/cinemaMap/cinemaMap.wxml" />
+  <div class="goods-show">
+    <!-- <import src="../../../templates/cinemaMap/cinemaMap.wxml" /> -->
     <view v-if="cinemaDetail">
       <view>
         <!-- <template
@@ -10,17 +10,24 @@
       </view>
       <view>
         <view>
-          <select-movie
-            movies="movies"
-            bindselectMovie="selectMovie"
-            defaultSelectID="movieId"
-          />
+          <!-- <select-movie
+            :movies="movies"
+            @selectMovie="selectMovie"
+            :defaultSelectID="movieId"
+          /> -->
+      
+        <movie-list  :movie="movie"
+            :movies="movies"
+            @selectMovie="selectMovie"
+            :defaultSelectID="movieId">
+          ></movie-list>
+       
         </view>
         <view class="movie-info" v-if="movie">
           <view class="movie-title line-ellipsis">
             <text class="title">{{ movie.nm }} </text>
             <text class="grade">
-              <text v-if="!movie.globalReleased"
+              <text v-if="!movie?.globalReleased"
                 >{{ movie.wish }}<text class="small">人想看</text></text
               >
               <text v-else-if="movie.sc !== '0.0'"
@@ -33,11 +40,16 @@
         </view>
       </view>
       <view>
-        <select-time
+        <!-- <select-time
           days="days"
           bindselectDayEvent="selectDay"
           defaultSelect="day"
-        ></select-time>
+        ></select-time> -->
+        <choose-date
+          :days="days"
+          @selectDay="selectDay"
+          :defaultSelect="day"
+        ></choose-date>
       </view>
       <view>
         <view v-if="timeList.length">
@@ -50,7 +62,7 @@
           >
             <view class="time-block box">
               <view class="begin">{{ item.tm }}</view>
-              <view class="end">{{ item.endTime }} 散场</view>
+              <view class="end">?{{ item.endTime }}? 散场</view>
             </view>
             <view class="info-block box">
               <view class="lan line-ellipsis"
@@ -87,7 +99,7 @@
         </view>
         <view v-else class="no-seat">
           <text>{{
-            movie.globalReleased ? '今日场次已映完' : '影片未上映'
+            movie?.globalReleased ? '今日场次已映完' : '影片未上映'
           }}</text>
         </view>
       </view>
@@ -131,16 +143,19 @@
 
 <script>
 import { getRandom, formatNumber } from '../../../src/utils/util'
+
 export default {
-  name: 'cinema-detail',
+  name: 'goods-show',
   props: {},
+  // components: [selectMovie, chooseDate],
   data() {
     return {
+      movie: {},
       cinemaId: '',
       movieId: '',
-      cinemaDetail: null, //影院详情
-      movie: null, //选中的电影
-      movies: null, //电影列表
+      cinemaDetail: true, //影院详情
+      movie: false, //选中的电影
+      movies: false, //电影列表
       days: [], //该电影的排片日期列表
       timeList: [], //当天播放电影的时间段
       divideDealList: [], //影院分类零食列表
@@ -151,62 +166,59 @@ export default {
   methods: {
     //初始化页面
     initPage(query) {
-      const { cinemaId = '', movieId = '', day = '' } = query
-      this.setData({
-        cinemaId,
-        movieId,
-        day
-      })
-      const _this = this
+      const { cinemaId = '', movieId = '', day = '', movie = '' } = query
+      this.cinemaId = cinemaId
+      this.movieId = movieId
+	
+      this.day = day
+
       wx.showLoading({
         title: '正在加载...'
       })
       wx.request({
         url: `https://m.maoyan.com/ajax/cinemaDetail?cinemaId=${cinemaId}&movieId=${movieId}`,
-        success(res) {
+        success: (res) => {
+         
           wx.hideLoading()
-          _this.setData({
-            cinemaDetail: res.data,
-            movies: _this.formatMovie(res.data.showData.movies),
-            divideDealList: _this.formatUrl(res.data.dealList.divideDealList)
-          })
+          this.cinemaDetail = res.data
+          this.movies = this.formatMovie(res.data.showData.movies)
+		  this.movie = this.movies.find((item)=> item.id == this.movieId)
+          this.divideDealList = this.formatUrl(res.data.dealList.divideDealList)
         }
       })
     },
     //选择电影
-    selectMovie(e) {
-      const movie = e.detail.movie
+    selectMovie(movie) {
       let days = []
+	  console.log("movie",movie)
       movie.shows.forEach((item) => {
         days.push({
           title: item.dateShow,
           day: item.showDate
         })
       })
-      this.setData({
-        movie,
-        days,
-        timeList: this.createEndTime(movie.shows[0].plist, movie.dur)
-      })
+      this.movie = movie
+      this.days = days
+      this.timeList = this.createEndTime(movie.shows[0].plist, movie.dur)
+      console.log(this.timeList, 'selectMovie')
     },
     //选择时间
     selectDay(e) {
       const day = e.detail.day
-      const movie = this.data.movie
+      const movie = this.movie
       const index = movie.shows.findIndex((item) => item.showDate === day)
-      this.setData({
-        timeList: this.createEndTime(movie.shows[index].plist, movie.dur)
-      })
+      this.timeList = this.createEndTime(movie.shows[index].plist, movie.dur)
+      console.log(this.timeList, 'selectDay')
     },
     //跳转到“套餐详情”页面
     goSnackPage(e) {
       const info = e.currentTarget.dataset.info
       //将参数转化为JSON通过页面跳转时传递
       const paramsStr = JSON.stringify({
-        cinemaName: this.data.cinemaDetail.cinemaData.nm,
-        cinemaId: this.data.cinemaId,
+        cinemaName: this.cinemaDetail.cinemaData.nm,
+        cinemaId: this.cinemaId,
         dealId: info.dealId,
-        cinemaData: this.data.cinemaDetail.cinemaData //影院信息
+        cinemaData: this.cinemaDetail.cinemaData //影院信息
       })
       wx.navigateTo({
         url: `/pages/subPages/snack-page/snack-page?paramsStr=${paramsStr}`
@@ -215,7 +227,7 @@ export default {
     //购票
     buyTicket(e) {
       const info = e.currentTarget.dataset.info
-      const { movie, cinemaId, cinemaDetail, first } = this.data
+      const { movie, cinemaId, cinemaDetail, first } = this
       //添加订单信息
       const paramsStr = JSON.stringify({
         cinemaName: cinemaDetail.cinemaData.nm, //电影院名
@@ -238,9 +250,8 @@ export default {
           title: '提示',
           content: '此小程序仅为学习，不会产生任何支付',
           success: (res) => {
-            this.setData({
-              first: false
-            })
+            this.first = false
+
             if (res.confirm) {
               wx.navigateTo({
                 url: `/pages/subPages/buy-ticket/buy-ticket?paramsStr=${paramsStr}`
@@ -276,9 +287,10 @@ export default {
       let list = []
       if (Array.isArray(arr)) {
         arr.forEach((item) => {
+          console.log(item, 'itemmmmm')
           list.push({
             ...item,
-            img: item.img.replace('w.h', '148.208')
+            img: item?.img?.replace('w.h', '148.208')
           })
         })
       }
@@ -294,7 +306,7 @@ export default {
           }
           temp.dealList = temp.dealList.map((i) => ({
             ...i,
-            imageUrl: i.imageUrl.replace('w.h', '440.0')
+            imageUrl: i?.imageUrl?.replace('w.h', '440.0')
           }))
           divideDealList.push(temp)
         })
@@ -306,6 +318,7 @@ export default {
   onLoad(query) {
     this.initPage(query)
   },
+  created() {},
   // 组件周期函数--监听组件挂载完毕
   mounted() {},
   // 组件周期函数--监听组件数据更新之前

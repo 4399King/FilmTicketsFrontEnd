@@ -11,31 +11,33 @@
             :start-time="showTime"
             bindselectDayEvent="changeTime"
           ></select-time> -->
-          <chooseDate
+          <choose-date
             :start-time="showTime"
             @changeTime="changeTime"
-          ></chooseDate>
+          ></choose-date>
         </view>
 
         <view>
-          <filterBar
+          <filter-bar
             :city-cinema-info="cityCinemaInfo"
             @cinemaList="getCinemas"
             @change="changeCondition"
             @toggleShow="toggleShow"
             :hidden="!isShow"
             :params="params"
-          ></filterBar>
+          ></filter-bar>
         </view>
       </view>
       <view class="main-content">
-        <view class="cinema-list" v-if="loadComplete && cinemas.length">
-          <cinemaListItem
+        <view class="cinema-list" v-if="cinemas.length">
+          <!-- <view class="cinema-list" v-if="cinemas.length"> -->
+          <cinema-list-item
+            :movie="movie"
             :movieId="movieId"
             :cinemas="cinemas"
             :day="params.day"
             @navTo="navTo"
-          ></cinemaListItem>
+          ></cinema-list-item>
 
           <!-- <template
             is="cinemaSection"
@@ -48,10 +50,10 @@
         <!-- <view v-if="!loadComplete && cinemas.length">
           <template is="loadingMore" />
         </view> -->
-        <view v-else-if="!cinemas.length">
+        <!-- <view v-else-if="loadComplete && !cinemas.length">
           <nothing message="暂无符合条件的影院"></nothing>
-          <!-- <template is="nothing" data='{{message:"暂无符合条件的影院"}}' /> -->
-        </view>
+        <template is="nothing" data='{{message:"暂无符合条件的影院"}}' /> 
+        </view> -->
         <view v-else>
           <nothing message="当天暂无场次"></nothing>
           <!-- <template is="nothing" data='{{message:"当天暂无场次"}}' /> -->
@@ -66,10 +68,13 @@ import chooseDate from '../../components/choose-date/choose-date.vue'
 import filterBar from '../../components/filter-bar/filter-bar.vue'
 import cinemaListItem from '../../components/cinema-list-item/cinema-list-item.vue'
 import nothing from '../../components/nothing/nothing.vue'
+
 export default {
-  components: { chooseDate, filterBar, cinemaListItem, nothing },
+  // components: { chooseDate, filterBar, cinemaListItem, nothing },
+
   data() {
     return {
+      movie: '',
       movieId: 0,
       showTime: '', //影片上映日期
       isShow: false, //导航下拉框是否展开
@@ -121,7 +126,7 @@ export default {
       this.movieId = options.movieId
       const movieName = options.movieName
       this.showTime = options.showTime //影片上映日期
-
+      this.movie = options.movie
       wx.setNavigationBarTitle({
         title: movieName
       })
@@ -129,6 +134,7 @@ export default {
         ...this.params,
         movieId: this.movieId
       }
+      console.log('options:', options)
       //select-time会触发事件来调用changeTime初始化数据
     },
     //获取影院列表
@@ -144,6 +150,7 @@ export default {
             this.cinemas = res.data.cinemas
             console.log(this.cinemas, 'changedCinemas')
             this.loadComplete = !res.data.paging.hasMore
+            // this.loadComplete = true
           }
         })
       })
@@ -213,9 +220,9 @@ export default {
       }
       this.getCinemas(params)
     },
-    navTo({ movieId, cinemaId, day }) {
+    navTo({ movieId, cinemaId, day, movie }) {
       uni.navigateTo({
-        url: `/pages/cinema-detail/cinema-detail?cinemaId=${cinemaId}&movieId=${movieId}&day=${day}`
+        url: `/pages/goods-show/goods-show?cinemaId=${cinemaId}&movieId=${movieId}&day=${day}&movie=${movie}`
       })
     }
   },

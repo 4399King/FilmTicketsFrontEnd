@@ -25,15 +25,15 @@
       }
     },
     {
-      "path": "pages/select/select",
+      "path": "pages/select-cinema/select-cinema",
       "style": {
-        "navigationBarTitleText": "select"
+        "navigationBarTitleText": "select-cinema"
       }
     },
     {
-      "path": "pages/cinema-detail/cinema-detail",
+      "path": "pages/goods-show/goods-show",
       "style": {
-        "navigationBarTitleText": "select"
+        "navigationBarTitleText": "详情"
       }
     }
   ],

@@ -49,18 +49,18 @@
 <script>
 export default {
   name: 'cinema-list-item',
-  props: ['cinemas', 'movieId', 'day'],
+  props: ['cinemas', 'movieId', 'day', 'movie'],
   data() {
     return {}
   },
   computed: {},
   methods: {
     navTo(id) {
-      console.log('htttttt')
       this.$emit('navTo', {
         movieId: this.movieId,
         cinemaId: id,
-        day: this.day
+        day: this.day,
+        movie: this.movie
       })
     }
   },

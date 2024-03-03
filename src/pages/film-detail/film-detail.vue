@@ -235,9 +235,9 @@ export default {
             title: this.Moviedetail.nm
           })
 
-          this.Moviedetail.img = this.Moviedetail.img.replace('w.h/', '')
+          this.Moviedetail.img = this.Moviedetail.img?.replace('w.h/', '')
           for (let i = 0; i < this.Moviedetail.photos.length; i++) {
-            this.Moviedetail.photos[i] = this.Moviedetail.photos[i].replace(
+            this.Moviedetail.photos[i] = this.Moviedetail.photos[i]?.replace(
               'w.h/',
               ''
             )
@@ -327,7 +327,7 @@ export default {
     },
     navToChooseCinema() {
       uni.navigateTo({
-        url: `/pages/select/select?movieId=${this.Moviedetail.id}&movieName=${this.Moviedetail.nm}&showTime=${this.Moviedetail.rt}`
+        url: `/pages/select-cinema/select-cinema?movieId=${this.Moviedetail.id}&movieName=${this.Moviedetail.nm}&showTime=${this.Moviedetail.rt}&movie=${this.Moviedetail}`
       })
     }
   },
