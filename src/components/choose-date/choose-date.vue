@@ -4,7 +4,7 @@
       <view
         :class="['day', item.day === selectDay ? 'active' : '']"
         v-for="item in days"
-        :key="item"
+        :key="item.day"
         @click="chooseDay"
         :data-day="item.day"
         >{{ item.title }}</view
