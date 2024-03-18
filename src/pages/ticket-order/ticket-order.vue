@@ -33,8 +33,10 @@
 			<view class="footer">
 				<div class="pay-type">
 					<div class="wechat type">
-						<span class="icon icon-wechat"></span>
-						<p>微信支付</p>
+						<div>
+							<span class="icon icon-wechat"></span>
+							<span class="text">微信支付</span>
+						</div>
 						<span :class="[
                 { 'icon-circle-selected-fill': selectPayType },
                 { 'icon-circle-unselect': !selectPayType }
@@ -43,8 +45,10 @@
               "></span>
 					</div>
 					<div class="alipay type">
-						<span class="icon icon-alipay"></span>
-						<p>支付宝</p>
+						<div>
+							<span class="icon icon-alipay"></span>
+							<span class="text">支付宝</span>
+						</div>
 						<span :class="[
                 { 'icon-circle-selected-fill': !selectPayType },
                 { 'icon-circle-unselect': selectPayType }
@@ -189,30 +193,41 @@
 		width: 100%;
 		background: #fff;
 		border-top: 1px solid #f0f0f0;
-	}
-
-	.payment {
-		padding: 20rpx 30rpx;
-		text-align: right;
-		font-size: 32rpx;
 
 		.pay-type {
-			border-top: 0.2rem solid #f1f1f1;
+
 			position: fixed;
 			width: 100%;
 			left: 0;
-			top: 4rem;
-			bottom: 0;
+			bottom: 192rpx;
 			background-color: #f1f1f1;
 
+			.wechat {
+				border-bottom: 1px solid #f0f0f0;
+			}
+
+
 			.type {
-				padding: 0.25rem 0.3rem;
+				border-bottom: 1px solid #f0f0f0;
+				box-sizing: border-box;
+				padding: 25rpx 35rpx 25rpx 35rpx;
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
 				position: relative;
-				border-bottom: 4rem solid #f1f1f1;
 				background-color: #fff;
+				text-align: left;
+
+
+				.text {
+					margin-left: 26rpx;
+					font-size: 29rpx;
+
+				}
+
+				label {
+					font-size: 39rpx;
+				}
 
 				span {
 					font-size: 0.6rem;
@@ -224,7 +239,16 @@
 				}
 			}
 		}
+
 	}
+
+	.payment {
+		padding: 20rpx 30rpx;
+		text-align: right;
+		font-size: 32rpx;
+
+	}
+
 
 	.footer .price-num {
 		color: #f03d37;

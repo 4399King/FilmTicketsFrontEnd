@@ -9,12 +9,11 @@
             "openVueDevtools" : true,
             "type" : "uni-app:miniProgram"
         },
-	{
-		"mp-weixin" : 
-		{
-			"launchtype" : "local"
-		},
-		"type" : "uniCloud"
-	}
+        {
+            "mp-weixin" : {
+                "launchtype" : "local"
+            },
+            "type" : "uniCloud"
+        }
     ]
 }
