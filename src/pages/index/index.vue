@@ -2,10 +2,14 @@
 	<view class="page">
 		<customNavBar style="position: absolute; width: 100vw; z-index: 100"></customNavBar>
 		<!-- 首页轮播图  Begin-->
-		<swiper :indicator-dots="false" :autoplay="true" duration="1000" class="carousel">
+		<swiper :indicator-dots="true" :autoplay="true" duration="1000" class="carousel">
 			<view>
-				<swiper-item>
-					<view></view>
+				<swiper-item v-for="(item, index) in 5" :key="index">
+					<div>
+						<image
+							:src="SuperHotList[index]?.img"
+						/>
+					</div>
 				</swiper-item>
 			</view>
 		</swiper>
@@ -21,7 +25,7 @@
 			<scroll-view scroll-x="true" class="hot page-block">
 				<view class="signle-poster" v-for="(item, index) in SuperHotList" :key="index" @click="goDetail(item.id)">
 					<view class="poster-wapper">
-						<image :src="item.img" class="hot-movie-jpg"></image>
+						<image :src="item?.img" class="hot-movie-jpg"></image>
 						<view class="movie-name">
 							{{ item.nm }}
 						</view>
@@ -68,13 +72,17 @@
 			</view>
 		</view>
 		<view class="page-block guess-u-like">
-			<view class="signle-like-movie" v-for="(Item, index) in UlikeMovieList" :key="index">
-				<image :src="serverContent + Item.Bannerpic" class="like-movie-png"></image>
+
+			<!-- <image :src="serverContent + Item.Bannerpic" class="like-movie-png"></image> -->
+			<div class="movie-item" v-for="(Item, index) in UlikeMovieList" :key="index">
+				<div class="image-box">
+					<image src="../../static/image/ed/movie1.jpg" class="like-movie-png"></image>
+				</div>
 				<view class="movie-desc">
 					<view class="movie-title">
 						{{ Item.Name }}
 					</view>
-					<view class="movie-score">{{ Item.sc }}</view>
+					<view class="movie-score">评分：<label>{{ Item.sc }} 分</label></view>
 					<view class="movie-info">
 						{{ Item.Mtype }}
 					</view>
@@ -83,14 +91,15 @@
 						{{ Item.UplayTime }}
 					</view>
 				</view>
-				<view class="movie-oper" :data-index="index" @click="giveup">
+			</div>
+			<!-- <view class="movie-oper" :data-index="index" @click="giveup">
 					<image src="../../static/ulike/giveup.png" class="giveup-ico"></image>
 					<view class="giveup-me"> 点赞 </view>
 					<view :animation="animationDataArr[index]" class="giveup-me animation-opacity">
 						+1
 					</view>
-				</view>
-			</view>
+				</view> -->
+
 		</view>
 		<!-- 猜你喜欢 End -->
 	</view>
@@ -98,7 +107,6 @@
 
 <script>
 	// 引用自定义组件
-
 	export default {
 		data() {
 			return {
@@ -106,7 +114,25 @@
 				CarouselList: [], //首页轮播组
 				SuperHotList: [], //热门影视组
 				SuperMovieList: [], //热门预告组
-				UlikeMovieList: [], //猜你喜欢组
+				UlikeMovieList: [{ Name: '11', Mtype: '666', UplayTime: '6666', sc: 5, Performers: 'xxf' }, {
+					Name: '11',
+					Mtype: '6666',
+					UplayTime: '6666',
+					sc: 5,
+					Performers: 'xxf'
+				}, {
+					Name: '11',
+					Mtype: '66666',
+					UplayTime: '666666',
+					sc: 5,
+					Performers: 'xxf'
+				}, { Name: '11', Mtype: '666666', UplayTime: '666666', sc: 5, Performers: 'xxf' }, {
+					Name: '11',
+					Mtype: '6666666',
+					UplayTime: '6666',
+					sc: 5,
+					Performers: 'xxf'
+				}], //猜你喜欢组
 				serverContent: '', //静态资源加载地址
 				animationData: {}, //动画
 				animationDataArr: [], //动画组
@@ -170,7 +196,7 @@
 					this.SuperHotList = res.data.movieList
 					console.log(res.data.movieList, 'wuhuwuhu')
 					for (let i = 0; i < this.SuperHotList.length; i++) {
-						this.SuperHotList[i].img = this.SuperHotList[i].img.replace(
+						this.SuperHotList[i].img = this.SuperHotList[i]?.img.replace(
 							'w.h/',
 							''
 						)

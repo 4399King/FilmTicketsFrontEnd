@@ -1,36 +1,40 @@
-.carousel{
+.carousel {
 	width: 100%;
 	height: 670upx;
 }
+
 .carousel view {
 	width: 100%;
-	height:100%;
-	background: url("https://p0.pipi.cn/mmdb/54ecde8db125bf7df551babaffeae732d70e5.jpg?imageView2/1/w/640/h/880")
-    center center no-repeat;
-	background-size: cover;
-	background-position: top left;
-
-
+	overflow: hidden;	
+	height: 670rpx;
 }
+
+.carousel view image {
+	width:100%;
+  height:150%;
+	object-fit: cover;
+	z-index:-1;
+}
+
 /* 热门视频 Begin */
-.super-hot{
+.super-hot {
 	margin-top: 12upx;
 	padding: 20upx;
 }
 
-.hot-title-wapper{
+.hot-title-wapper {
 	display: flex;
 	flex-direction: row;
 }
 
-.hot-ico{
+.hot-ico {
 	width: 40upx;
 	height: 40upx;
 	margin-top: 5upx;
-	
+
 }
 
-.hot-title{
+.hot-title {
 	font-size: 20px;
 	margin-left: 20upx;
 	font-weight: bold;
@@ -41,30 +45,30 @@
 	padding-bottom: 20rpx;
 }
 
-.hot{
+.hot {
 
 	width: 100%;
 	white-space: nowrap;
-	
+
 }
 
-.signle-poster{
+.signle-poster {
 	display: inline-block;
 	margin-right: 20upx;
 
 }
 
-.poster-wapper{
+.poster-wapper {
 	display: flex;
 	flex-direction: column;
 }
 
-.hot-movie-jpg{
-	width:170upx;
-	height:230upx;
+.hot-movie-jpg {
+	width: 170upx;
+	height: 230upx;
 }
 
-.movie-name{
+.movie-name {
 	margin-top: 10upx;
 	font-weight: bold;
 	width: 168rpx;
@@ -80,146 +84,171 @@
 /* End */
 
 /* 热门预告 Begin */
-.hot-movie{
+.hot-movie {
 	margin-left: 15upx;
 	width: 350upx;
 	height: 200upx;
 	padding: 0upx 20upx 20upx 20upx;
 }
+
 /* 热门预告 End */
 
 /* 猜你喜欢 Begin */
-.guess-u-like{
-	display: flex;
-	flex-direction: column;
-}
 
-.ulike-reload{
+/* .ulike-reload{
 	margin-top: 8upx;
 	margin-left: 5px;
-}
-.like-movie-png{
-	width: 180upx;
-	height: 240upx;
-	border-radius: 3%;
+} */
+.image-box {
+	width: 100%;
+	height: 350rpx;
+	text-align: center;
+	overflow: hidden;
+	border-radius: 5px;
 }
 
-.signle-like-movie{
-	display: flex;
-	flex-direction: row;
-	padding: 30upx 20upx;
-	justify-content: space-between;
+
+
+.like-movie-png {
+	width: 100%;
+	text-align: center;
+	object-fit: cover;
 }
-.movie-desc{
+
+.guess-u-like {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	box-sizing: border-box;
+	padding: 10upx;
+}
+
+.movie-item {
+	width: 45%;
+	max-width: 400rpx;
+	margin: 18rpx;
+	border: 1px solid #f0f0f0;
+	background-color: #f0f0f0;
+	box-sizing: border-box;
+	padding: 20rpx;
+	border-radius: 5px;
+	flex: 0 0 1;
+}
+
+
+.movie-desc {
 	width: 340upx;
-	display: flex;
-	flex-direction: column;
+
 }
 
-.movie-title{
+.movie-title {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	font-size: 18px;
 }
+
 .movie-score {
-	display: flex;
-	justify-content: space-between;
-	font-size: 22rpx;
+	font-weight: 700;
+	font-size: 24rpx;
 	color: #666;
 }
-.movie-score label{
+
+.movie-score label {
 	font-weight: 700;
 	color: #faaf00;
 	font-size: 24rpx;
-	margin-right:30upx;
+	margin-right: 30upx;
 }
 
 
-.movie-info{
+.movie-info {
 	color: #808080;
 	font-size: 14px;
-	
+
 }
-.movie-Introduce{
-	
-}
+
+.movie-Introduce {}
+
 /* 点赞 */
-.movie-oper{
+.movie-oper {
 	display: flex;
 	width: 140upx;
 	flex-direction: column;
 	justify-content: center;
-	
-	border-left:dashed 2px ;
+
+	border-left: dashed 2px;
 	border-left-color: #C0C0C0;
 }
-.giveup-ico{
+
+.giveup-ico {
 	width: 40upx;
 	height: 40upx;
 	align-self: center;
 }
-.giveup-me{
+
+.giveup-me {
 	font-size: 14px;
-	color:#feab2a ;
+	color: #feab2a;
 	align-self: center;
 }
-.animation-opacity{
+
+.animation-opacity {
 	font-weight: bold;
 	opacity: 0;
 }
+
 /* 猜你喜欢 End */
 
 
 
 .switch-content {
 	padding-bottom: 30rpx;
-  }
-  
-  .title {
+}
+
+.title {
 	padding: 0 30rpx;
 	padding-top: 20rpx;
 	font-size: 28rpx;
 	color: #333;
-  }
-  
-  .most-expected {
+}
+
+.most-expected {
 	position: relative;
 	padding: 0 19rpx;
 	padding-bottom: 20rpx;
 	border-bottom: 20rpx solid #f5f5f5;
 	white-space: nowrap;
 
-  }
-  
-  .most-expected .title {
+}
+
+.most-expected .title {
 	padding-left: 0;
 	margin-bottom: 20rpx;
-  }
-  
-  .expected-item { 
+}
+
+.expected-item {
 	display: inline-block;
 	width: 170rpx;
 	overflow: hidden;
-	
+
 	margin-right: 20rpx;
-  }
-  
-  .poster {
+}
+
+.poster {
 	position: relative;
 	width: 170rpx;
 	height: 230rpx;
 	margin-bottom: 12rpx;
-  }
-  
-  .name {
+}
+
+.name {
 	margin-bottom: 3px;
 	font-size: 24rpx;
 	color: #333;
-  }
-  
-  .data {
+}
+
+.data {
 	font-size: 24rpx;
 	color: #999;
-  }
-  
+}

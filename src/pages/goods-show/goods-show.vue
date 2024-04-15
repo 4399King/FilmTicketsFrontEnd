@@ -184,12 +184,14 @@
 			//跳转到“套餐详情”页面
 			goSnackPage(info) {
 				//将参数转化为JSON通过页面跳转时传递
+
 				const paramsStr = JSON.stringify({
 					cinemaName: this.cinemaDetail.cinemaData.nm,
 					cinemaId: this.cinemaId,
 					dealId: info.dealId,
 					cinemaData: this.cinemaDetail.cinemaData //影院信息
 				})
+				console.log('param', paramsStr)
 				uni.navigateTo({ url: `/pages/snack-order/snack-order?paramsStr=${paramsStr}` })
 			},
 			//购票

@@ -10,7 +10,7 @@
         class="search-input"
         placeholder="搜影院"
       />
-      <button class="iconfont icon-sousuo">搜索</button>
+
     </view>
     <view class="nav-wrapper">
       <filterBar
@@ -41,7 +41,7 @@ export default {
   data() {
     return {
       //cinema
-      city: '正在定位...',
+      city: '天津',
       cinemas: [],
       params: {
         //url请求参数对象

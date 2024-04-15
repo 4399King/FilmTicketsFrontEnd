@@ -1,15 +1,12 @@
 <template>
 	<view class="container">
 		<view class="header">
-			<!-- <button
-        class="name"
-        open-type="getUserInfo"
-        bindgetuserinfo="onGetUserInfo"
-        v-if="!hasUserInfo"
-        @click="login"
-      >
-        {{ username }}
-      </button> -->
+		<image
+			:src="userImg"
+			mode="scaleToFill"
+			class="avatar"
+		/>
+		<span class="user-name">{{ userName }}</span>
 
 		</view>
 		<view>
@@ -19,14 +16,14 @@
 					<view class="title-line"></view>
 				</view>
 				<view class="order-list">
-					<navigator class="order-item" url="../subPages/movie-order/movie-order" hover-class="none">
+					<div class="order-item" @click="navToList('film')">
 						<image src="../../static/image/user/order_movie.png"></image>
 						<view>电影</view>
-					</navigator>
-					<navigator class="order-item" url="../subPages/snack-order/snack-order" hover-class="none">
+					</div>
+					<div class="order-item" @click="navToList('snack')">
 						<image src="../../static/image/user/order_store.png"></image>
 						<view>小吃</view>
-					</navigator>
+					</div>
 				</view>
 			</view>
 			<view class="other">
@@ -48,10 +45,6 @@
 			</view>
 		</view>
 		<view class="login-box">
-			<button @click="login">登录</button>
-			<button class="box-img" open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
-				<image class="avatar" :src="avatarUrl" mode="aspectFill"></image>
-			</button>
 			<input type="nickname" class="nickname" />
 		</view>
 	</view>
@@ -61,8 +54,8 @@
 	export default {
 		data() {
 			return {
-				avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
-				username: '点击登录',
+				userImg: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
+				userName: '点击登录',
 				hasUserInfo: false
 			}
 		},
@@ -71,6 +64,10 @@
 		},
 		onShow() {
 			this.userAuthorized()
+		},
+		created(){
+			this.userName =   uni.getStorageSync("userName");
+			this.userImg = uni.getStorageSync("userImg")
 		},
 		methods: {
 			async login() {
@@ -147,6 +144,13 @@
 						}
 					})
 				}
+			},
+			navToList(flag) {
+				if(flag === "film") {
+					uni.navigateTo({url:"/pages/film-order-list/film-order-list"})
+				}else {
+					uni.navigateTo({url:"/pages/snack-order-list/snack-order-list"})
+				}
 			}
 		}
 	}
@@ -197,21 +201,27 @@
 		}
 	}
 
-	.header .name {
+	.header {
+		background-color: #e54847;
+		.user-name {
 		height: 45rpx;
 		margin-top: 14rpx;
-		font-size: 32rpx;
+		font-size: 27rpx;
 		line-height: 45rpx;
 		background: none;
 		color: #fff;
 	}
-
-	.header .name::after {
-		border: none;
+	.avatar {
+		width:200rpx;
+		height:200rpx;
+		border-radius: 50%;
+	}
 	}
 
+
+
 	.order {
-		margin-top: 20rpx;
+
 		background: #fff;
 		padding: 26rpx 30rpx 0;
 	}

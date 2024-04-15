@@ -3,8 +3,8 @@
 		<view class="container" v-if="order">
 			<view class="section">
 				<view class="snack-box box">
-					<view class="snack line-ellipsis">{{ order.title }}</view>
-					<view>{{ order.price }}元</view>
+					<view class="snack line-ellipsis">{{ order.cinemaName +' '  }}{{order.cinemaData.addr }}</view>
+
 				</view>
 				<view class="amount-box box">
 					<view>数量：</view>
@@ -16,7 +16,7 @@
 				</view>
 				<view class="total box">
 					<view>总价：</view>
-					<view class="red">{{ order.total }}元</view>
+					<view class="red">{{ order.cinemaData.lat.toFixed(2) }}元</view>
 				</view>
 			</view>
 			<view class="phone section"> 手机号 </view>
@@ -35,7 +35,7 @@
 		},
 		methods: {
 			initData(order) {
-				this.order = oreder
+				this.order = order
 			},
 			//减少数量
 			minus() {
@@ -68,18 +68,28 @@
 			//模拟支付
 			payment() {
 				//避免重复支付
-				if (this.first) {
-					let snackOrder = wx.getStorageSync('snackOrder') || []
-					snackOrder.unshift(this.order)
-					wx.setStorageSync('snackOrder', snackOrder)
-					wx.showToast({ title: '支付成功' })
-					this.first = false
-				} else {
-					wx.showToast({
-						title: '已支付',
-						icon: 'none'
-					})
-				}
+				// if (this.first) {
+				// 	let snackOrder = wx.getStorageSync('snackOrder') || []
+				// 	snackOrder.unshift(this.order)
+				// 	wx.setStorageSync('snackOrder', snackOrder)
+				// 	wx.showToast({ title: '支付成功' })
+				// 	this.first = false
+				// } else {
+				// 	wx.showToast({
+				// 		title: '已支付',
+				// 		icon: 'none'
+				// 	})
+				// }
+				uni.request({
+					url: 'http://localhost:14252/api/test', // 本地开发服务器地址
+					method: 'GET',
+					success: res => {
+						console.log('response:', res.data)
+					},
+					fail: err => {
+						console.error('request failed:', err)
+					}
+				})
 			}
 		},
 		onLoad(opt) {
