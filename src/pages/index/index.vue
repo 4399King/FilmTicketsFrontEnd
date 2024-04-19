@@ -6,9 +6,7 @@
 			<view>
 				<swiper-item v-for="(item, index) in 5" :key="index">
 					<div>
-						<image
-							:src="SuperHotList[index]?.img"
-						/>
+						<image :src="SuperHotList[index]?.img" />
 					</div>
 				</swiper-item>
 			</view>
@@ -80,15 +78,15 @@
 				</div>
 				<view class="movie-desc">
 					<view class="movie-title">
-						{{ Item.Name }}
+						{{ Item.name }}
 					</view>
-					<view class="movie-score">评分：<label>{{ Item.sc }} 分</label></view>
+					<view class="movie-score">评分：<label>{{ Item?.sc }} 分</label></view>
 					<view class="movie-info">
-						{{ Item.Mtype }}
+						{{ Item.category }}
 					</view>
-					<view class="movie-info"> 演员：{{ Item.Performers }} </view>
+					<view class="movie-info"> 演员：{{ Item.actor }} </view>
 					<view class="movie-info">
-						{{ Item.UplayTime }}
+						{{ Item.releaseTime }}
 					</view>
 				</view>
 			</div>
@@ -114,31 +112,10 @@
 				CarouselList: [], //首页轮播组
 				SuperHotList: [], //热门影视组
 				SuperMovieList: [], //热门预告组
-				UlikeMovieList: [{ Name: '11', Mtype: '666', UplayTime: '6666', sc: 5, Performers: 'xxf' }, {
-					Name: '11',
-					Mtype: '6666',
-					UplayTime: '6666',
-					sc: 5,
-					Performers: 'xxf'
-				}, {
-					Name: '11',
-					Mtype: '66666',
-					UplayTime: '666666',
-					sc: 5,
-					Performers: 'xxf'
-				}, { Name: '11', Mtype: '666666', UplayTime: '666666', sc: 5, Performers: 'xxf' }, {
-					Name: '11',
-					Mtype: '6666666',
-					UplayTime: '6666',
-					sc: 5,
-					Performers: 'xxf'
-				}], //猜你喜欢组
+				UlikeMovieList: [], //猜你喜欢组
 				serverContent: '', //静态资源加载地址
 				animationData: {}, //动画
 				animationDataArr: [], //动画组
-
-				//
-
 				city: '正在定位...',
 				switchItem: 0, //默认选择‘正在热映’
 				//‘正在热映’数据
@@ -224,21 +201,38 @@
 			}
 		},
 		methods: {
-			refresh() {
-				var serverUrl = this.ServerUrl
-				uni.request({
-					url: serverUrl + '/Movies/GetRandomMovies',
-					method: 'GET',
-					header: { 'content-type': 'application/json' },
-					success: res => {
-						this.UlikeMovieList = res.data.Data
-						console.log(this.UlikeMovieList, 'hrer')
-					},
-					complete: () => {
-						uni.stopPullDownRefresh()
-						uni.hideLoading()
-					},
-				})
+			async refresh() {
+
+				try {
+					let { data: { code }, data: { data } } = await new Promise((resolve, reject) => {
+						uni.request({
+							url: 'https://film.sipc115.com/film/recommend',
+							method: 'GET',
+							header: { 'content-type': 'application/json', 'Authorization': uni.getStorageSync('token') },
+							success: resolve,
+							fail: reject,
+							complete: () => {
+								uni.stopPullDownRefresh()
+								uni.hideLoading()
+							},
+						})
+					})
+					switch (code) {
+						case "00000":
+							this.UlikeMovieList = data;
+							break;
+						default:
+							throw new Error(data)
+					}
+
+				} catch (e) {
+					//TODO handle the exception
+					console.error(e)
+				}
+
+				// this.UlikeMovieList =
+				// console.log(this.UlikeMovieList, 'hrer')
+
 			},
 
 			//点赞动画效果

@@ -1,117 +1,130 @@
 {
-  "pages": [
-    {
-      "path": "pages/index/index",
-      "style": {
-        "navigationBarTitleText": "uni-app",
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/me/me",
-      "style": {}
-    },
-    {
-      "path": "pages/film-detail/film-detail",
-      "style": {
-        "navigationBarTitleText": "uni-app"
-      }
-    },
-    {
-      "path": "pages/cinema/cinema",
-      "style": {
-        "navigationBarTitleText": "影院"
-      }
-    },
-    {
-      "path": "pages/select-cinema/select-cinema",
-      "style": {
-        "navigationBarTitleText": "select-cinema"
-      }
-    },
-    {
-      "path": "pages/goods-show/goods-show",
-      "style": {
-        "navigationBarTitleText": "详情"
-      }
-    },
-    {
-    	"path" : "pages/ticket-order/ticket-order",
-    	"style" : 
-    	{
-    		"navigationBarTitleText" : "",
-    		"enablePullDownRefresh" : false
-    	}
-    },
-    {
-    	"path" : "pages/snack-order/snack-order",
-    	"style" : 
-    	{
-    		"navigationBarTitleText" : "",
-    		"enablePullDownRefresh" : false
-    	}
-    },
-    {
-    	"path" : "pages/choose-seat/choose-seat",
-    	"style" : 
-    	{
-    		"navigationBarTitleText" : "选座",
-    		"enablePullDownRefresh" : false
-    	}
-    },
-    {
-    	"path" : "pages/login/login",
-    	"style" : 
-    	{
-    		"navigationBarTitleText" : "登录",
-    		"enablePullDownRefresh" : false
-    	}
-    },  
-    {
-      "path": "pages/film-order-list/film-order-list",
-      "style": {
-        "navigationBarTitleText": "影票历史订单"
-      }
-    },
-    {
-      "path": "pages/snack-order-list/snack-order-list",
-      "style": {
-        "navigationBarTitleText": "小吃历史订单"
-      }
-    }
-  ],
-  "globalStyle": {
-    "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8"
-  },
-  "tabBar": {
-    "color": "#696969",
-    "selectedColor": "#e54847",
-    "list": [
-      {
-        "pagePath": "pages/index/index",
-        "iconPath": "static/image/tab-bar/movie.png",
-        "selectedIconPath": "static/image/tab-bar/movieSelect.png",
-        "text": "影片"
-      },
-      {
-        "pagePath": "pages/cinema/cinema",
-        "iconPath": "static/image/tab-bar/cinema.png",
-        "selectedIconPath": "static/image/tab-bar/cinemaSelect.png",
-        "text": "影城"
-      },
-      {
-        "pagePath": "pages/me/me",
-        "iconPath": "static/image/tab-bar/user.png",
-        "selectedIconPath": "static/image/tab-bar/userSelect.png",
-        "text": "我的"
-      }
-   
-    ]
-  },
-	"condition" : { //模式配置，仅开发期间生效
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "uni-app",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/me/me",
+			"style": {}
+		},
+		{
+			"path": "pages/film-detail/film-detail",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		},
+		{
+			"path": "pages/cinema/cinema",
+			"style": {
+				"navigationBarTitleText": "影院"
+			}
+		},
+		{
+			"path": "pages/select-cinema/select-cinema",
+			"style": {
+				"navigationBarTitleText": "select-cinema"
+			}
+		},
+		{
+			"path": "pages/goods-show/goods-show",
+			"style": {
+				"navigationBarTitleText": "详情"
+			}
+		},
+		{
+			"path": "pages/ticket-order/ticket-order",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/snack-order/snack-order",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/choose-seat/choose-seat",
+			"style": {
+				"navigationBarTitleText": "选座",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/film-order-list/film-order-list",
+			"style": {
+				"navigationBarTitleText": "影票历史订单"
+			}
+		},
+		{
+			"path": "pages/snack-order-list/snack-order-list",
+			"style": {
+				"navigationBarTitleText": "小吃历史订单"
+			}
+		},
+		{
+			"path": "pages/snack-order-detail/snack-order-detail",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		},
+		{
+			"path": "pages/film-order-detail/film-order-detail",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		},
+		{
+			"path": "pages/search/search",
+			"style": {
+				"navigationBarTitleText": "搜索"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#696969",
+		"selectedColor": "#e54847",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/image/tab-bar/movie.png",
+				"selectedIconPath": "static/image/tab-bar/movieSelect.png",
+				"text": "影片"
+			},
+			{
+				"pagePath": "pages/cinema/cinema",
+				"iconPath": "static/image/tab-bar/cinema.png",
+				"selectedIconPath": "static/image/tab-bar/cinemaSelect.png",
+				"text": "影城"
+			},
+			{
+				"pagePath": "pages/me/me",
+				"iconPath": "static/image/tab-bar/user.png",
+				"selectedIconPath": "static/image/tab-bar/userSelect.png",
+				"text": "我的"
+			}
+		]
+	},
+	"condition": { //模式配置，仅开发期间生效
 		"current": 0, //当前激活的模式(list 的索引项)
 		"list": [
 			{

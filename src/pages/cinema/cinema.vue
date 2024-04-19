@@ -5,20 +5,12 @@
         <text class="city-name">{{ city }}</text>
         <text class="city-entry-arrow"></text>
       </view>
-      <input
-        url="../../subPages/search-page/search-page?stype=2"
-        class="search-input"
-        placeholder="搜影院"
-      />
+      <input @click="navToSearch" class="search-input" placeholder="搜影院" />
 
     </view>
     <view class="nav-wrapper">
-      <filterBar
-        @toggleShow="toggleShow"
-        @cinemaList="cinemaList"
-        :params="params"
-        :cityCinemaInfo="cityCinemaInfo"
-      ></filterBar>
+      <filterBar @toggleShow="toggleShow" @cinemaList="cinemaList" :params="params" :cityCinemaInfo="cityCinemaInfo">
+      </filterBar>
     </view>
     <view class="cinema-list">
       <cinemaListItem :cinemas="cinemas"></cinemaListItem>
@@ -32,6 +24,7 @@
   </view>
 </template>
 
+
 <script>
 import { getToday } from '../../utils/util'
 import filterBar from '../../components/filter-bar/filter-bar.vue'
@@ -42,6 +35,7 @@ export default {
     return {
       //cinema
       city: '天津',
+      cityId:40,
       cinemas: [],
       params: {
         //url请求参数对象
@@ -105,7 +99,129 @@ export default {
   },
   computed: {},
   methods: {
+    navToSearch() {
+      uni.navigateTo({
+        url:"/pages/search/search"
+      })
+    },
     //初始化页面
+    async getLocation() {
+      // uni.authorize({
+      //   scope: 'scope.userLocation',
+      //   async success() {
+      //     let res = await new Promise((resolve, reject) => {
+      //       uni.getLocation({
+      //         type: 'gcj02',
+      //         success: resolve,
+      //         fail: reject
+      //       });
+      //     }).then(() => {
+      //       // 在这里调用逆地理编码服务
+      //       reverseGeocode(res.latitude, res.longitude);
+      //     }).catch((err) => {
+      //       console.error("出错了", err)
+      //     })
+      //   }
+      // })
+      // let that = this
+      // // 获取用户是否开启 授权获取当前的地理位置、速度的权限。
+      // uni.getSetting({
+      //   success(res) {
+      //     console.log(res)
+
+      //     // 如果没有授权
+      //     if (!res.authSetting['scope.userLocation']) {
+      //       // 则拉起授权窗口
+      //       uni.authorize({
+      //         scope: 'scope.userLocation',
+      //         success() {
+      //           //点击允许后--就一直会进入成功授权的回调 就可以使用获取的方法了
+      //           uni.getLocation({
+      //             type: 'wgs84',
+      //             success: function (res) {
+      //               that.x = res.longitude
+      //               that.y = res.latitude
+      //               console.log(res)
+      //               console.log('当前位置的经度：' + res.longitude)
+      //               console.log('当前位置的纬度：' + res.latitude)
+      //               uni.showToast({
+      //                 title: '当前位置的经纬度：' + res.longitude + ',' + res.latitude,
+      //                 icon: 'success',
+      //                 mask: true
+      //               })
+      //             }, fail(error) {
+      //               console.log('失败', error)
+      //             }
+      //           })
+      //         },
+      //         fail(error) {
+      //           //点击了拒绝授权后--就一直会进入失败回调函数--此时就可以在这里重新拉起授权窗口
+      //           console.log('拒绝授权', error)
+
+      //           uni.showModal({
+      //             title: '提示',
+      //             content: '若点击不授权，将无法使用位置功能',
+      //             cancelText: '不授权',
+      //             cancelColor: '#999',
+      //             confirmText: '授权',
+      //             confirmColor: '#f94218',
+      //             success(res) {
+      //               console.log(res)
+      //               if (res.confirm) {
+      //                 // 选择弹框内授权
+      //                 uni.openSetting({
+      //                   success(res) {
+      //                     console.log(res.authSetting)
+      //                   }
+      //                 })
+      //               } else if (res.cancel) {
+      //                 // 选择弹框内 不授权
+      //                 console.log('用户点击不授权')
+      //               }
+      //             }
+      //           })
+      //         }
+      //       })
+      //     } else {
+      //       // 有权限则直接获取
+      //       uni.getLocation({
+      //         type: 'wgs84',
+      //         success: function (res) {
+      //           that.x = res.longitude
+      //           that.y = res.latitude
+      //           console.log(res)
+      //           console.log('当前位置的经度：' + res.longitude)
+      //           console.log('当前位置的纬度：' + res.latitude)
+      //           uni.showToast({
+      //             title: '当前位置的经纬度：' + res.longitude + ',' + res.latitude,
+      //             icon: 'success',
+      //             mask: true
+      //           })
+      //         }, fail(error) {
+      //           uni.showToast({
+      //             title: '请勿频繁调用！',
+      //             icon: 'none',
+      //           })
+      //           console.log('失败', error)
+      //         }
+      //       })
+      //     }
+      //   }
+      // })
+    },
+    // reverseGeocode() {
+    //   // 注意：此处代码为示例，实际开发中请替换为正确的AK等参数
+    //   var BMap = window?.BMap;
+    //   var point = new BMap.Point(longitude, latitude);
+    //   var geoc = new BMap.Geocoder();
+    //   geoc.getLocation(point, function (res) {
+    //     if (res && res.addressComponents) {
+    //       let city = res.addressComponents.city;
+    //       console.log("城市名字在这里", city); // 这里的city就是用户所在的城市名
+    //     }
+    //   });
+
+    // },
     initPage() {
       wx.showLoading({
         title: '正在加载...'
@@ -338,22 +454,24 @@ export default {
 
   // 页面周期函数--监听页面加载
   onLoad() {
-    let app = getApp()
-    if (app.globalData.userLocation) {
-      this.city = app.globalData.selectCity
-        ? app.globalData.selectCity.cityName
-        : '定位失败'
-    } else {
-      app.userLocationReadyCallback = () => {
-        this.city = app.globalData.selectCity
-          ? app.globalData.selectCity.cityName
-          : '定位失败'
-      }
-    }
+    // let app = getApp()
+    // if (app.globalData.userLocation) {
+    //   this.city = app.globalData.selectCity
+    //     ? app.globalData.selectCity.cityName
+    //     : '定位失败'
+    // } else {
+    //   app.userLocationReadyCallback = () => {
+    //     this.city = app.globalData.selectCity
+    //       ? app.globalData.selectCity.cityName
+    //       : '定位失败'
+    //   }
+    // }
     this.initPage()
+    this.getLocation()
+    uni.setStorageSync("cityId",40)
   },
   // 页面周期函数--监听页面初次渲染完成
-  onReady() {},
+  onReady() { },
   // 页面周期函数--监听页面显示(not-nvue)
   onShow() {
     let app = getApp()
@@ -362,9 +480,9 @@ export default {
     }
   },
   // 页面周期函数--监听页面隐藏
-  onHide() {},
+  onHide() { },
   // 页面周期函数--监听页面卸载
-  onUnload() {}
+  onUnload() { }
   // 页面处理函数--监听用户下拉动作
   // onPullDownRefresh() { uni.stopPullDownRefresh(); },
   // 页面处理函数--监听用户上拉触底
@@ -515,9 +633,11 @@ export default {
   overflow: hidden;
   white-space: nowrap;
 }
+
 .nav {
   font-size: 28rpx;
 }
+
 .tab {
   display: flex;
   align-items: center;
@@ -534,9 +654,11 @@ export default {
   text-align: center;
   font-size: 28rpx;
 }
+
 .tab .nav-item {
   width: 33.33%;
 }
+
 .nav-item .title {
   display: inline-block;
   max-width: 80%;
@@ -610,11 +732,13 @@ export default {
   width: calc(100vw * 0.4);
   height: 100%;
 }
+
 .side-item {
   height: 80rpx;
   line-height: 80rpx;
   padding-left: 30rpx;
 }
+
 .side-item.active {
   color: #dd403b;
   background: #f5f5f5;
@@ -626,6 +750,7 @@ export default {
   height: 100%;
   background: #f5f5f5;
 }
+
 .region-list-item .item {
   display: flex;
   justify-content: space-between;

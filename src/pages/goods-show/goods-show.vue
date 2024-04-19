@@ -119,11 +119,10 @@
 		// components: [selectMovie, chooseDate],
 		data() {
 			return {
-				movie: {},
+				movie: {}, //选中的电影
 				cinemaId: '',
 				movieId: '',
-				cinemaDetail: true, //影院详情
-				movie: false, //选中的电影
+				cinemaDetail: {}, //影院详情
 				movies: false, //电影列表
 				days: [], //该电影的排片日期列表
 				timeList: [], //当天播放电影的时间段
@@ -134,34 +133,41 @@
 		computed: {},
 		methods: {
 			//初始化页面
-			initPage(query) {
+			async initPage(query) {
 				console.log("init```````````````````````")
 				const { cinemaId = '', movieId = '', day = '', movie = '' } = query
 				this.cinemaId = cinemaId
 				this.movieId = movieId
-
+				this.movie = movie
 				this.day = day
 
 				wx.showLoading({
 					title: '正在加载...'
 				})
-				wx.request({
+				await wx.request({
 					url: `https://m.maoyan.com/ajax/cinemaDetail?cinemaId=${cinemaId}&movieId=${movieId}`,
 					success: (res) => {
 
 						wx.hideLoading()
 						this.cinemaDetail = res.data
+						uni.setNavigationBarTitle({
+							title: this.cinemaDetail?.cinemaData?.nm
+						})
 						this.movies = this.formatMovie(res.data.showData.movies)
 						this.movie = this.movies.find((item) => item.id == this.movieId)
 
 						this.divideDealList = this.formatUrl(res.data.dealList.divideDealList)
 					}
 				})
+
+
 			},
 			//选择电影
 			selectMovie(movie) {
 				let days = []
-				console.log("movie", movie)
+				if (!movie) {
+					movie = this.movies[0]
+				}
 				movie.shows.forEach((item) => {
 					days.push({
 						title: item.dateShow,
@@ -214,22 +220,13 @@
 					orderId: getRandom(1000000000, 9999999999), //模拟10位数的订单号,
 					cinemaData: cinemaDetail.cinemaData //影院信息
 				})
-				// 只提示一次
 				if (first) {
-					wx.showModal({
-						title: '提示',
-						content: '此小程序仅为学习，不会产生任何支付',
-						success: (res) => {
-							this.first = false
-
-							if (res.confirm) {
-								uni.navigateTo({
-									// url: `/pages/ticket-order/ticket-order?paramsStr=${paramsStr}`
-									url: `/pages/choose-seat/choose-seat?paramsStr=${paramsStr}&movieId=${movie.id}&cinemaId=${cinemaId}&scheduleId=12`
-								})
-							}
-						}
+					this.first = false
+					uni.navigateTo({
+						// url: `/pages/ticket-order/ticket-order?paramsStr=${paramsStr}`
+						url: `/pages/choose-seat/choose-seat?paramsStr=${paramsStr}&movieId=${movie.id}&cinemaId=${cinemaId}&scheduleId=12`
 					})
+
 				} else {
 					uni.navigateTo({
 						// url: `/pages/ticket-order/ticket-order?paramsStr=${paramsStr}`
@@ -288,6 +285,9 @@
 		watch: {},
 		onLoad(query) {
 			this.initPage(query)
+			console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!", this.cinemaDetail)
+
+
 		},
 		created() {},
 		// 组件周期函数--监听组件挂载完毕

@@ -4,7 +4,7 @@
 			<view class="post-bg" :style="{ 'background-image': `url(${movie?.img})` }"></view>
 			<view class="post-bg-mask"></view>
 			<scroll-view class="swiper-wrapper scroll-view_H" scroll-x scroll-with-animation :scroll-left="scrollLeft">
-				<view class="movie-item" ref="item" v-for="(item,index) in movies" :key="item.id" data-movie="item"
+				<view class="movie-item" ref="item" v-for="(item,index) in movies" :key="index" data-movie="item"
 					:id="`item${index}`" @click="selectMovie(item)">
 					<view :class="['post', movie?.id === item?.id ? 'select' : '']">
 						<image :src="item?.img"></image>
@@ -34,13 +34,19 @@
 		computed: {},
 		watch: {
 			movies(movies) {
+				console.log('', this.movie)
 				this.selectMovie(this.movie)
 			}
 		},
 		methods: {
 			//选中电影
 			selectMovie(movie) {
-				console.log('touch', this.movies)
+				let index
+				if (!movie) {
+					index = 0
+				} else {
+					index = this.movies.findIndex(item => item.id === movie.id)
+				}
 
 				// const movie =
 				//   movie ||
@@ -51,7 +57,6 @@
 				// 	return
 				// }
 
-				const index = this.movies.findIndex(item => item.id === movie.id)
 				// if (this.size) {
 				// 	this.movie = movie
 				// 	this.scrollLeft = this.size * index

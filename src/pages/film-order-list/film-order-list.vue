@@ -3,12 +3,12 @@
 
     <view class='container order-list-page'>
       <view v-for='(item, index) in orderList' :key='index' class='order-item'>
-        <navigator class='order-title line-ellipsis' url='../cinema-detail/cinema-detail?cinemaId={{item.cinemaId}}'
+        <div class='order-title line-ellipsis' @click="navToDetail(item.cinemaId)"
           hover-class='none'>
           <view>{{ item.cinemaName }}</view>
           <view class='triangle'></view>
-        </navigator>
-        <view class='order-info' bindtap='goTo' data-order='{{item}}'>
+      </div>
+        <view class='order-info' @click="goTo(item)" >
           <image :src='item.movieImg'></image>
           <view class='order-desc'>
             <view class='delete-box' catchtap='deleteOrder' data-index='{{index}}'>
@@ -45,6 +45,15 @@ export default {
         hall: "", 
         seat: "", 
         price: 59
+      },
+      {
+        cinemaName: '6',
+        movieImg: "", 
+        movieName: "",
+        time: "", 
+        hall: "", 
+        seat: "", 
+        price: 59
       }]
     }
   },
@@ -72,18 +81,21 @@ export default {
       })
     },
     //跳转到订单详情页面
-    goTo(e) {
-      const order = e.currentTarget.dataset.order
+    goTo(order) {     
       const paramsStr = JSON.stringify(order)
       uni.navigateTo({
-        url: `../movie-order-detail/movie-order-detail?paramsStr=${paramsStr}`
+        url: `/pages/film-order-detail/film-order-detail?paramsStr=${paramsStr}`
       })
+    },
+    navToDetail(cinemaId) {
+      uni.navigateTo({url:`/pages/select-cinema/select-cinema?cinemaId=${cinemaId}`})
+      url='../cinema-detail/cinema-detail?cinemaId={{item.cinemaId}}'
     }
   },
   watch: {},
 
   // 组件周期函数--监听组件挂载完毕
-  mounted() { `` },
+  mounted() {  },
   // 组件周期函数--监听组件数据更新之前
   beforeUpdate() { },
   // 组件周期函数--监听组件数据更新之后

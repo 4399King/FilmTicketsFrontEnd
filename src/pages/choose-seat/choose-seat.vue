@@ -27,9 +27,9 @@
 			<div class="seat-container">
 				<div class="row" v-show="hackReset" v-for="(itemI, indexI) in seatIJ" :key="indexI">
 					<span class="seat icon-empty-seat" v-for="(itemJ, indexJ) in itemI" :key="indexJ" :class="{
-              'icon-sold-seat': itemJ === 1,             
-              'icon-selected-seat': itemJ === 2
-            }" @click.prevent="handleSelectSeat(indexI, indexJ)"></span>
+				'icon-sold-seat': itemJ === 1,
+				'icon-selected-seat': itemJ === 2
+			}" @click.prevent="handleSelectSeat(indexI, indexJ)"></span>
 				</div>
 			</div>
 
@@ -74,11 +74,15 @@
 		name: 'SelectSeat',
 		data() {
 			return {
+				allInfo: {},
 				cinemaInfo: {},
 				movieInfo: {},
 				scheduleInfo: {},
 				seatInfo: '',
 				seatCount: 0,
+				cinemaId: 0,
+				movieId: 0,
+				scheduleId: 0,
 				selectedSeat: false,
 				hackReset: true,
 				selectedSeatInfo: [],
@@ -96,48 +100,53 @@
 			// Indicator.open('Loading...')
 
 		},
-		onLoad(query) {
-			this.loadInfo(query)
+		onLoad({ paramsStr, movieId, cinemaId, scheduleId }) {
+			this.allInfo = JSON.parse(paramsStr)
+			this.cinemaId = cinemaId - 0
+			this.movieId = movieId - 0
+			this.scheduleId = scheduleId - 0
+			console.log('弱小但不是软糯')
+			// this.loadInfo(query)
 		},
 		methods: {
 			//加载信息
-			async loadInfo(query) {
+			// async loadInfo(query) {
 
-				const { cinemaId, movieId, scheduleId } = query
-				console.log('!!!!!!!!!!!', query)
-				return
-				if (
-					cinemaId &&
-					movieId &&
-					scheduleId
-				) {
-					let json = await getCurrentCinemaDetail(cinemaId)
-					if (json.success_code === 200) {
-						this.cinemaInfo = json.data
-					}
-					json = await getMovieDetail(movieId)
-					if (json.success_code === 200) {
-						this.movieInfo = json.data[0]
-					}
-					json = await getScheduleById(scheduleId)
-					if (json.success_code === 200) {
-						this.scheduleInfo = json.data
-						this.seatInfo = this.scheduleInfo.seat_info
-						if (this.seatInfo) {
-							this.seatInfo = JSON.parse(this.seatInfo)
-							this.seatInfo.forEach(value => {
-								if (value % 10 !== 0) {
-									this.seatIJ[parseInt(value / 10)][(value % 10) - 1] = 1
-								} else {
-									this.seatIJ[parseInt(value / 10) - 1][9] = 1
-								}
-							})
-						}
-					}
-				}
-				Indicator.close()
-			},
-			//选择座位
+			// 	const { cinemaId, movieId, scheduleId } = query
+			// 	console.log('!!!!!!!!!!!', query)
+			// 	return
+			// 	if (
+			// 		cinemaId &&
+			// 		movieId &&
+			// 		scheduleId
+			// 	) {
+			// 		let json = await getCurrentCinemaDetail(cinemaId)
+			// 		if (json.success_code === 200) {
+			// 			this.cinemaInfo = json.data
+			// 		}
+			// 		json = await getMovieDetail(movieId)
+			// 		if (json.success_code === 200) {
+			// 			this.movieInfo = json.data[0]
+			// 		}
+			// 		json = await getScheduleById(scheduleId)
+			// 		if (json.success_code === 200) {
+			// 			this.scheduleInfo = json.data
+			// 			this.seatInfo = this.scheduleInfo.seat_info
+			// 			if (this.seatInfo) {
+			// 				this.seatInfo = JSON.parse(this.seatInfo)
+			// 				this.seatInfo.forEach(value => {
+			// 					if (value % 10 !== 0) {
+			// 						this.seatIJ[parseInt(value / 10)][(value % 10) - 1] = 1
+			// 					} else {
+			// 						this.seatIJ[parseInt(value / 10) - 1][9] = 1
+			// 					}
+			// 				})
+			// 			}
+			// 		}
+			// 	}
+			// 	Indicator.close()
+			// },
+			// 选择座位
 			handleSelectSeat(indexI, indexJ) {
 				if (this.seatCount === 4 && this.seatIJ[indexI][indexJ] === 0) {
 					MessageBox.alert('一次最多选择4个座位哦！')
@@ -185,41 +194,71 @@
 				}
 			},
 			//确认选座
-			async ensureSeatBtn() {
+			ensureSeatBtn() {
+				console.log(this.selectedSeatInfo)
+
+				this.selectedSeatInfo.map(async item => {
+					try {
+						let res = await new Promise((resolve, reject) => {
+							uni.request({
+								url: 'https://film.sipc115.com/ticket/order',
+								method: 'POST',
+								header: {
+									'Content-Type': 'application/json',
+									'Authorization': uni.getStorageSync('token')
+								},
+								data: {
+									film: this.movieId,
+									cinema: this.cinemaId,
+									schedule: this.scheduleId,
+									seat: (item[0] + 1) * (item[1] + 1),
+									description: JSON.stringify(this.allInfo)
+								},
+								success: resolve,
+								fail: reject
+							})
+						})
+						console.log('mm的接口', res)
+					} catch (e) {
+
+					}
+				})
+
+
 				uni.navigateTo({ url: '/pages/ticket-order/ticket-order' })
 				return
-				if (this.$cookies.get('user_id')) {
-					if (!this.seatInfo) {
-						this.seatInfo = []
-					}
-					this.selectedSeatInfo.forEach((value, index) => {
-						this.seatInfo.push(value[0] * 10 + value[1] + 1)
-						this.$cookies.set('seat_' + (index + 1), value[0] * 10 + value[1] + 1)
-					})
-					this.$cookies.set('seat_count', this.selectedSeatInfo.length)
-					this.seatInfo = JSON.stringify(this.seatInfo)
-					let json = await updateScheduleSeat(
-						scheduleId,
-						this.seatInfo
-					)
-					if (json.success_code === 200) {
-						Toast({
-							message: '锁定座位成功',
-							position: 'middle',
-							duration: 2000
-						})
-						this.$router.push({
-							path: '/submit_order',
-							query: {
-								cinemaId,
-								movieId,
-								scheduleId,
-							}
-						})
-					}
-				} else {
-					this.$router.push('./login')
-				}
+				// if (this.$cookies.get('user_id')) {
+				// 	if (!this.seatInfo) {
+				// 		this.seatInfo = []
+				// 	}
+				// 	this.selectedSeatInfo.forEach((value, index) => {
+				// 		this.seatInfo.push(value[0] * 10 + value[1] + 1)
+				// 		this.$cookies.set('seat_' + (index + 1), value[0] * 10 + value[1] + 1)
+				// 	})
+				// 	this.$cookies.set('seat_count', this.selectedSeatInfo.length)
+				// 	this.seatInfo = JSON.stringify(this.seatInfo)
+				// 	let json = await updateScheduleSeat(
+				// 		scheduleId,
+				// 		this.seatInfo
+				// 	)
+				// 	if (json.success_code === 200) {
+				// 		Toast({
+				// 			message: '锁定座位成功',
+				// 			position: 'middle',
+				// 			duration: 2000
+				// 		})
+				// 		this.$router.push({
+				// 			path: '/submit_order',
+				// 			query: {
+				// 				cinemaId,
+				// 				movieId,
+				// 				scheduleId,
+				// 			}
+				// 		})
+				// 	}
+				// } else {
+				// 	this.$router.push('./login')
+				// }
 			}
 		},
 		filters: {

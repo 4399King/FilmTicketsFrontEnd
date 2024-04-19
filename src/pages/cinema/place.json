@@ -1,0 +1,1016 @@
+{
+  "letterMap": {
+    "B": [
+      {
+        "id": 1,
+        "nm": "北京",
+        "py": "beijing",
+        "rank": "S",
+        "acronym": "bj",
+        "chineseFullnm": "北京市",
+        "position": {
+          "lat": 39.886744,
+          "lng": 116.365204
+        }
+      },
+      {
+        "id": 84,
+        "nm": "保定",
+        "py": "baoding",
+        "rank": "C",
+        "acronym": "bd",
+        "chineseFullnm": "保定市",
+        "position": {
+          "lat": 38.610727,
+          "lng": 115.692012
+        }
+      },
+      {
+        "id": 88,
+        "nm": "蚌埠",
+        "py": "bengbu",
+        "rank": "D",
+        "acronym": "bengbu",
+        "chineseFullnm": "蚌埠市",
+        "position": {
+          "lat": 32.926665,
+          "lng": 117.31321
+        }
+      },
+      {
+        "id": 140,
+        "nm": "包头",
+        "py": "baotou",
+        "rank": "C",
+        "acronym": "bt",
+        "chineseFullnm": "包头市",
+        "position": {
+          "lat": 40.641995,
+          "lng": 109.801781
+        }
+      },
+      {
+        "id": 153,
+        "nm": "本溪",
+        "py": "benxi",
+        "rank": "E",
+        "acronym": "benxi",
+        "chineseFullnm": "本溪市",
+        "position": {
+          "lat": 41.292254,
+          "lng": 124.130065
+        }
+      },
+      {
+        "id": 146,
+        "nm": "巴彦淖尔",
+        "py": "bayannaoer",
+        "rank": "E",
+        "acronym": "byne",
+        "chineseFullnm": "巴彦淖尔市",
+        "position": {
+          "lat": 40.746137,
+          "lng": 107.353763
+        }
+      },
+      {
+        "id": 167,
+        "nm": "白城",
+        "py": "baicheng",
+        "rank": "E",
+        "acronym": "bc",
+        "chineseFullnm": "白城市",
+        "position": {
+          "lat": 45.845213,
+          "lng": 123.21497
+        }
+      },
+      {
+        "id": 165,
+        "nm": "白山",
+        "py": "baishan",
+        "rank": "E",
+        "acronym": "baishan",
+        "chineseFullnm": "白山市",
+        "position": {
+          "lat": 41.934784,
+          "lng": 126.398124
+        }
+      },
+      {
+        "id": 204,
+        "nm": "亳州",
+        "py": "bozhou",
+        "rank": "D",
+        "acronym": "bozhou",
+        "chineseFullnm": "亳州市",
+        "position": {
+          "lat": 33.87641,
+          "lng": 115.768245
+        }
+      },
+      {
+        "id": 233,
+        "nm": "滨州",
+        "py": "binzhou",
+        "rank": "D",
+        "acronym": "bz",
+        "chineseFullnm": "滨州市",
+        "position": {
+          "lat": 37.466125,
+          "lng": 117.987671
+        }
+      },
+      {
+        "id": 317,
+        "nm": "巴中",
+        "py": "bazhong",
+        "rank": "E",
+        "acronym": "bazhong",
+        "chineseFullnm": "巴中市",
+        "position": {
+          "lat": 31.867407,
+          "lng": 106.733941
+        }
+      },
+      {
+        "id": 292,
+        "nm": "北海",
+        "py": "beihai",
+        "rank": "E",
+        "acronym": "bh",
+        "chineseFullnm": "北海市",
+        "position": {
+          "lat": 21.489726,
+          "lng": 109.129944
+        }
+      },
+      {
+        "id": 297,
+        "nm": "百色",
+        "py": "baise",
+        "rank": "E",
+        "acronym": "baise",
+        "chineseFullnm": "百色市",
+        "position": {
+          "lat": 23.892077,
+          "lng": 106.608778
+        }
+      },
+      {
+        "id": 327,
+        "nm": "毕节",
+        "py": "bijiediqu",
+        "rank": "E",
+        "acronym": "bijie",
+        "chineseFullnm": "毕节市",
+        "position": {
+          "lat": 26.77828,
+          "lng": 105.379886
+        }
+      },
+      {
+        "id": 332,
+        "nm": "保山",
+        "py": "baoshan",
+        "rank": "E",
+        "acronym": "bs",
+        "chineseFullnm": "保山市",
+        "position": {
+          "lat": 25.071664,
+          "lng": 99.181063
+        }
+      },
+      {
+        "id": 353,
+        "nm": "宝鸡",
+        "py": "baoji",
+        "rank": "D",
+        "acronym": "baoji",
+        "chineseFullnm": "宝鸡市",
+        "position": {
+          "lat": 34.363232,
+          "lng": 107.227358
+        }
+      },
+      {
+        "id": 363,
+        "nm": "白银",
+        "py": "baiyin",
+        "rank": "E",
+        "acronym": "by",
+        "chineseFullnm": "白银市",
+        "position": {
+          "lat": 36.571232,
+          "lng": 104.67914
+        }
+      },
+      {
+        "id": 393,
+        "nm": "巴州",
+        "py": "bazhou",
+        "rank": "Z",
+        "acronym": "baz",
+        "chineseFullnm": "巴音郭楞蒙古自治州",
+        "position": {
+          "lat": 42.065993,
+          "lng": 86.571602
+        }
+      },
+      {
+        "id": 392,
+        "nm": "博尔塔拉",
+        "py": "boertala",
+        "rank": "Z",
+        "acronym": "betl",
+        "chineseFullnm": "博尔塔拉蒙古自治州",
+        "position": {
+          "lat": 44.886791,
+          "lng": 82.065472
+        }
+      },
+      {
+        "id": 533,
+        "nm": "滨海",
+        "py": "binhai",
+        "rank": "Z",
+        "acronym": "binhai",
+        "chineseFullnm": "滨海县",
+        "position": {
+          "lat": 34.267151,
+          "lng": 120.093205
+        }
+      },
+      {
+        "id": 602,
+        "nm": "宝应",
+        "py": "baoying",
+        "rank": "F",
+        "acronym": "baoying",
+        "chineseFullnm": "宝应县",
+        "position": {
+          "lat": 33.24338,
+          "lng": 119.326605
+        }
+      },
+      {
+        "id": 681,
+        "nm": "北流",
+        "py": "beiliu",
+        "rank": "F",
+        "acronym": "beiliu",
+        "chineseFullnm": "北流市",
+        "position": {
+          "lat": 22.707402,
+          "lng": 110.348003
+        }
+      },
+      {
+        "id": 698,
+        "nm": "博爱",
+        "py": "boai",
+        "rank": "F",
+        "acronym": "boai",
+        "chineseFullnm": "博爱县",
+        "position": {
+          "lat": 35.158079,
+          "lng": 113.057905
+        }
+      },
+      {
+        "id": 731,
+        "nm": "北碚",
+        "py": "beipei",
+        "rank": "Z",
+        "acronym": "beipei",
+        "chineseFullnm": "北碚区",
+        "position": {
+          "lat": 29.822732,
+          "lng": 106.523146
+        }
+      },
+      {
+        "id": 783,
+        "nm": "宝丰",
+        "py": "baofeng",
+        "rank": "F",
+        "acronym": "baofeng",
+        "chineseFullnm": "宝丰县",
+        "position": {
+          "lat": 33.855491,
+          "lng": 113.058271
+        }
+      },
+      {
+        "id": 887,
+        "nm": "泌阳",
+        "py": "biyang",
+        "rank": "F",
+        "acronym": "biyang",
+        "chineseFullnm": "泌阳县",
+        "position": {
+          "lat": 32.740454,
+          "lng": 113.340027
+        }
+      },
+      {
+        "id": 852,
+        "nm": "博兴",
+        "py": "boxing",
+        "rank": "F",
+        "acronym": "boxing",
+        "chineseFullnm": "博兴县",
+        "position": {
+          "lat": 37.14697,
+          "lng": 118.110744
+        }
+      },
+      {
+        "id": 952,
+        "nm": "博山",
+        "py": "boshan",
+        "rank": "F",
+        "acronym": "boshan",
+        "chineseFullnm": "博山区",
+        "position": {
+          "lat": 36.509234,
+          "lng": 117.872873
+        }
+      },
+      {
+        "id": 946,
+        "nm": "璧山",
+        "py": "bishan",
+        "rank": "F",
+        "acronym": "bishan",
+        "chineseFullnm": "璧山",
+        "position": {
+          "lat": 29.587757,
+          "lng": 106.216266
+        }
+      },
+      {
+        "id": 915,
+        "nm": "彬县",
+        "py": "binxian",
+        "rank": "F",
+        "acronym": "binxian",
+        "chineseFullnm": "彬县",
+        "position": {
+          "lat": 35.035855,
+          "lng": 108.079422
+        }
+      },
+      {
+        "id": 994,
+        "nm": "宾阳",
+        "py": "binyang",
+        "rank": "F",
+        "acronym": "binyang",
+        "chineseFullnm": "宾阳县",
+        "position": {
+          "lat": 23.196343,
+          "lng": 109.121313
+        }
+      },
+      {
+        "id": 1102,
+        "nm": "博白县",
+        "py": "bobaixian",
+        "rank": "F",
+        "acronym": "bobaixian",
+        "chineseFullnm": "博白县",
+        "position": {
+          "lat": 22.268745,
+          "lng": 109.994526
+        }
+      },
+      {
+        "id": 1098,
+        "nm": "博罗县",
+        "py": "boluoxian",
+        "rank": "F",
+        "acronym": "boluoxian",
+        "chineseFullnm": "博罗县",
+        "position": {
+          "lat": 23.171402,
+          "lng": 114.27118
+        }
+      },
+      {
+        "id": 1141,
+        "nm": "北镇市",
+        "py": "beizhenshi",
+        "rank": "F",
+        "acronym": "beizhenshi",
+        "chineseFullnm": "北镇市",
+        "position": {
+          "lat": 41.586969,
+          "lng": 121.766197
+        }
+      },
+      {
+        "id": 1074,
+        "nm": "泊头市",
+        "py": "botou",
+        "rank": "F",
+        "acronym": "botou",
+        "chineseFullnm": "泊头市",
+        "position": {
+          "lat": 38.081151,
+          "lng": 116.345476
+        }
+      },
+      {
+        "id": 1165,
+        "nm": "北安市",
+        "py": "beianshi",
+        "rank": "F",
+        "acronym": "beianshi",
+        "chineseFullnm": "北安市",
+        "position": {
+          "lat": 48.257975,
+          "lng": 126.489606
+        }
+      },
+      {
+        "id": 1193,
+        "nm": "巴彦县",
+        "py": "bayanxian",
+        "rank": "F",
+        "acronym": "bayanxian",
+        "chineseFullnm": "巴彦县",
+        "position": {
+          "lat": 46.078055,
+          "lng": 127.402582
+        }
+      }
+    ],
+    "T": [
+      {
+        "id": 40,
+        "nm": "天津",
+        "py": "tianjin",
+        "rank": "A",
+        "acronym": "tj",
+        "chineseFullnm": "天津市",
+        "position": {
+          "lat": 39.069752,
+          "lng": 117.201681
+        }
+      },
+      {
+        "id": 101,
+        "nm": "太原",
+        "py": "taiyuan",
+        "rank": "B",
+        "acronym": "ty",
+        "chineseFullnm": "太原市",
+        "position": {
+          "lat": 37.693709,
+          "lng": 112.385619
+        }
+      },
+      {
+        "id": 121,
+        "nm": "唐山",
+        "py": "tangshan",
+        "rank": "C",
+        "acronym": "ts",
+        "chineseFullnm": "唐山市",
+        "position": {
+          "lat": 39.656111,
+          "lng": 118.123107
+        }
+      },
+      {
+        "id": 143,
+        "nm": "通辽",
+        "py": "tongliao",
+        "rank": "E",
+        "acronym": "tongliao",
+        "chineseFullnm": "通辽市",
+        "position": {
+          "lat": 44.554334,
+          "lng": 120.913297
+        }
+      },
+      {
+        "id": 159,
+        "nm": "铁岭",
+        "py": "tieling",
+        "rank": "E",
+        "acronym": "tl",
+        "chineseFullnm": "铁岭市",
+        "position": {
+          "lat": 42.265082,
+          "lng": 123.833893
+        }
+      },
+      {
+        "id": 164,
+        "nm": "通化",
+        "py": "tonghua",
+        "rank": "E",
+        "acronym": "th",
+        "chineseFullnm": "通化市",
+        "position": {
+          "lat": 41.71374,
+          "lng": 125.910591
+        }
+      },
+      {
+        "id": 191,
+        "nm": "台州",
+        "py": "taizhoutz",
+        "rank": "C",
+        "acronym": "tz",
+        "chineseFullnm": "台州市",
+        "position": {
+          "lat": 28.729306,
+          "lng": 121.473865
+        }
+      },
+      {
+        "id": 183,
+        "nm": "泰州",
+        "py": "taizhou",
+        "rank": "C",
+        "acronym": "taizhou",
+        "chineseFullnm": "泰州市",
+        "position": {
+          "lat": 32.348164,
+          "lng": 119.883143
+        }
+      },
+      {
+        "id": 196,
+        "nm": "铜陵",
+        "py": "tongling",
+        "rank": "E",
+        "acronym": "tongling",
+        "chineseFullnm": "铜陵市",
+        "position": {
+          "lat": 30.964953,
+          "lng": 117.864876
+        }
+      },
+      {
+        "id": 226,
+        "nm": "泰安",
+        "py": "taian",
+        "rank": "D",
+        "acronym": "ta",
+        "chineseFullnm": "泰安市",
+        "position": {
+          "lat": 36.223054,
+          "lng": 117.171106
+        }
+      },
+      {
+        "id": 325,
+        "nm": "铜仁",
+        "py": "tongrendiqu",
+        "rank": "E",
+        "acronym": "tr",
+        "chineseFullnm": "铜仁市",
+        "position": {
+          "lat": 27.580723,
+          "lng": 108.225145
+        }
+      },
+      {
+        "id": 352,
+        "nm": "铜川",
+        "py": "tongchuan",
+        "rank": "E",
+        "acronym": "tc",
+        "chineseFullnm": "铜川市",
+        "position": {
+          "lat": 34.893115,
+          "lng": 108.933671
+        }
+      },
+      {
+        "id": 364,
+        "nm": "天水",
+        "py": "tianshui",
+        "rank": "E",
+        "acronym": "tianshui",
+        "chineseFullnm": "天水市",
+        "position": {
+          "lat": 34.720435,
+          "lng": 104.887065
+        }
+      },
+      {
+        "id": 399,
+        "nm": "塔城",
+        "py": "tacheng",
+        "rank": "Z",
+        "acronym": "tac",
+        "chineseFullnm": "塔城地区",
+        "position": {
+          "lat": 46.740527,
+          "lng": 82.953453
+        }
+      },
+      {
+        "id": 389,
+        "nm": "吐鲁番",
+        "py": "tulufan",
+        "rank": "Z",
+        "acronym": "tlf",
+        "chineseFullnm": "吐鲁番",
+        "position": {
+          "lat": 42.955339,
+          "lng": 89.21951
+        }
+      },
+      {
+        "id": 432,
+        "nm": "太仓",
+        "py": "taicang",
+        "rank": "D",
+        "acronym": "taicang",
+        "chineseFullnm": "太仓市",
+        "position": {
+          "lat": 31.693829,
+          "lng": 121.075126
+        }
+      },
+      {
+        "id": 425,
+        "nm": "桐乡",
+        "py": "tongxiang",
+        "rank": "D",
+        "acronym": "tx",
+        "chineseFullnm": "桐乡市",
+        "position": {
+          "lat": 30.630749,
+          "lng": 120.58555
+        }
+      },
+      {
+        "id": 503,
+        "nm": "台山",
+        "py": "taishan",
+        "rank": "E",
+        "acronym": "taishan",
+        "chineseFullnm": "台山市",
+        "position": {
+          "lat": 22.318506,
+          "lng": 112.785469
+        }
+      },
+      {
+        "id": 482,
+        "nm": "腾冲",
+        "py": "tengchong",
+        "rank": "Z",
+        "acronym": "tengchong",
+        "chineseFullnm": "腾冲",
+        "position": {
+          "lat": 25.012586,
+          "lng": 98.458679
+        }
+      },
+      {
+        "id": 549,
+        "nm": "滕州",
+        "py": "tengzhou",
+        "rank": "E",
+        "acronym": "tengzhou",
+        "chineseFullnm": "滕州市",
+        "position": {
+          "lat": 35.19101,
+          "lng": 117.127774
+        }
+      },
+      {
+        "id": 554,
+        "nm": "桐庐",
+        "py": "tonglu",
+        "rank": "F",
+        "acronym": "tonglu",
+        "chineseFullnm": "桐庐县",
+        "position": {
+          "lat": 29.835569,
+          "lng": 119.733882
+        }
+      },
+      {
+        "id": 518,
+        "nm": "泰兴",
+        "py": "taixing",
+        "rank": "E",
+        "acronym": "taixing",
+        "chineseFullnm": "泰兴市",
+        "position": {
+          "lat": 32.174588,
+          "lng": 120.015763
+        }
+      },
+      {
+        "id": 626,
+        "nm": "天长",
+        "py": "tianchang",
+        "rank": "E",
+        "acronym": "tianchang",
+        "chineseFullnm": "天长市",
+        "position": {
+          "lat": 32.687222,
+          "lng": 119.010041
+        }
+      },
+      {
+        "id": 578,
+        "nm": "天门",
+        "py": "tianmen",
+        "rank": "E",
+        "acronym": "tm",
+        "chineseFullnm": "天门市",
+        "position": {
+          "lat": 30.649943,
+          "lng": 113.143503
+        }
+      },
+      {
+        "id": 673,
+        "nm": "桐城",
+        "py": "tongcheng",
+        "rank": "F",
+        "acronym": "tongcheng",
+        "chineseFullnm": "桐城市",
+        "position": {
+          "lat": 31.032823,
+          "lng": 116.979304
+        }
+      },
+      {
+        "id": 666,
+        "nm": "洮南",
+        "py": "taonan",
+        "rank": "F",
+        "acronym": "tn",
+        "chineseFullnm": "洮南市",
+        "position": {
+          "lat": 45.348278,
+          "lng": 122.783935
+        }
+      },
+      {
+        "id": 743,
+        "nm": "台前",
+        "py": "taiqian",
+        "rank": "F",
+        "acronym": "taiqian",
+        "chineseFullnm": "台前县",
+        "position": {
+          "lat": 35.989539,
+          "lng": 115.855195
+        }
+      },
+      {
+        "id": 759,
+        "nm": "太和",
+        "py": "taihe",
+        "rank": "F",
+        "acronym": "taihe",
+        "chineseFullnm": "太和县",
+        "position": {
+          "lat": 33.375979,
+          "lng": 115.850448
+        }
+      },
+      {
+        "id": 817,
+        "nm": "汤阴",
+        "py": "tangyin",
+        "rank": "F",
+        "acronym": "tangyin",
+        "chineseFullnm": "汤阴县",
+        "position": {
+          "lat": 35.9248,
+          "lng": 114.324336
+        }
+      },
+      {
+        "id": 812,
+        "nm": "藤县",
+        "py": "tengxian",
+        "rank": "F",
+        "acronym": "tengxian",
+        "chineseFullnm": "藤县",
+        "position": {
+          "lat": 23.203899,
+          "lng": 110.991716
+        }
+      },
+      {
+        "id": 790,
+        "nm": "太谷",
+        "py": "taigu",
+        "rank": "F",
+        "acronym": "taigu",
+        "chineseFullnm": "太谷县",
+        "position": {
+          "lat": 37.423064,
+          "lng": 112.533328
+        }
+      },
+      {
+        "id": 782,
+        "nm": "天台",
+        "py": "tiantai",
+        "rank": "F",
+        "acronym": "tiantai",
+        "chineseFullnm": "天台县",
+        "position": {
+          "lat": 29.138919,
+          "lng": 121.037618
+        }
+      },
+      {
+        "id": 879,
+        "nm": "土默特右旗",
+        "py": "tumoteyouqi",
+        "rank": "F",
+        "acronym": "tmtyq",
+        "chineseFullnm": "土默特右旗",
+        "position": {
+          "lat": 40.573085,
+          "lng": 110.517555
+        }
+      },
+      {
+        "id": 947,
+        "nm": "铜梁",
+        "py": "tongliang",
+        "rank": "F",
+        "acronym": "tongliang",
+        "chineseFullnm": "铜梁",
+        "position": {
+          "lat": 29.832688,
+          "lng": 106.073136
+        }
+      },
+      {
+        "id": 942,
+        "nm": "郯城",
+        "py": "tancheng",
+        "rank": "F",
+        "acronym": "tancheng",
+        "chineseFullnm": "郯城县",
+        "position": {
+          "lat": 34.616249,
+          "lng": 118.347573
+        }
+      },
+      {
+        "id": 1009,
+        "nm": "桃源",
+        "py": "taoyuanxian",
+        "rank": "F",
+        "acronym": "taoyuanxian",
+        "chineseFullnm": "桃源县",
+        "position": {
+          "lat": 28.876972,
+          "lng": 111.472987
+        }
+      },
+      {
+        "id": 962,
+        "nm": "同安",
+        "py": "tongan",
+        "rank": "F",
+        "acronym": "tongan",
+        "chineseFullnm": "同安区",
+        "position": {
+          "lat": 24.678149,
+          "lng": 118.161613
+        }
+      },
+      {
+        "id": 1111,
+        "nm": "通许县",
+        "py": "tongxuxian",
+        "rank": "F",
+        "acronym": "tongxuxian",
+        "chineseFullnm": "通许县",
+        "position": {
+          "lat": 34.482393,
+          "lng": 114.45636
+        }
+      },
+      {
+        "id": 1135,
+        "nm": "通榆县",
+        "py": "tongyuxian",
+        "rank": "F",
+        "acronym": "tongyuxian",
+        "chineseFullnm": "通榆县",
+        "position": {
+          "lat": 44.809001,
+          "lng": 123.081471
+        }
+      },
+      {
+        "id": 1132,
+        "nm": "通海县",
+        "py": "tonghaixian",
+        "rank": "F",
+        "acronym": "tonghaixian",
+        "chineseFullnm": "通海县",
+        "position": {
+          "lat": 24.115673,
+          "lng": 102.748145
+        }
+      },
+      {
+        "id": 1136,
+        "nm": "唐河",
+        "py": "tanghe",
+        "rank": "F",
+        "acronym": "tanghe",
+        "chineseFullnm": "唐河县",
+        "position": {
+          "lat": 32.682883,
+          "lng": 112.8573
+        }
+      },
+      {
+        "id": 1030,
+        "nm": "泰和县",
+        "py": "taihexian",
+        "rank": "F",
+        "acronym": "taihexian",
+        "chineseFullnm": "泰和县",
+        "position": {
+          "lat": 26.806213,
+          "lng": 114.888286
+        }
+      },
+      {
+        "id": 1054,
+        "nm": "太康县",
+        "py": "taikangxian",
+        "rank": "F",
+        "acronym": "taikangxian",
+        "chineseFullnm": "太康县",
+        "position": {
+          "lat": 34.05897,
+          "lng": 114.829358
+        }
+      },
+      {
+        "id": 1041,
+        "nm": "铜鼓",
+        "py": "tonggu",
+        "rank": "F",
+        "acronym": "tonggu",
+        "chineseFullnm": "铜鼓县",
+        "position": {
+          "lat": 28.521392,
+          "lng": 114.361245
+        }
+      },
+      {
+        "id": 1044,
+        "nm": "田东县",
+        "py": "tiandongxian",
+        "rank": "F",
+        "acronym": "tiandongxian",
+        "chineseFullnm": "田东县",
+        "position": {
+          "lat": 23.60607,
+          "lng": 107.114315
+        }
+      },
+      {
+        "id": 1215,
+        "nm": "通江县",
+        "py": "tongjiangxian",
+        "rank": "F",
+        "acronym": "tongjiangxian",
+        "chineseFullnm": "通江县",
+        "position": {
+          "lat": 31.915608,
+          "lng": 107.241468
+        }
+      }
+    ]
+  },
+  "geoCity": {
+    "id": 1,
+    "nm": "北京",
+    "py": "beijing",
+    "rank": "S",
+    "acronym": "bj",
+    "chineseFullnm": "北京市",
+    "position": {
+      "lat": 39.886744,
+      "lng": 116.365204
+    }
+  }
+}

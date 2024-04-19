@@ -94,6 +94,11 @@ export default {
           }
           
         } catch (error) {
+          uni.showToast({
+                icon: 'none',
+                title:"登陆失败",
+                duration:1000
+              })
           console.log("操作失败",error)
         }
 
