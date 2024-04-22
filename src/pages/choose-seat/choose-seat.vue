@@ -21,8 +21,6 @@
 				<span>3</span>
 				<span>4</span>
 				<span>5</span>
-				<span>6</span>
-
 			</div>
 			<div class="seat-container">
 				<div class="row" v-show="hackReset" v-for="(itemI, indexI) in seatIJ" :key="indexI">
@@ -92,7 +90,7 @@
 					[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 					[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 					[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+					// [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 				]
 			}
 		},
@@ -196,10 +194,10 @@
 			//确认选座
 			ensureSeatBtn() {
 				console.log(this.selectedSeatInfo)
-
+				uni.navigateTo({ url: '/pages/ticket-order/ticket-order' })
 				this.selectedSeatInfo.map(async item => {
 					try {
-						let res = await new Promise((resolve, reject) => {
+						let { code } = await new Promise((resolve, reject) => {
 							uni.request({
 								url: 'https://film.sipc115.com/ticket/order',
 								method: 'POST',
@@ -218,15 +216,30 @@
 								fail: reject
 							})
 						})
-						console.log('mm的接口', res)
-					} catch (e) {
 
+						switch (code) {
+							case '00000':
+
+								uni.showToast({
+									title: '支付成功',
+									duration: 1000
+								})
+								break
+							default:
+								throw new Error(data)
+						}
+						console.log('@@@@@@@@@@@@@', res)
+					} catch (e) {
+						console.error(e)
 					}
 				})
 
 
-				uni.navigateTo({ url: '/pages/ticket-order/ticket-order' })
-				return
+				// uni.navigateTo({ url: '/pages/ticket-order/ticket-order' })
+				// return
+
+
+
 				// if (this.$cookies.get('user_id')) {
 				// 	if (!this.seatInfo) {
 				// 		this.seatInfo = []
@@ -386,7 +399,7 @@
 				top: 205rpx;
 				left: 20rpx;
 				width: 30rpx;
-				height: 500rpx;
+				height: 411rpx;
 				background-color: rgba(168, 168, 168, 0.8);
 				display: flex;
 				flex-flow: column;

@@ -195,9 +195,18 @@
 					cinemaName: this.cinemaDetail.cinemaData.nm,
 					cinemaId: this.cinemaId,
 					dealId: info.dealId,
-					cinemaData: this.cinemaDetail.cinemaData //影院信息
+					cinemaData: this.cinemaDetail.cinemaData, //影院信息
+					deal: {
+						firstTitle: info.firstTitle,
+						title: info.title,
+						price: info.price,
+						imageUrl: info.imageUrl
+					},
+					amount: 1
 				})
 				console.log('param', paramsStr)
+				console.log('info', info)
+				console.log('this.cinemaDetail.cinemaData', this.cinemaDetail.cinemaData)
 				uni.navigateTo({ url: `/pages/snack-order/snack-order?paramsStr=${paramsStr}` })
 			},
 			//购票
@@ -321,6 +330,8 @@
 	.small {
 		font-size: 20rpx;
 	}
+
+
 
 	.movie-desc {
 		height: 37rpx;

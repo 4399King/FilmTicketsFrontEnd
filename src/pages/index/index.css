@@ -5,15 +5,15 @@
 
 .carousel view {
 	width: 100%;
-	overflow: hidden;	
+	overflow: hidden;
 	height: 670rpx;
 }
 
 .carousel view image {
-	width:100%;
-  height:150%;
+	width: 100%;
+	height: 150%;
 	object-fit: cover;
-	z-index:-1;
+	z-index: -1;
 }
 
 /* 热门视频 Begin */
@@ -107,7 +107,16 @@
 	border-radius: 5px;
 }
 
-
+.overflow-ellipsis {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-line-clamp: 2;
+	/* 控制显示行数 */
+	white-space: normal !important;
+	/* 多余的部分以正常换行方式显示，避免被隐藏 */
+}
 
 .like-movie-png {
 	width: 100%;
@@ -137,35 +146,38 @@
 
 
 .movie-desc {
-	width: 340upx;
-
+	width: 284upx;
 }
 
 .movie-title {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	font-size: 18px;
+	font-size: 26rpx;
+
 }
 
 .movie-score {
 	font-weight: 700;
-	font-size: 24rpx;
+	font-size: 22rpx;
 	color: #666;
 }
 
 .movie-score label {
 	font-weight: 700;
 	color: #faaf00;
-	font-size: 24rpx;
+	font-size: 22rpx;
 	margin-right: 30upx;
 }
 
 
 .movie-info {
 	color: #808080;
-	font-size: 14px;
+	font-size: 22rpx;
+}
 
+.movie-release-time {
+	margin-top: 4rpx;
 }
 
 .movie-Introduce {}

@@ -72,7 +72,7 @@
 		<view class="page-block guess-u-like">
 
 			<!-- <image :src="serverContent + Item.Bannerpic" class="like-movie-png"></image> -->
-			<div class="movie-item" v-for="(Item, index) in UlikeMovieList" :key="index">
+			<div class="movie-item" v-for="(Item, index) in UlikeMovieList" :key="index" @click="goOldMovieDetail(Item)">
 				<div class="image-box">
 					<image src="../../static/image/ed/movie1.jpg" class="like-movie-png"></image>
 				</div>
@@ -81,11 +81,11 @@
 						{{ Item.name }}
 					</view>
 					<view class="movie-score">评分：<label>{{ Item?.sc }} 分</label></view>
-					<view class="movie-info">
+					<view class="movie-info ">
 						{{ Item.category }}
 					</view>
-					<view class="movie-info"> 演员：{{ Item.actor }} </view>
-					<view class="movie-info">
+					<view class="movie-info overflow-ellipsis"> 演员：{{ Item.actor }} </view>
+					<view class="movie-info movie-release-time">
 						{{ Item.releaseTime }}
 					</view>
 				</view>
@@ -128,6 +128,7 @@
 				movieIds1: [],
 				loadComplete1: false,
 				loadComplete2: false, //水平滚动加载的数据是否加载完毕
+				recommendMoviePage: 1
 			}
 		},
 		onUnload() {
@@ -206,7 +207,7 @@
 				try {
 					let { data: { code }, data: { data } } = await new Promise((resolve, reject) => {
 						uni.request({
-							url: 'https://film.sipc115.com/film/recommend',
+							url: `https://film.sipc115.com/film/list?page=${this.recommendMoviePage}&size=${4}`,
 							method: 'GET',
 							header: { 'content-type': 'application/json', 'Authorization': uni.getStorageSync('token') },
 							success: resolve,
@@ -262,6 +263,11 @@
 			},
 			goDetail(movieid) {
 				uni.navigateTo({ url: '../film-detail/film-detail?movieid=' + movieid })
+			},
+			goOldMovieDetail(movie) {
+				uni.navigateTo({
+					url: `../film-detail/film-detail?flag=${1}&paramStr=${JSON.stringify(movie)}`
+				})
 			},
 			//预告电影
 			expectedMovie() {

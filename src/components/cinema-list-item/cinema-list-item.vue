@@ -1,163 +1,148 @@
 <template>
-  <view class="cinema-list-item">
-    <view
-      v-for="cinema in cinemas"
-      :key="cinema.id"
-      class="cinema-section"
-      url="/pages/subPages/cinema-detail/cinema-detail?cinemaId={{cinema.id}}&movieId={{movieId}}&day={{day}}"
-      hover-class="none"
-      @click="navTo(cinema.id)"
-    >
-      <view class="name-price line-ellipsis"
-        >{{ cinema.nm }}
-        <text class="sell-price" v-if="cinema.sellPrice"
-          ><text class="price">{{ cinema.sellPrice }}</text> 元起</text
-        >
-      </view>
-      <view class="address">
-        <text class="line-ellipsis">{{ cinema.addr }}</text>
-        <text class="distance">{{ cinema.distance }}</text>
-      </view>
-      <view class="feature-tags">
-        <text v-if="cinema.endorse || cinema.tag.endorse">退</text>
-        <text v-if="cinema.allowRefund || cinema.tag.allowRefund">改签</text>
-        <text
-          v-for="item in cinema.hallType || cinema.tag.hallType"
-          :key="item"
-          >{{ item }}</text
-        >
-        <text class="featrue" v-if="cinema.snack || cinema.tag.snack"
-          >小吃</text
-        >
-        <text class="featrue" v-if="cinema.vipDesc || cinema.tag.vipTag">{{
+	<view class="cinema-list-item">
+		<view v-for="cinema in cinemas" :key="cinema.id" class="cinema-section"
+			url="/pages/subPages/cinema-detail/cinema-detail?cinemaId={{cinema.id}}&movieId={{movieId}}&day={{day}}"
+			hover-class="none" @click="navTo(cinema.id)">
+			<view class="name-price line-ellipsis">{{ cinema.nm }}
+				<text class="sell-price" v-if="cinema.sellPrice"><text class="price">{{ cinema.sellPrice }}</text> 元起</text>
+			</view>
+			<view class="address">
+				<text class="line-ellipsis">{{ cinema.addr }}</text>
+				<text class="distance">{{ cinema.distance }}</text>
+			</view>
+			<view class="feature-tags">
+				<text v-if="cinema.endorse || cinema.tag.endorse">退</text>
+				<text v-if="cinema.allowRefund || cinema.tag.allowRefund">改签</text>
+				<text v-for="item in cinema.hallType || cinema.tag.hallType" :key="item">{{ item }}</text>
+				<text class="featrue" v-if="cinema.snack || cinema.tag.snack">小吃</text>
+				<text class="featrue" v-if="cinema.vipDesc || cinema.tag.vipTag">{{
           cinema.vipDesc || cinema.tag.vipTag
         }}</text>
-      </view>
-      <view v-if="cinema.promotion.cardPromotionTag">
-        <text class="card"></text>
-        <text class="discount-label-text">{{
+			</view>
+			<view v-if="cinema.promotion.cardPromotionTag">
+				<text class="card"></text>
+				<text class="discount-label-text">{{
           cinema.promotion.cardPromotionTag
         }}</text>
-      </view>
-      <view v-if="cinema.showTimes" class="showTimes"
-        >近期场次：{{ cinema.showTimes }}</view
-      >
-    </view>
-  </view>
+			</view>
+			<view v-if="cinema.showTimes" class="showTimes">近期场次：{{ cinema.showTimes }}</view>
+		</view>
+	</view>
 </template>
 
 <script>
-export default {
-  name: 'cinema-list-item',
-  props: ['cinemas', 'movieId', 'day', 'movie'],
-  data() {
-    return {}
-  },
-  computed: {},
-  methods: {
-    navTo(id) {
-      this.$emit('navTo', {
-        movieId: this.movieId,
-        cinemaId: id,
-        day: this.day,
-        movie: this.movie
-      })
-    }
-  },
-  watch: {},
+	export default {
+		name: 'cinema-list-item',
+		props: ['cinemas', 'movieId', 'day', 'movie'],
+		data() {
+			return {}
+		},
+		computed: {},
+		methods: {
+			navTo(id) {
+				uni.navigateTo({ url: `/pages/goods-show/goods-show?cinemaId=${id}` })
+				this.$emit('navTo', {
+					movieId: this.movieId,
+					cinemaId: id,
+					day: this.day,
+					movie: this.movie
+				})
+			}
+		},
+		watch: {},
 
-  // 组件周期函数--监听组件挂载完毕
-  mounted() {},
-  // 组件周期函数--监听组件数据更新之前
-  beforeUpdate() {},
-  // 组件周期函数--监听组件数据更新之后
-  updated() {},
-  // 组件周期函数--监听组件激活(显示)
-  activated() {},
-  // 组件周期函数--监听组件停用(隐藏)
-  deactivated() {},
-  // 组件周期函数--监听组件销毁之前
-  beforeDestroy() {}
-}
+		// 组件周期函数--监听组件挂载完毕
+		mounted() {},
+		// 组件周期函数--监听组件数据更新之前
+		beforeUpdate() {},
+		// 组件周期函数--监听组件数据更新之后
+		updated() {},
+		// 组件周期函数--监听组件激活(显示)
+		activated() {},
+		// 组件周期函数--监听组件停用(隐藏)
+		deactivated() {},
+		// 组件周期函数--监听组件销毁之前
+		beforeDestroy() {}
+	}
 </script>
 
 <style scoped>
-.cinema-section {
-  padding: 30rpx 0;
-  margin: 0 30rpx;
-  border-bottom: 1px solid #f0f0f0;
-  line-height: 1.8em;
-}
+	.cinema-section {
+		padding: 30rpx 0;
+		margin: 0 30rpx;
+		border-bottom: 1px solid #f0f0f0;
+		line-height: 1.8em;
+	}
 
-.name-price {
-  font-size: 32rpx;
-  color: #333;
-}
+	.name-price {
+		font-size: 32rpx;
+		color: #333;
+	}
 
-.sell-price {
-  font-size: 24rpx;
-  color: #999;
-  white-space: nowrap;
-  margin-left: 20rpx;
-}
+	.sell-price {
+		font-size: 24rpx;
+		color: #999;
+		white-space: nowrap;
+		margin-left: 20rpx;
+	}
 
-.price {
-  font-size: 34rpx;
-  color: #ef4238;
-}
+	.price {
+		font-size: 34rpx;
+		color: #ef4238;
+	}
 
-.address {
-  display: flex;
-  justify-content: space-between;
-  font-size: 28rpx;
-  color: #666;
-}
+	.address {
+		display: flex;
+		justify-content: space-between;
+		font-size: 28rpx;
+		color: #666;
+	}
 
-.distance {
-  margin-left: 10rpx;
-}
+	.distance {
+		margin-left: 10rpx;
+	}
 
-.feature-tags {
-  width: 80%;
-}
+	.feature-tags {
+		width: 80%;
+	}
 
-.feature-tags text {
-  display: inline-block;
-  border: 1px solid #589daf;
-  color: #589daf;
-  padding: 0 6rpx;
-  height: 30rpx;
-  line-height: 30rpx;
-  border-radius: 4rpx;
-  font-size: 24rpx;
-  margin-right: 8rpx;
-}
+	.feature-tags text {
+		display: inline-block;
+		border: 1px solid #589daf;
+		color: #589daf;
+		padding: 0 6rpx;
+		height: 30rpx;
+		line-height: 30rpx;
+		border-radius: 4rpx;
+		font-size: 24rpx;
+		margin-right: 8rpx;
+	}
 
-.feature-tags .featrue {
-  color: #f90;
-  border-color: #f90;
-}
+	.feature-tags .featrue {
+		color: #f90;
+		border-color: #f90;
+	}
 
-.card {
-  position: relative;
-  top: 6rpx;
-  display: inline-block;
-  width: 30rpx;
-  height: 28rpx;
-  margin-right: 6rpx;
-  z-index: -1;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAeCAYAAABNChwpAAAAAXNSR0IArs4c6QAAAgFJREFUSA3Nlz1LA0EQhmf3kouFEQwi+FEYQ+xEsImFoCDoL/CLaKd/QbC0sbCzFVuxsRS1jEVAsUqrIILRQAhaBGKMuawzwpGAm83mNhddCHfZnd3n3Z2ZuxsG2JI3YtQpVw6AiTkhYJj6/GqMwSsIdm312DsnMyzLCF79rGRAiIhfUOm6jL0FQvZU4Gfn0GU4KcINE5vjsc9LFXajE9kcfT7UDZaMQWwuG9Dpi/YyiIWZjqnSxrOAtWgANsYDysV1Bj0L0Flcx8ZoC1F0wf50UMo5fqjCY1FIxxo7jQSUHWgK+ag2YprfGwnIlQTQTk3a/46B2UEOIUu+v0gIIMgZLLTIZHJTOl+TL4K9ShckMc36Q+pc356QB6FLLJQFCqi4f39d2WoKLTy03ckg2OjAvcyXh9n1KX8eA0YC4n0MtuLoJru+o3bvjAS8o2vpfXCYsGEzZkFYHQ5SbcoglM5o6KQAoxhIDHBYiVqYERZcZB04f3aghNGv04wEuIDbQg3u8Lc4YsHymAVLeD17cuDypbWKjgggIZTpVwhM5x1YxzdlpaaXXB0T4J5GEbPy6F7/8WwUhC7U5OpZgIPfU5qnrNTn+UmoXLWNQc8n0AZDacqxUskpLXwcJDbHMinlI0O9NLI51WiAZZLa0odRZBKbU4FINRoDdtoNdxCDWMQk9jePWpE8hVOLbwAAAABJRU5ErkJggg==');
-}
+	.card {
+		position: relative;
+		top: 6rpx;
+		display: inline-block;
+		width: 30rpx;
+		height: 28rpx;
+		margin-right: 6rpx;
+		z-index: -1;
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAeCAYAAABNChwpAAAAAXNSR0IArs4c6QAAAgFJREFUSA3Nlz1LA0EQhmf3kouFEQwi+FEYQ+xEsImFoCDoL/CLaKd/QbC0sbCzFVuxsRS1jEVAsUqrIILRQAhaBGKMuawzwpGAm83mNhddCHfZnd3n3Z2ZuxsG2JI3YtQpVw6AiTkhYJj6/GqMwSsIdm312DsnMyzLCF79rGRAiIhfUOm6jL0FQvZU4Gfn0GU4KcINE5vjsc9LFXajE9kcfT7UDZaMQWwuG9Dpi/YyiIWZjqnSxrOAtWgANsYDysV1Bj0L0Flcx8ZoC1F0wf50UMo5fqjCY1FIxxo7jQSUHWgK+ag2YprfGwnIlQTQTk3a/46B2UEOIUu+v0gIIMgZLLTIZHJTOl+TL4K9ShckMc36Q+pc356QB6FLLJQFCqi4f39d2WoKLTy03ckg2OjAvcyXh9n1KX8eA0YC4n0MtuLoJru+o3bvjAS8o2vpfXCYsGEzZkFYHQ5SbcoglM5o6KQAoxhIDHBYiVqYERZcZB04f3aghNGv04wEuIDbQg3u8Lc4YsHymAVLeD17cuDypbWKjgggIZTpVwhM5x1YxzdlpaaXXB0T4J5GEbPy6F7/8WwUhC7U5OpZgIPfU5qnrNTn+UmoXLWNQc8n0AZDacqxUskpLXwcJDbHMinlI0O9NLI51WiAZZLa0odRZBKbU4FINRoDdtoNdxCDWMQk9jePWpE8hVOLbwAAAABJRU5ErkJggg==');
+	}
 
-.discount-label-text {
-  font-size: 22rpx;
-  color: #999;
-}
+	.discount-label-text {
+		font-size: 22rpx;
+		color: #999;
+	}
 
-.showTimes {
-  font-size: 24rpx;
-  color: #999;
-}
+	.showTimes {
+		font-size: 24rpx;
+		color: #999;
+	}
 </style>
