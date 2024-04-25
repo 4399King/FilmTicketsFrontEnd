@@ -292,8 +292,14 @@
 				return stars
 			},
 			navToChooseCinema() {
+				let allInfo = JSON.stringify({
+					movieId: this.Moviedetail.id,
+					movieName: this.Moviedetail.nm,
+					showTime: this.Moviedetail.rt,
+
+				})
 				uni.navigateTo({
-					url: `/pages/select-cinema/select-cinema?movieId=${this.Moviedetail.id}&movieName=${this.Moviedetail.nm}&showTime=${this.Moviedetail.rt}&movie=${this.Moviedetail}`
+					url: `/pages/select-cinema/select-cinema?allInfo=${allInfo}`
 				})
 			}
 		},

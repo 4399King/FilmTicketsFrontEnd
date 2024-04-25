@@ -33,21 +33,27 @@
 <script>
 	export default {
 		name: 'cinema-list-item',
-		props: ['cinemas', 'movieId', 'day', 'movie'],
+		props: ['cinemas', 'movieId', 'day'],
 		data() {
 			return {}
 		},
 		computed: {},
 		methods: {
 			navTo(id) {
-				uni.navigateTo({ url: `/pages/goods-show/goods-show?cinemaId=${id}` })
-				this.$emit('navTo', {
-					movieId: this.movieId,
-					cinemaId: id,
-					day: this.day,
-					movie: this.movie
-				})
+
+				uni.navigateTo({ url: `/pages/goods-show/goods-show?cinemaId=${id}&movieId=${this.movieId}&day=${this.day}` })
+				//  {
+				// 	movieId: ,
+				// 	cinemaId: ,
+				// 	day: this.day,
+				// 	movie: this.movie
+				// }
+				// 	uni
+				// .navigateTo({ url: `/pages/goods-show/goods-show?cinemaId=${this.movieId}&movieId=${movieId}&day=${day}&movie=${movie}` })
 			}
+		},
+		navTo({ movieId, cinemaId, day, movie }) {
+
 		},
 		watch: {},
 

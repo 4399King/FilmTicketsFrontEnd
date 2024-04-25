@@ -32,10 +32,17 @@
 		// 	this.selectMovie(this.movie)
 		// },
 		computed: {},
+		created() {
+
+		},
 		watch: {
-			movies(movies) {
-				console.log('', this.movie)
-				this.selectMovie(this.movie)
+			movie(movie) {
+				console.log('1.', movie, this.movie)
+				if (this.movies?.length) {
+					console.log('!!!!!!!!!!!', movie)
+					this.selectMovie(this.movie)
+				}
+
 			}
 		},
 		methods: {
@@ -44,8 +51,13 @@
 				let index
 				if (!movie) {
 					index = 0
+					movie = this.movies[index]
+					// this.movie = movie
+					console.log('2.1', index, movie, this.movie)
 				} else {
+
 					index = this.movies.findIndex(item => item.id === movie.id)
+					console.log('2.2', index, movie, this.movie)
 				}
 
 				// const movie =
@@ -61,7 +73,7 @@
 				// 	this.movie = movie
 				// 	this.scrollLeft = this.size * index
 				// } else {
-				console.log('beforeCal')
+
 				this.calcSize().then(size => {
 					// this.movie = movie;
 					console.log('calSize')
@@ -69,8 +81,7 @@
 					console.log('size:', size)
 					this.scrollLeft = size * index
 				})
-				// this.scrollLeft = this.size * index
-				// }
+				console.log('电影movie', movie)
 				this.$emit('selectMovie', movie)
 			},
 			//计算节点大小

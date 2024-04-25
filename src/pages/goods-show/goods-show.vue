@@ -119,7 +119,7 @@
 		// components: [selectMovie, chooseDate],
 		data() {
 			return {
-				movie: {}, //选中的电影
+				movie: null, //选中的电影
 				cinemaId: '',
 				movieId: '',
 				cinemaDetail: {}, //影院详情
@@ -134,11 +134,10 @@
 		methods: {
 			//初始化页面
 			async initPage(query) {
-				console.log("init```````````````````````")
-				const { cinemaId = '', movieId = '', day = '', movie = '' } = query
+
+				const { cinemaId = '', movieId = '', day = '' } = query
 				this.cinemaId = cinemaId
 				this.movieId = movieId
-				this.movie = movie
 				this.day = day
 
 				wx.showLoading({
@@ -150,12 +149,13 @@
 
 						wx.hideLoading()
 						this.cinemaDetail = res.data
+						console.log('到底发生什么', res.data)
 						uni.setNavigationBarTitle({
 							title: this.cinemaDetail?.cinemaData?.nm
 						})
 						this.movies = this.formatMovie(res.data.showData.movies)
 						this.movie = this.movies.find((item) => item.id == this.movieId)
-
+						console.log('找到的电影', this.movie, this.movirs)
 						this.divideDealList = this.formatUrl(res.data.dealList.divideDealList)
 					}
 				})
@@ -165,9 +165,6 @@
 			//选择电影
 			selectMovie(movie) {
 				let days = []
-				if (!movie) {
-					movie = this.movies[0]
-				}
 				movie.shows.forEach((item) => {
 					days.push({
 						title: item.dateShow,
@@ -294,9 +291,6 @@
 		watch: {},
 		onLoad(query) {
 			this.initPage(query)
-			console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!", this.cinemaDetail)
-
-
 		},
 		created() {},
 		// 组件周期函数--监听组件挂载完毕
