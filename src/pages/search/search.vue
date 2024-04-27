@@ -3,7 +3,7 @@
 		<view class="search-block">
 			<view class="search-block-ico">
 			</view>
-			<input type="text" v-model="searchValue" placeholder="搜索电影" class="search-text" @input="searchMovie" />
+			<input type="text" v-model="searchValue" placeholder="搜索影片/影院" class="search-text" @input="searchMovie" />
 		</view>
 		<view class="search-list page-block">
 			<view class="search-list-item" v-for="(item, index) in searchList" :key="index" @click="goDetail(item.id)">

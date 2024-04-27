@@ -5,7 +5,7 @@
 				<text class="city-name">{{ city }}</text>
 				<text class="city-entry-arrow"></text>
 			</view>
-			<input @click="navToSearch" class="search-input" placeholder="搜影院" />
+			<input @click="navToSearch" class="search-input" placeholder="搜索影片/影院" />
 
 		</view>
 		<view class="nav-wrapper">

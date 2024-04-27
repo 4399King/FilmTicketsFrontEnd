@@ -6,7 +6,7 @@
 			<view>
 				<swiper-item v-for="(item, index) in 5" :key="index">
 					<div>
-						<image :src="SuperHotList[index]?.img" />
+						<image :src="SuperHotList[index]?.img" @click="goDetail(SuperHotList[index].id)" />
 					</div>
 				</swiper-item>
 			</view>
@@ -201,120 +201,122 @@
 				uni.navigateTo({ url: '/pages/login/login' })
 			}
 		},
+		onReachBottom() {
+
+		},
 		methods: {
 			async refresh() {
-
-				try {
-					let { data: { code }, data: { data } } = await new Promise((resolve, reject) => {
-						uni.request({
-							url: `https://film.sipc115.com/film/list?page=${this.recommendMoviePage}&size=${4}`,
-							method: 'GET',
-							header: { 'content-type': 'application/json', 'Authorization': uni.getStorageSync('token') },
-							success: resolve,
-							fail: reject,
-							complete: () => {
-								uni.stopPullDownRefresh()
-								uni.hideLoading()
-							},
+				if (this.UlikeMovieList.length >= 20) {
+				
+					try {
+						let { data: { code }, data: { data } } = await new Promise((resolve, reject) => {
+							uni.request({
+								url: `https://film.sipc115.com/film/list?page=${this.recommendMoviePage}&size=${4}`,
+								method: 'GET',
+								header: { 'content-type': 'application/json', 'Authorization': uni.getStorageSync('token') },
+								success: resolve,
+								fail: reject,
+							})
 						})
-					})
-					switch (code) {
-						case "00000":
-							this.UlikeMovieList = data;
-							break;
-						default:
-							throw new Error(data)
+						switch (code) {
+							case "00000":
+								for (const item of data) {
+									this.UlikeMovieList.push(item)
+								}
+								break;
+							default:
+								throw new Error(data)
+						}
+
+					} catch (e) {
+						//TODO handle the exception
+						console.error(e)
 					}
 
-				} catch (e) {
-					//TODO handle the exception
-					console.error(e)
+					// this.UlikeMovieList =
+					// console.log(this.UlikeMovieList, 'hrer')
 				}
+				},
 
-				// this.UlikeMovieList =
-				// console.log(this.UlikeMovieList, 'hrer')
+				//点赞动画效果
+				giveup(e) {
+						// #ifdef APP-PLUS||MP-WEIXIN
 
-			},
+						var index = e.currentTarget.dataset.index
 
-			//点赞动画效果
-			giveup(e) {
-				// #ifdef APP-PLUS||MP-WEIXIN
+						this.animation.translateY(-60).opacity(1).step({ duration: 400 })
 
-				var index = e.currentTarget.dataset.index
-
-				this.animation.translateY(-60).opacity(1).step({ duration: 400 })
-
-				this.animationData = this.animation
-				this.animationDataArr[index] = this.animationData.export()
-				setTimeout(
-					function() {
-						this.animation.translateY(0).opacity(0).step({ duration: 0 })
 						this.animationData = this.animation
 						this.animationDataArr[index] = this.animationData.export()
-					}.bind(this),
-					600
-				)
-				// #endif
-			},
-			//重加载猜你喜欢数据
-			ulikeReload() {
-				uni.showLoading({ mask: true })
-				this.refresh()
-			},
-			goDetail(movieid) {
-				uni.navigateTo({ url: '../film-detail/film-detail?movieid=' + movieid })
-			},
-			goOldMovieDetail(movie) {
-				uni.navigateTo({
-					url: `../film-detail/film-detail?flag=${1}&paramStr=${JSON.stringify(movie)}`
-				})
-			},
-			//预告电影
-			expectedMovie() {
-				// uni.showLoading({
-				// 	mask: true
-				// })
-
-				// 获取中间热映
-				uni.request({
-					url: 'https://m.maoyan.com/ajax/mostExpected?limit=10&offset=0&token=',
-					method: 'GET',
-					header: {
-						'content-type': 'application/json',
-						cookie: 'iuuid=01E2CDE09CCA11EBBA0D13E3C3194737A56B4CED40274A299CC63CA5D6B488F1',
+						setTimeout(
+							function() {
+								this.animation.translateY(0).opacity(0).step({ duration: 0 })
+								this.animationData = this.animation
+								this.animationDataArr[index] = this.animationData.export()
+							}.bind(this),
+							600
+						)
+						// #endif
 					},
-					success: ({ data: res }) => {
-						console.log(res, '@@@@@@@@@@@here')
-
-						this.mostExpectedList = this.formatImgUrl(res.coming || [], true)
-						console.log(this.mostExpectedList, 'here@@@@@@@@@@@@')
+					//重加载猜你喜欢数据
+					ulikeReload() {
+						uni.showLoading({ mask: true })
+						this.refresh()
 					},
-				})
+					goDetail(movieid) {
+						uni.navigateTo({ url: '../film-detail/film-detail?movieid=' + movieid })
+					},
+					goOldMovieDetail(movie) {
+						uni.navigateTo({
+							url: `../film-detail/film-detail?flag=${1}&paramStr=${JSON.stringify(movie)}`
+						})
+					},
+					//预告电影
+					expectedMovie() {
+						// uni.showLoading({
+						// 	mask: true
+						// })
+
+						// 获取中间热映
+						uni.request({
+							url: 'https://m.maoyan.com/ajax/mostExpected?limit=10&offset=0&token=',
+							method: 'GET',
+							header: {
+								'content-type': 'application/json',
+								cookie: 'iuuid=01E2CDE09CCA11EBBA0D13E3C3194737A56B4CED40274A299CC63CA5D6B488F1',
+							},
+							success: ({ data: res }) => {
+								console.log(res, '@@@@@@@@@@@here')
+
+								this.mostExpectedList = this.formatImgUrl(res.coming || [], true)
+								console.log(this.mostExpectedList, 'here@@@@@@@@@@@@')
+							},
+						})
+					},
+					//处理图片url
+					formatImgUrl(arr, cutTitle = false) {
+						if (!Array.isArray(arr)) {
+							return
+						}
+						let newArr = []
+						arr.forEach(item => {
+							let title = item.comingTitle
+							if (cutTitle) {
+								//是否截取X月X日，砍掉星期
+								title = item.comingTitle.split(' ')[0]
+							}
+							let imgUrl = item.img.replace('w.h', '128.180')
+							newArr.push({
+								...item,
+								comingTitle: title,
+								img: imgUrl,
+							})
+						})
+						return newArr
+					},
 			},
-			//处理图片url
-			formatImgUrl(arr, cutTitle = false) {
-				if (!Array.isArray(arr)) {
-					return
-				}
-				let newArr = []
-				arr.forEach(item => {
-					let title = item.comingTitle
-					if (cutTitle) {
-						//是否截取X月X日，砍掉星期
-						title = item.comingTitle.split(' ')[0]
-					}
-					let imgUrl = item.img.replace('w.h', '128.180')
-					newArr.push({
-						...item,
-						comingTitle: title,
-						img: imgUrl,
-					})
-				})
-				return newArr
-			},
-		},
-		components: {},
-	}
+			components: {},
+		}
 </script>
 
 <style>
