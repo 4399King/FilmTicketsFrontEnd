@@ -72,7 +72,9 @@
 
 			<!-- 电影评论展示 -->
 			<view class="movie-comment page-block">
-				<view class="movie-detail-comment-text">热门评论</view>
+				<view class="movie-detail-comment-text">热门评论
+					<button @click="pubComment">发表评论</button>
+				</view>
 				<view class="movie-comment-item" v-for="(item, index) in commentslist" :key="index">
 					<view class="movie-comment-user">
 						<view>
@@ -178,6 +180,38 @@
 		},
 		computed: {},
 		methods: {
+			pubComment() {
+				if (!uni.getStorageSync('comments')) {
+					uni.setStorageSync('comments', [])
+				}
+				let startTime = Date.now()
+				let comments = uni.getStorageSync('comments')
+				const comment = {
+					nick: uni.getStorageSync('userName'),
+					avatarUrl: uni.getStorageSync('userImg'),
+					content: '天津理工(｡･∀･)ﾉﾞ嗨',
+					startTime,
+					replyCount: 0,
+					movieId: this.Movieid
+				}
+
+				let tempComments = [comment]
+				comments.unshift(...[{ ...comment }]);
+				this.formatDate(tempComments);
+				this.commentslist.unshift(...tempComments);
+				uni.setStorageSync('comments', comments)
+			},
+			getCurrentTimeFormatted() {
+				const now = new Date();
+				const year = now.getFullYear(); // 获取年份
+				const month = now.getMonth() + 1; // 获取月份，加1使其从1开始
+				const day = now.getDate(); // 获取日期
+				const hours = now.getHours(); // 获取小时
+				const minutes = now.getMinutes(); // 获取分钟
+
+				// 生成格式化的时间字符串，注意月、日、小时和分钟不补零
+				return `${year}-${month}-${day} ${hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+			},
 			//加载数据
 			searchDetail() {
 				uni.showLoading({
@@ -249,17 +283,28 @@
 							return
 						}
 						this.commentslist = res.data.data.hotComments
+						if (!uni.getStorageSync('comments')) {
+							uni.setStorageSync('comments', [])
+						}
+						let comments = uni.getStorageSync('comments')
+						for (const comment of comments) {
+							if (comment.movieId === this.Movieid) {
+								console.log('comment', comment)
+								this.commentslist.unshift(comment)
+							}
+
+						}
 
 						this.allcomments = res.data.data.total
-						this.formatDate()
-						console.log(this.commentslist[0], '@@@@@@@@@@@@@')
+						this.formatDate(this.commentslist)
+
 					}
 				})
 			},
-			formatDate() {
-				for (let i = 0; i < this.commentslist.length; i++) {
+			formatDate(commentslist) {
+				for (let i = 0; i < commentslist.length; i++) {
 					var date = new Date()
-					date.setTime(this.commentslist[i].startTime)
+					date.setTime(commentslist[i].startTime)
 					var month = date.getMonth() + 1
 					var hours = date.getHours()
 					if (hours < 10) hours = '0' + hours
@@ -275,7 +320,7 @@
 						hours +
 						':' +
 						minutes
-					this.commentslist[i].startTime = time
+					commentslist[i].startTime = time
 				}
 			},
 			formatStar(sc) {
@@ -308,8 +353,6 @@
 </script>
 
 <style>
-	@import url('film-detail.css');
-
 	.purchase {
 		position: fixed;
 		bottom: 0;
@@ -324,4 +367,251 @@
 		text-align: center;
 		z-index: 1;
 	}
+
+	/* 头部预告片 Begin */
+	.movie-detail-vedio {
+		position: relative;
+		display: border-box;
+		padding: 5upx 0;
+		width: 100%;
+		height: 450upx;
+		background-color: #fff;
+		margin: 20upx 0;
+	}
+
+	.movie-vedio {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 100%;
+		height: 380upx;
+
+	}
+
+	/* 头部预告片 End */
+	/* 上部分详情 Begin */
+	.movie-bgimg {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		background-size: 100%;
+		filter: blur(30rpx);
+		z-index: -1;
+		/* background-color: #40454e; */
+
+		/* position: absolute; */
+		/* background-repeat: no-repeat; */
+		/* background-size: 100% 100%; */
+	}
+
+	.movie-mask {
+		background-color: rgba(64, 69, 78, 0.55);
+		width: 100%;
+	}
+
+	.movie-detail {
+		display: flex;
+		flex-direction: row;
+		padding: 30upx 30upx;
+
+		top: 0;
+
+
+	}
+
+	.detail-star image {
+		width: 36upx;
+		height: 36upx;
+		margin-right: 5upx;
+	}
+
+	.detail-img-ico {
+		width: 206upx;
+		height: 286upx;
+		border: 1px solid #fff;
+	}
+
+	.detail-info {
+		color: #e5e5e5;
+		display: flex;
+		flex-direction: column;
+		padding-left: 30upx;
+		font-size: 22rpx;
+
+	}
+
+	.detail-info-nm {
+		color: #FFFFFF;
+		font-size: 36rpx;
+	}
+
+	.detail-info-enm {
+		margin-bottom: 12upx;
+	}
+
+	/* 上部分详情 End */
+
+	/* 中间简介 Begin */
+	.movie-body {
+		background-color: #f5f5f5;
+		z-index: -1;
+		cursor: pointer;
+
+	}
+
+	.movie-intro {
+		background-color: #fff;
+	}
+
+	.movie-info-titile {
+		padding: 20rpx 30rpx 10rpx;
+		font-size: 32rpx;
+		color: #444;
+	}
+
+	.movie-info-texthide {
+		line-height: 1.42;
+		text-indent: 2em;
+		height: 101upx;
+		padding: 20upx 20upx;
+		overflow: hidden;
+		font-size: 30rpx;
+		color: #555;
+	}
+
+	.movie-info-textauto {
+		line-height: 1.42;
+		text-indent: 2em;
+		padding: 20upx 20upx;
+		height: auto;
+		font-size: 30rpx;
+		color: #555;
+	}
+
+	.movie-info-text-btn {
+		text-align: center;
+	}
+
+	.movie-info-text-btn-img {
+		width: 30upx;
+		height: 30upx;
+	}
+
+	/* 中间简介 End */
+
+	/* 电影图片展示 Begin */
+	.movie-detail-photos {
+		background-color: #fff;
+		margin-top: 20upx;
+		display: border-box;
+		padding: 25upx 0;
+	}
+
+	.movie-detail-photos-text,
+	.movie-detail-comment-text {
+		font-size: 32rpx;
+		padding: 0 20rpx 20rpx 20rpx;
+	}
+
+	.movie-photos-scroll {
+		width: 100%;
+		white-space: nowrap;
+	}
+
+	.movie-photos-block {
+		display: inline-block;
+		margin-left: 20upx;
+	}
+
+	.movie-photos-item {
+		display: flex;
+		flex-direction: row;
+		margin-left: 20upx;
+	}
+
+	.movie-photos-png {
+		width: 240upx;
+		height: 180upx;
+
+	}
+
+	/* 电影图片展示 End */
+
+	/* 电影评论 Begin */
+	.movie-detail-comment-text {
+		display: flex;
+		justify-content: space-between;
+		border-bottom: 2px solid #f5f5f5;
+	}
+
+	.movie-detail-comment-text button {
+		margin: 0;
+		width: 152rpx;
+		font-size: 24rpx;
+		background-color: #e54847;
+		color: #fff
+	}
+
+	.movie-comment-item {
+		padding: 30upx 20upx;
+		display: flex;
+		flex-direction: column;
+		border-bottom: 2px solid #f5f5f5;
+	}
+
+	.movie-comment {
+		display: border-box;
+		margin-top: 20upx;
+		padding: 20upx 0;
+		background-color: #fff;
+	}
+
+	.movie-comment-user {
+		display: flex;
+		flex-direction: row;
+	}
+
+	.movie-comment-user-img {
+		width: 80upx;
+		height: 80upx;
+		border-radius: 10%;
+	}
+
+	.movie-comment-user-info {
+		padding-left: 20upx;
+		color: #444;
+		font-size: 28rpx;
+	}
+
+	.movie-comment-info {
+		padding-top: 25upx;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		padding-left: 100upx;
+		font-size: 24rpx;
+		color: #999;
+	}
+
+	.movie-comment-text {
+		padding-left: 100upx;
+		font-size: 30rpx;
+	}
+
+	.movie-comment-info-ico {
+		padding-left: 10upx;
+		width: 30upx;
+		height: 30upx;
+	}
+
+	.search-all {
+		color: #ef4238;
+		font-size: 15px;
+		text-align: center;
+		height: 44px;
+		line-height: 44px;
+	}
+
+	/* 电影评论 End' */
 </style>
