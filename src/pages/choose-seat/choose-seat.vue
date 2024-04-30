@@ -62,6 +62,7 @@
 </template>
 
 <script>
+	import { myRequest } from '../../api/uniRequest.js'
 	import {
 		getMovieDetail,
 		getCurrentCinemaDetail,
@@ -103,6 +104,7 @@
 			this.cinemaId = cinemaId - 0
 			this.movieId = movieId - 0
 			this.scheduleId = scheduleId - 0
+			this.getSeatInfo()
 			console.log('弱小但不是软糯')
 			// this.loadInfo(query)
 		},
@@ -146,7 +148,18 @@
 			// },
 			// 选择座位
 
-			getSeatInfo() {},
+			async getSeatInfo() {
+				let seatArray = await myRequest(
+					`/ticket/unavailable?film=${this.movieId}&cinema=${this.cinemaId}&schedu_id=${this.scheduleId}`,
+					'GET')
+
+				for (const seat of seatArray) {
+					console.log('SeatIJ', Math.floor((seat - 1) / 10), ((seat - 1) % 10), this.seatIJ)
+					// if (Math.floor(seat / 10) >= 5) continue
+					this.seatIJ[Math.floor((seat - 1) / 10)][(seat - 1) % 10] = 1
+				}
+
+			},
 			handleSelectSeat(indexI, indexJ) {
 				if (this.seatCount === 4 && this.seatIJ[indexI][indexJ] === 0) {
 					MessageBox.alert('一次最多选择4个座位哦！')

@@ -98,6 +98,7 @@
 				if (this.first) {
 					for (let item of this.orders.selectedSeatInfo) {
 						let { data: { code } } = await new Promise((resolve, reject) => {
+							console.log('座位', item)
 							uni.request({
 								url: 'https://film.sipc115.com/ticket/order',
 								method: 'POST',
@@ -109,7 +110,7 @@
 									film: this.orders.movieId,
 									cinema: this.orders.cinemaId,
 									schedule: this.orders.scheduleId,
-									seat: (item[0] + 1) * (item[1] + 1),
+									seat: (item[0] * 10) + (item[1] + 1),
 									description: JSON.stringify(this.orders.allInfo)
 								},
 								success: resolve,

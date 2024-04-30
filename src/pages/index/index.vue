@@ -77,7 +77,7 @@
 					<view class="movie-title">
 						{{ Item.name }}
 					</view>
-					<view class="movie-score">评分：<label>{{ Item?.sc }} 分</label></view>
+					<view class="movie-score">评分：<label>{{ Item?.score }} 分</label></view>
 					<view class="movie-info ">
 						{{ Item.category }}
 					</view>
@@ -228,7 +228,7 @@
 			async refresh() {
 
 				if (this.UlikeMovieList.length <= 20) {
-					console.log('嗲用了', this.UlikeMovieList)
+
 					try {
 						let { data: { code }, data: { data } } = await new Promise((resolve, reject) => {
 							uni.request({
