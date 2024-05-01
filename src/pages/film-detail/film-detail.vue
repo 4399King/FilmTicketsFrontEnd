@@ -73,7 +73,7 @@
 			<!-- 电影评论展示 -->
 			<view class="movie-comment page-block">
 				<view class="movie-detail-comment-text">热门评论
-					<button @click="pubComment">发表评论</button>
+					<button @click="this.showFloatWindow = true">发表评论</button>
 				</view>
 				<view class="movie-comment-item" v-for="(item, index) in commentslist" :key="index">
 					<view class="movie-comment-user">
@@ -109,6 +109,13 @@
 			v-if="Moviedetail.onSale" class="purchase" @click.prevent="navToChooseCinema" type="warn">
 			优惠购票
 		</button>
+		<!-- 遮罩层 -->
+		<view class="mask" v-show="showFloatWindow" @click="this.showFloatWindow = false"></view>
+
+		<div v-show="showFloatWindow" class="float-window">
+			<textarea v-model="commentContent" placeholder="请输入评论内容"></textarea>
+			<button @click="pubComment">发表评论</button>
+		</div>
 	</view>
 </template>
 
@@ -122,7 +129,9 @@
 				fold: true, //隐藏文本
 				allcomments: '', //数量
 				commentslist: [], //评论
-				flag: 0
+				flag: 0,
+				commentContent: '',
+				showFloatWindow: false
 			}
 		},
 		onLoad(res) {
@@ -189,7 +198,7 @@
 				const comment = {
 					nick: uni.getStorageSync('userName'),
 					avatarUrl: uni.getStorageSync('userImg'),
-					content: '天津理工(｡･∀･)ﾉﾞ嗨',
+					content: this.commentContent,
 					startTime,
 					replyCount: 0,
 					movieId: this.Movieid
@@ -200,6 +209,7 @@
 				this.formatDate(tempComments);
 				this.commentslist.unshift(...tempComments);
 				uni.setStorageSync('comments', comments)
+				this.showFloatWindow = false;
 			},
 			getCurrentTimeFormatted() {
 				const now = new Date();
@@ -352,7 +362,47 @@
 	}
 </script>
 
-<style>
+<style scoped>
+	.mask {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 2;
+	}
+
+	.float-window {
+		position: fixed;
+		box-sizing: border-box;
+		bottom: 0;
+		left: 0;
+		background-color: white;
+		padding: 20px;
+		border: 1px solid #ccc;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		z-index: 2;
+		width: 100vw;
+
+	}
+
+	textarea {
+		width: 100%;
+		height: 100px;
+		margin-bottom: 10px;
+		font-size: 30upx;
+	}
+
+	button {
+		font-size: 30upx;
+		display: block;
+		background-color: #e54847;
+		color: white;
+		border: none;
+		border-radius: 5px;
+	}
+
 	.purchase {
 		position: fixed;
 		bottom: 0;

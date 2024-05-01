@@ -3,9 +3,10 @@
  * @param {String} method = ['GET'] 
  * @param {Object} data = [{}] 
  */
-export async function myRequest(api, method, data) {
+export async function myRequest(api, method, requestData) {
 	try {
-		let { data: { code, data } } = await new Promise((resolve, reject) => {
+		let { data: { code, data, message } } = await new Promise((resolve, reject) => {
+			console.log('退票数据', requestData)
 			uni.request({
 				url: `https://film.sipc115.com${api}`,
 				method,
@@ -13,7 +14,7 @@ export async function myRequest(api, method, data) {
 					'Content-Type': 'application/json',
 					'Authorization': uni.getStorageSync('token')
 				},
-				data,
+				data: requestData,
 				success: resolve,
 				fail: reject
 			})

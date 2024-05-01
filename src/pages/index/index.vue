@@ -15,7 +15,7 @@
 		<!-- 热门视频 Begin -->
 		<view class="page-block super-hot">
 			<view class="hot-title-wapper">
-				<image src="../../static/super-hot/hot.png" class="hot-ico"></image>
+				<!-- <image src="../../static/super-hot/hot.png" class="hot-ico"></image> -->
 				<view class="hot-title"> 今日热映 </view>
 			</view>
 		</view>
@@ -42,7 +42,7 @@
 		<!-- 热门预告 Begin -->
 		<view class="page-block super-hot">
 			<view class="hot-title-wapper">
-				<image src="../../static/super-movieyg/hotmovie.png" class="hot-ico"></image>
+				<!-- <image src="../../static/super-movieyg/hotmovie.png" class="hot-ico"></image> -->
 				<view class="hot-title"> 热门预告 </view>
 			</view>
 		</view>
@@ -62,29 +62,30 @@
 		<!-- 猜你喜欢 Begin-->
 		<view class="page-block super-hot">
 			<view class="hot-title-wapper">
-				<image src="../../static/ulike/ulikeico.png" class="hot-ico"></image>
+				<!-- <image src="../../static/ulike/ulikeico.png" class="hot-ico"></image> -->
 				<view class="hot-title"> 猜你喜欢 </view>
 			</view>
 		</view>
 		<view class="page-block guess-u-like">
 
 			<!-- <image :src="serverContent + Item.Bannerpic" class="like-movie-png"></image> -->
-			<div class="movie-item" v-for="(Item, index) in UlikeMovieList" :key="index" @click="goOldMovieDetail(Item)">
+			<div class="movie-item" v-for="(Item, index) in curRecommendMovie" :key="index" @click="goOldMovieDetail(Item)">
 				<div class="image-box">
-					<image src="../../static/image/ed/movie1.jpg" class="like-movie-png"></image>
+					<image :src="images[index]" class="like-movie-png"></image>
+
 				</div>
 				<view class="movie-desc">
 					<view class="movie-title">
-						{{ Item.name }}
+						{{ Item?.name.slice(-5) == ' - 电影'?Item?.name.slice(0,-5):Item?.name }}
 					</view>
 					<view class="movie-score">评分：<label>{{ Item?.score }} 分</label></view>
 					<view class="movie-info ">
-						{{ Item.category }}
+						{{ Item?.category.includes('同性')?'爱情':Item?.category }}
 					</view>
-					<view class="movie-info overflow-ellipsis"> 演员：{{ Item.actor }} </view>
-					<view class="movie-info movie-release-time">
-						{{ Item.releaseTime }}
-					</view>
+					<view class="movie-info overflow-ellipsis" v-show="!(Item?.actor === null)"> 演员：{{ Item?.actor }} </view>
+					<!-- <view class="movie-info movie-release-time">
+						{{ Item?.releaseTime }}
+					</view> -->
 				</view>
 			</div>
 			<!-- <view class="movie-oper" :data-index="index" @click="giveup">
@@ -101,7 +102,27 @@
 </template>
 
 <script>
-	// 引用自定义组件
+	import img0 from "@/static/image/ed/0.webp"
+	import img1 from "@/static/image/ed/1.webp"
+	import img2 from "@/static/image/ed/2.webp"
+	import img3 from "@/static/image/ed/3.webp"
+	import img4 from "@/static/image/ed/4.webp"
+	import img5 from "@/static/image/ed/5.webp"
+	import img6 from "@/static/image/ed/6.webp"
+	import img7 from "@/static/image/ed/7.webp"
+	import img8 from "@/static/image/ed/8.webp"
+	import img9 from "@/static/image/ed/9.webp"
+	import img10 from "@/static/image/ed/10.webp"
+	import img11 from "@/static/image/ed/11.webp"
+	import img12 from "@/static/image/ed/12.webp"
+	import img13 from "@/static/image/ed/13.webp"
+	import img14 from "@/static/image/ed/14.webp"
+	import img15 from "@/static/image/ed/15.webp"
+	import img16 from "@/static/image/ed/16.webp"
+	import img17 from "@/static/image/ed/17.webp"
+	import img18 from "@/static/image/ed/18.webp"
+	import img19 from "@/static/image/ed/19.webp"
+	// 引用自义组件
 	export default {
 		data() {
 			return {
@@ -125,7 +146,39 @@
 				movieIds1: [],
 				loadComplete1: false,
 				loadComplete2: false, //水平滚动加载的数据是否加载完毕
-				recommendMoviePage: 1
+				recommendMoviePage: 1,
+				curRecommendMovie: [],
+				curRecommendMovieCount: 0,
+				images: [
+					img0,
+					img1,
+					img2,
+					img3,
+					img4,
+					img5,
+					img6,
+					img7,
+					img8,
+					img9,
+					img10,
+					img11,
+					img12,
+					img13,
+					img14,
+					img15,
+					img16,
+					img17,
+					img18,
+					img19,
+				],
+
+			}
+		},
+		created() {
+			for (let i = 0; i <= 19; i++) {
+				let path = `@/static/image/ed/${i}.webp`; // 或根据实际路径修改
+
+				this.images.push(img);
 			}
 		},
 		onUnload() {
@@ -199,7 +252,16 @@
 			}
 		},
 		onReachBottom() {
-			this.refresh()
+			if (this.curRecommendMovie.length < 20) {
+				for (let i = 0; i < 4; i++) {
+					this.curRecommendMovie.push(this.UlikeMovieList[this.curRecommendMovieCount++])
+				}
+			} else {
+				uni.showToast({
+					title: '已经到底了',
+					icon: 'none' // 使用‘none’类型的图标，仅展示文本
+				});
+			}
 		},
 		methods: {
 			//上拉触底刷新的加载函数
@@ -227,12 +289,12 @@
 			},
 			async refresh() {
 
-				if (this.UlikeMovieList.length <= 20) {
+				if (this.UlikeMovieList.length < 20) {
 
 					try {
 						let { data: { code }, data: { data } } = await new Promise((resolve, reject) => {
 							uni.request({
-								url: `https://film.sipc115.com/film/list?page=${this.recommendMoviePage}&size=${4}`,
+								url: `https://film.sipc115.com/film/recommend`,
 								method: 'GET',
 								header: { 'content-type': 'application/json', 'Authorization': uni.getStorageSync('token') },
 								success: resolve,
@@ -242,10 +304,16 @@
 						})
 						switch (code) {
 							case "00000":
+								this.curRecommendMovieCount = 0;
 								for (const item of data) {
+									if (this.curRecommendMovieCount < 4) {
+										this.curRecommendMovie.push(item)
+										this.curRecommendMovieCount++;
+									}
+
 									this.UlikeMovieList.push(item)
 								}
-								this.recommendMoviePage++;
+
 								break;
 							default:
 								throw new Error(data)

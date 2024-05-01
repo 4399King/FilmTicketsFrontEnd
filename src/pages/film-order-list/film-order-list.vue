@@ -19,6 +19,7 @@
 							{{ `${Math.floor(item.seat/10)}排${item.seat%10?item.seat%10: 10}座`  }}
 						</view>
 					</view>
+					<button class="cancel-ticket" @click.prevent="cancelTicket(item.id)">退票</button>
 				</view>
 				<view class='order-more'>
 					<view>总价：{{ item.description.price }}元</view>
@@ -51,9 +52,25 @@
 		},
 		computed: {},
 		methods: {
+			async cancelTicket(id) {
+				try {
+					await myRequest('/ticket/refund', 'POST', { ticketId: id })
+					uni.showToast({
+						title: '退票成功',
+						duration: 1000
+					})
+					this.curTime = new Date()
+					this.getFilmOrder()
+
+				} catch (e) {
+					console.error(e)
+				}
+
+			},
 			async getFilmOrder() {
 				let data = await myRequest('/ticket/ordered', 'GET')
 				console.log(data)
+				this.orderList = []
 				for (const order of data) {
 					order.description = JSON.parse(order.description)
 					order.time = new Date(order.description.time)
@@ -130,6 +147,20 @@
 </script>
 
 <style lang="less" scoped>
+	.cancel-ticket {
+		position: absolute;
+		bottom: 30upx;
+		right: 20upx;
+		width: 110upx;
+		height: 50upx;
+		line-height: 50upx;
+		font-size: 20upx;
+	}
+
+	.cancel-ticket-box {
+		position: relative
+	}
+
 	.container.order-list-page {
 		width: 100vw;
 		min-height: 100vh;
