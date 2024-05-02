@@ -87,11 +87,15 @@
 					<view class="movie-comment-text">
 						<view>{{ item.content }}</view>
 					</view>
-					<view class="movie-comment-info" @click="praise()">
+					<view class="movie-comment-info">
 						<view>{{ item.startTime }}</view>
 						<view>
 							<view>{{ item.replyCount }}
-								<image src="../../static/detail/zan.png" class="movie-comment-info-ico"></image>
+								<image v-if="!item.isPraised" @click="praise(item)" src="../../static/detail/zan.png"
+									class="movie-comment-info-ico" />
+								<image v-else @click="dePraise(item)" src=" ../../static/detail/dianzan.png"
+									class="movie-comment-info-ico" />
+
 							</view>
 						</view>
 					</view>
@@ -189,6 +193,88 @@
 		},
 		computed: {},
 		methods: {
+			returnFomatDate(timeStamp) {
+				var date = new Date()
+				date.setTime(timeStamp)
+				var month = date.getMonth() + 1
+				var hours = date.getHours()
+				if (hours < 10) hours = '0' + hours
+				var minutes = date.getMinutes()
+				if (minutes < 10) minutes = '0' + minutes
+				var time =
+					date.getFullYear() +
+					'-' +
+					month +
+					'-' +
+					date.getDate() +
+					' ' +
+					hours +
+					':' +
+					minutes
+				return time
+			},
+			dePraise(item) {
+
+				if (!item.hasOwnProperty('id')) {
+					item.isPraised--
+					item.replyCount--
+					let myComments = uni.getStorageSync('comments')
+
+					myComments.map((comment) => {
+
+						if (this.returnFomatDate(comment.startTime) === item.startTime && comment.content === item.content) {
+
+							comment.isPraised--
+							comment.replyCount--
+						}
+
+					})
+					uni.setStorageSync("comments", myComments)
+				} else {
+					item.isPraised--
+					item.replyCount--
+					if (!uni.getStorageSync('othersComments')) {
+						return
+					}
+					let othersComments = uni.getStorageSync('othersComments')
+					othersComments = othersComments.filter((otherComment) => {
+						console.log(otherComment.id, item.id)
+						otherComment.id !== item.id
+					})
+					console.log('othersComments', othersComments)
+					uni.setStorageSync('othersComments', othersComments)
+				}
+			},
+			praise(item) {
+
+				if (!item.hasOwnProperty('id')) {
+					item.isPraised++
+					item.replyCount++
+					let myComments = uni.getStorageSync('comments')
+
+					myComments.map((comment) => {
+
+						if (this.returnFomatDate(comment.startTime) === item.startTime && comment.content === item.content) {
+
+							comment.isPraised++
+							comment.replyCount++
+						}
+
+					})
+					uni.setStorageSync("comments", myComments)
+
+				} else {
+					item.isPraised++
+					item.replyCount++
+					if (!uni.getStorageSync('othersComments')) {
+						uni.setStorageSync('othersComments', [])
+					}
+					let othersComments = uni.getStorageSync('othersComments')
+					othersComments = [...othersComments, item]
+					uni.setStorageSync('othersComments', othersComments)
+				}
+
+			},
 			pubComment() {
 				if (!uni.getStorageSync('comments')) {
 					uni.setStorageSync('comments', [])
@@ -201,7 +287,8 @@
 					content: this.commentContent,
 					startTime,
 					replyCount: 0,
-					movieId: this.Movieid
+					movieId: this.Movieid,
+					isPraised: 0
 				}
 
 				let tempComments = [comment]
@@ -267,7 +354,6 @@
 			changeText() {
 				this.fold = !this.fold
 			},
-
 			//预览图片
 			previewImg(index) {
 				uni.previewImage({
@@ -287,19 +373,33 @@
 						cookie: 'iuuid=01E2CDE09CCA11EBBA0D13E3C3194737A56B4CED40274A299CC63CA5D6B488F1'
 					},
 					success: (res) => {
-						console.log(res)
 						if (res.statusCode != 200) {
 							uni.hideLoading()
 							return
 						}
-						this.commentslist = res.data.data.hotComments
+						//别人的评论
+						let othersComments = [];
+						if (uni.getStorageSync('othersComments')) {
+							othersComments = uni.getStorageSync('othersComments')
+						}
+						for (const comment of res.data.data.hotComments) {
+							comment.isPraised = 0
+							for (const record of othersComments) {
+								if (record.id === comment.id) {
+									comment.isPraised++;
+									comment.replyCount++;
+								}
+							}
+							this.commentslist.push(comment)
+						}
+
 						if (!uni.getStorageSync('comments')) {
 							uni.setStorageSync('comments', [])
 						}
+						//我的评论
 						let comments = uni.getStorageSync('comments')
 						for (const comment of comments) {
 							if (comment.movieId === this.Movieid) {
-								console.log('comment', comment)
 								this.commentslist.unshift(comment)
 							}
 

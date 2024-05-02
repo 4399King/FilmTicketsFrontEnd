@@ -175,11 +175,7 @@
 			}
 		},
 		created() {
-			for (let i = 0; i <= 19; i++) {
-				let path = `@/static/image/ed/${i}.webp`; // 或根据实际路径修改
 
-				this.images.push(img);
-			}
 		},
 		onUnload() {
 			this.animationData = {} //页面关闭 清除动画
