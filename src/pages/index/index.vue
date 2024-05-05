@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<customNavBar style="position: absolute; width: 100vw; z-index: 100"></customNavBar>
+		<custom-nav-bar style="position: absolute; width: 100vw; z-index: 9999; height:200px;"></custom-nav-bar>
 		<!-- 首页轮播图  Begin-->
 		<swiper :indicator-dots="true" :autoplay="true" duration="1000" class="carousel">
 			<view>
