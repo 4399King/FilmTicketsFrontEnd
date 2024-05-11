@@ -78,7 +78,7 @@
 					<view class="movie-title">
 						{{ Item?.name.slice(-5) == ' - 电影'?Item?.name.slice(0,-5):Item?.name }}
 					</view>
-					<view class="movie-score">评分：<label>{{ Item?.score }} 分</label></view>
+					<view class="movie-score">推荐程度：<label>{{ '⭐'.repeat((Item?.score - 0)) }} </label></view>
 					<view class="movie-info ">
 						{{ Item?.category.includes('同性')?'爱情':Item?.category }}
 					</view>
@@ -239,13 +239,15 @@
 			})
 			this.expectedMovie()
 			//获取猜你喜欢
-			this.refresh()
+
 		},
 		onShow() {
 			this.userInfo = uni.getStorageSync('userName')
 			if (!this.userInfo) {
 				uni.navigateTo({ url: '/pages/login/login' })
+				return
 			}
+			this.refresh()
 		},
 		onReachBottom() {
 			if (this.curRecommendMovie.length < 20) {
