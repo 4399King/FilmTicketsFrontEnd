@@ -34,7 +34,7 @@
 		data() {
 			return {
 				//cinema
-				city: '天津',
+				city: '北京',
 				cityId: 40,
 				cinemas: [],
 				params: {

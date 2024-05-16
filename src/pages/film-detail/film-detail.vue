@@ -88,7 +88,7 @@
 						<view>{{ item.content }}</view>
 					</view>
 					<view class="movie-comment-info">
-						<view>{{ item.startTime }}</view>
+						<view>{{ item.startTime }} {{((item.score / 2) + '')[0]}}分</view>
 						<view>
 							<view>{{ item.replyCount }}
 								<image v-if="!item.isPraised" @click="praise(item)" src="../../static/detail/zan.png"
@@ -117,6 +117,9 @@
 		<view class="mask" v-show="showFloatWindow" @click="this.showFloatWindow = false"></view>
 
 		<div v-show="showFloatWindow" class="float-window">
+			<div class="give-score">评分：<span v-for="(item, index) in 5" :key="index">
+					<image :src='userScore >= (index + 1)?fullStar:emptyStar' class="star-img" @click="giveScore(index)"></image>
+				</span></div>
 			<textarea v-model="commentContent" placeholder="请输入评论内容"></textarea>
 			<button @click="pubComment">发表评论</button>
 		</div>
@@ -124,6 +127,8 @@
 </template>
 
 <script>
+	import emptyStar from '../../static/image/star/star-empty.png'
+	import fullStar from '../../static/image/star/star-full.png'
 	export default {
 		data() {
 			return {
@@ -135,9 +140,14 @@
 				commentslist: [], //评论
 				flag: 0,
 				commentContent: '',
-				showFloatWindow: false
+				showFloatWindow: false,
+				userScore: -1,
+				fullStar,
+				emptyStar,
+				isLogin: false
 			}
 		},
+
 		onLoad(res) {
 
 			if (res?.flag) { //切换成老电影
@@ -156,9 +166,9 @@
 			this.videocontext.pause()
 		},
 		onShow() {
-			if (this.videocontext) {
-				this.videocontext.play()
-			}
+			// if (this.videocontext) {
+			// 	this.videocontext.play()
+			// }
 		},
 		onShareAppMessage(res) {
 			return {
@@ -193,6 +203,9 @@
 		},
 		computed: {},
 		methods: {
+			giveScore(index) {
+				this.userScore = index + 1;
+			},
 			returnFomatDate(timeStamp) {
 				var date = new Date()
 				date.setTime(timeStamp)
@@ -276,11 +289,28 @@
 
 			},
 			pubComment() {
+				if (this.userScore < 0) {
+					uni.showModal({
+						title: '提示',
+						content: '请先评分'
+					})
+					return
+				}
 				if (!uni.getStorageSync('comments')) {
 					uni.setStorageSync('comments', [])
 				}
 				let startTime = Date.now()
 				let comments = uni.getStorageSync('comments')
+				for (const comment of comments) {
+					if (comment.movieId === this.Movieid) {
+						uni.showModal({
+							title: '提示',
+							content: '您已经发表过对这部电影的评价咯'
+						})
+						return
+					}
+
+				}
 				const comment = {
 					nick: uni.getStorageSync('userName'),
 					avatarUrl: uni.getStorageSync('userImg'),
@@ -288,7 +318,8 @@
 					startTime,
 					replyCount: 0,
 					movieId: this.Movieid,
-					isPraised: 0
+					isPraised: 0,
+					score: this.userScore * 2
 				}
 
 				let tempComments = [comment]
@@ -463,6 +494,29 @@
 </script>
 
 <style scoped>
+	.give-score {
+		border-bottom: 1px solid #f0f0f0;
+		margin-bottom: 20upx;
+		font-size: 36upx;
+	}
+
+	.star-img {
+		width: 50upx;
+		height: 50upx;
+		margin: 0 5upx;
+	}
+
+	.active-score-star {
+		color: orange;
+		background-color: orangered;
+	}
+
+	.score-star {
+		font-size: 36upx;
+		color: #000;
+		background-color: #fff;
+	}
+
 	.mask {
 		position: fixed;
 		top: 0;

@@ -175,7 +175,7 @@
 			}
 		},
 		created() {
-
+			uni.setStorageSync('cityId', 40)
 		},
 		onUnload() {
 			this.animationData = {} //页面关闭 清除动画
@@ -243,11 +243,15 @@
 		},
 		onShow() {
 			this.userInfo = uni.getStorageSync('userName')
+			console.log(this.userInfo, "@@@@@@@@@@@")
 			if (!this.userInfo) {
 				uni.navigateTo({ url: '/pages/login/login' })
 				return
+			} else if (!this.UlikeMovieList.length) {
+
+				this.refresh()
 			}
-			this.refresh()
+
 		},
 		onReachBottom() {
 			if (this.curRecommendMovie.length < 20) {
@@ -287,8 +291,7 @@
 			},
 			async refresh() {
 
-				if (this.UlikeMovieList.length < 20) {
-
+				if (!this.UlikeMovieList.length) {
 					try {
 						let { data: { code }, data: { data } } = await new Promise((resolve, reject) => {
 							uni.request({
@@ -324,11 +327,6 @@
 
 					// this.UlikeMovieList =
 					// console.log(this.UlikeMovieList, 'hrer')
-				} else {
-					uni.showToast({
-						title: '已经到底了',
-						icon: 'none' // 使用‘none’类型的图标，仅展示文本
-					});
 				}
 			},
 
