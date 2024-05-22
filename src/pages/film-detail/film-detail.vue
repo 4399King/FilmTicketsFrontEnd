@@ -5,7 +5,7 @@
 		<view class="movie-mask">
 			<view class="movie-detail">
 				<view class="detail-img">
-					<image :src="Moviedetail.img" class="detail-img-ico"></image>
+					<image :src="flag?images[picIndex]:Moviedetail.img" class="detail-img-ico"></image>
 				</view>
 				<view class="detail-info">
 					<view class="detail-info-nm">
@@ -54,12 +54,12 @@
 				</view>
 			</view>
 
-			<view class="movie-detail-vedio">
+			<view class="movie-detail-vedio" v-if="Moviedetail?.videourl">
 				<video id="movievedio" :src="Moviedetail.videourl" :poster="Moviedetail.videoImg" class="movie-vedio"></video>
 			</view>
 
 			<!-- 电影图片展示 -->
-			<view class="movie-detail-photos page-block">
+			<view class="movie-detail-photos page-block" v-if="Moviedetail?.photos">
 				<view class="movie-detail-photos-text">影视剧照</view>
 				<scroll-view scroll-x="true" class="movie-photos-scroll page-block">
 					<view class="movie-photos-block" v-for="(item, index) in Moviedetail.photos" :key="index">
@@ -75,58 +75,85 @@
 				<view class="movie-detail-comment-text">热门评论
 					<button @click="this.showFloatWindow = true">发表评论</button>
 				</view>
-				<view class="movie-comment-item" v-for="(item, index) in commentslist" :key="index">
-					<view class="movie-comment-user">
-						<view>
-							<image :src="item.avatarUrl" class="movie-comment-user-img"></image>
-						</view>
-						<view class="movie-comment-user-info">
-							{{ item.nick }}
-						</view>
-					</view>
-					<view class="movie-comment-text">
-						<view>{{ item.content }}</view>
-					</view>
-					<view class="movie-comment-info">
-						<view>{{ item.startTime }} {{((item.score / 2) + '')[0]}}分</view>
-						<view>
-							<view>{{ item.replyCount }}
-								<image v-if="!item.isPraised" @click="praise(item)" src="../../static/detail/zan.png"
-									class="movie-comment-info-ico" />
-								<image v-else @click="dePraise(item)" src=" ../../static/detail/dianzan.png"
-									class="movie-comment-info-ico" />
-
+				<view class="" v-if="commentslist.length">
+					<view class="movie-comment-item" v-for="(item, index) in commentslist" :key="index">
+						<view class="movie-comment-user">
+							<view>
+								<image :src="item.avatarUrl" class="movie-comment-user-img"></image>
+							</view>
+							<view class="movie-comment-user-info">
+								{{ item.nick }}
 							</view>
 						</view>
-					</view>
-					<view class="line-wapper">
-						<view class="line"></view>
-					</view>
-				</view>
-				<view class="search-all" v-show="allcomments > 0 ? true : false">
-					查看全部{{ allcomments }}条评论
-				</view>
-			</view>
-		</view>
-		<button hover-class="none"
-			url="/pages/subPages/select-cinema/select-cinema?movieId={{detailMovie.id}}&movieName={{detailMovie.nm}}&showTime={{detailMovie.rt}}"
-			v-if="Moviedetail.onSale" class="purchase" @click.prevent="navToChooseCinema" type="warn">
-			优惠购票
-		</button>
-		<!-- 遮罩层 -->
-		<view class="mask" v-show="showFloatWindow" @click="this.showFloatWindow = false"></view>
+						<view class="movie-comment-text">
+							<view>{{ item.content }}</view>
+						</view>
+						<view class="movie-comment-info">
+							<view>{{ item.startTime }} {{((item.score / 2) + '')[0]}}分</view>
+							<view>
+								<view>{{ item.replyCount }}
+									<image v-if="!item.isPraised" @click="praise(item)" src="../../static/detail/zan.png"
+										class="movie-comment-info-ico" />
+									<image v-else @click="dePraise(item)" src=" ../../static/detail/dianzan.png"
+										class="movie-comment-info-ico" />
 
-		<div v-show="showFloatWindow" class="float-window">
-			<div class="give-score">评分：<span v-for="(item, index) in 5" :key="index">
-					<image :src='userScore >= (index + 1)?fullStar:emptyStar' class="star-img" @click="giveScore(index)"></image>
-				</span></div>
-			<textarea v-model="commentContent" placeholder="请输入评论内容"></textarea>
-			<button @click="pubComment">发表评论</button>
-		</div>
+								</view>
+							</view>
+						</view>
+						<view class="line-wapper">
+							<view class="line"></view>
+						</view>
+					</view>
+					<view class="search-all" v-show="allcomments > 0 ? true : false">
+						查看全部{{ allcomments }}条评论
+					</view>
+				</view>
+				<view v-else style="font-size:32upx;text-align: center;padding-top:20rpx;">
+					暂无评论...
+				</view>
+
+			</view>
+			<button hover-class="none"
+				url="/pages/subPages/select-cinema/select-cinema?movieId={{detailMovie.id}}&movieName={{detailMovie.nm}}&showTime={{detailMovie.rt}}"
+				v-if="Moviedetail.onSale" class="purchase" @click.prevent="navToChooseCinema" type="warn">
+				优惠购票
+			</button>
+			<!-- 遮罩层 -->
+			<view class="mask" v-show="showFloatWindow" @click="this.showFloatWindow = false"></view>
+
+			<div v-show="showFloatWindow" class="float-window">
+				<div class="give-score">评分：<span v-for="(item, index) in 5" :key="index">
+						<image :src='userScore >= (index + 1)?fullStar:emptyStar' class="star-img" @click="giveScore(index)">
+						</image>
+					</span></div>
+				<textarea v-model="commentContent" placeholder="请输入评论内容"></textarea>
+				<button @click="pubComment">发表评论</button>
+			</div>
+		</view>
 	</view>
 </template>
 
 <script>
+	import img0 from "@/static/image/ed/0.webp"
+	import img1 from "@/static/image/ed/1.webp"
+	import img2 from "@/static/image/ed/2.webp"
+	import img3 from "@/static/image/ed/3.webp"
+	import img4 from "@/static/image/ed/4.webp"
+	import img5 from "@/static/image/ed/5.webp"
+	import img6 from "@/static/image/ed/6.webp"
+	import img7 from "@/static/image/ed/7.webp"
+	import img8 from "@/static/image/ed/8.webp"
+	import img9 from "@/static/image/ed/9.webp"
+	import img10 from "@/static/image/ed/10.webp"
+	import img11 from "@/static/image/ed/11.webp"
+	import img12 from "@/static/image/ed/12.webp"
+	import img13 from "@/static/image/ed/13.webp"
+	import img14 from "@/static/image/ed/14.webp"
+	import img15 from "@/static/image/ed/15.webp"
+	import img16 from "@/static/image/ed/16.webp"
+	import img17 from "@/static/image/ed/17.webp"
+	import img18 from "@/static/image/ed/18.webp"
+	import img19 from "@/static/image/ed/19.webp"
 	import emptyStar from '../../static/image/star/star-empty.png'
 	import fullStar from '../../static/image/star/star-full.png'
 	export default {
@@ -138,21 +165,49 @@
 				fold: true, //隐藏文本
 				allcomments: '', //数量
 				commentslist: [], //评论
-				flag: 0,
+				flag: false,
 				commentContent: '',
 				showFloatWindow: false,
 				userScore: -1,
 				fullStar,
 				emptyStar,
-				isLogin: false
+				isLogin: false,
+				picIndex: 0,
+				images: [
+					img0,
+					img1,
+					img2,
+					img3,
+					img4,
+					img5,
+					img6,
+					img7,
+					img8,
+					img9,
+					img10,
+					img11,
+					img12,
+					img13,
+					img14,
+					img15,
+					img16,
+					img17,
+					img18,
+					img19,
+				],
+
 			}
 		},
 
 		onLoad(res) {
 
 			if (res?.flag) { //切换成老电影
-				this.flag = res.flag
+				this.flag = res.flag - 0
 				this.Moviedetail = JSON.parse(res.paramStr)
+				this.picIndex = res.picIndex - 0
+				this.fold = false
+				this.Movieid = this.Moviedetail.id
+				this.getOldMovieComment()
 			} else {
 				this.Movieid = res.movieid
 				this.searchDetail()
@@ -203,6 +258,20 @@
 		},
 		computed: {},
 		methods: {
+			getOldMovieComment() {
+				if (!uni.getStorageSync('comments')) {
+					uni.setStorageSync('comments', [])
+				}
+				//我的评论
+				let comments = uni.getStorageSync('comments')
+				for (const comment of comments) {
+					if (comment.movieId === this.Movieid) {
+						this.commentslist.unshift(comment)
+					}
+
+				}
+				this.formatDate(this.commentslist)
+			},
 			giveScore(index) {
 				this.userScore = index + 1;
 			},
@@ -321,6 +390,7 @@
 					isPraised: 0,
 					score: this.userScore * 2
 				}
+				console.log('comment', comment)
 
 				let tempComments = [comment]
 				comments.unshift(...[{ ...comment }]);

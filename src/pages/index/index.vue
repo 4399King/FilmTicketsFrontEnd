@@ -69,9 +69,10 @@
 		<view class="page-block guess-u-like">
 
 			<!-- <image :src="serverContent + Item.Bannerpic" class="like-movie-png"></image> -->
-			<div class="movie-item" v-for="(Item, index) in curRecommendMovie" :key="index" @click="goOldMovieDetail(Item)">
+			<div class="movie-item" v-for="(Item, index) in curRecommendMovie" :key="index"
+				@click="goOldMovieDetail(Item,index)">
 				<div class="image-box">
-					<image :src="images[index]" class="like-movie-png"></image>
+					<image :src='`../../static/image/ed/${index}.webp`' class="like-movie-png"></image>
 
 				</div>
 				<view class="movie-desc">
@@ -358,9 +359,10 @@
 			goDetail(movieid) {
 				uni.navigateTo({ url: '../film-detail/film-detail?movieid=' + movieid })
 			},
-			goOldMovieDetail(movie) {
+			goOldMovieDetail(movie, picIndex) {
+				console.log('电影', movie)
 				uni.navigateTo({
-					url: `../film-detail/film-detail?flag=${1}&paramStr=${JSON.stringify(movie)}`
+					url: `../film-detail/film-detail?flag=${1}&paramStr=${JSON.stringify(movie)}&picIndex=${picIndex}`
 				})
 			},
 			//预告电影
