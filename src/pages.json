@@ -2,7 +2,7 @@
 	"pages": [{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app",
+				"navigationBarTitleText": "主页",
 				"navigationStyle": "custom"
 			}
 		},
@@ -16,12 +16,14 @@
 
 		{
 			"path": "pages/me/me",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
 		},
 		{
 			"path": "pages/film-detail/film-detail",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "电影详情"
 			}
 		},
 		{
@@ -39,20 +41,20 @@
 		{
 			"path": "pages/goods-show/goods-show",
 			"style": {
-				"navigationBarTitleText": "详情"
+				"navigationBarTitleText": "影院详情"
 			}
 		},
 		{
 			"path": "pages/ticket-order/ticket-order",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "订单",
 				"enablePullDownRefresh": false
 			}
 		},
 		{
 			"path": "pages/snack-order/snack-order",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "订单",
 				"enablePullDownRefresh": false
 			}
 		},

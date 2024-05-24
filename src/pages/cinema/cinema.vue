@@ -5,11 +5,14 @@
 				<text class="city-name">{{ city }}</text>
 				<text class="city-entry-arrow"></text>
 			</view>
-			<input @click="navToSearch" class="search-input" placeholder="搜索影片/影院" />
+			<input @click="navToSearch" class="search-input" placeholder="搜索影片/影院" /> <button
+				style="width:200rpx;font-size:24rpx;height:60rpx;text-align:center;line-height:60rpx;"
+				@click="reset">重置影院</button>
 
 		</view>
 		<view class="nav-wrapper">
-			<filterBar @toggleShow="toggleShow" @cinemaList="cinemaList" :params="params" :cityCinemaInfo="cityCinemaInfo">
+			<filterBar @toggleShow="toggleShow" @cinemaList="cinemaList" :params="params" :cityCinemaInfo="cityCinemaInfo"
+				:itemName1="itemName1" :itemName2="itemName2" :itemName3="itemName3">
 			</filterBar>
 		</view>
 		<view class="cinema-list">
@@ -34,7 +37,7 @@
 		data() {
 			return {
 				//cinema
-				city: '北京',
+				city: '天津',
 				cityId: 40,
 				cinemas: [],
 				params: {
@@ -99,6 +102,10 @@
 		},
 		computed: {},
 		methods: {
+			reset() {
+
+				uni.reLaunch({ url: '/pages/cinema/cinema' })
+			},
 			navToSearch() {
 				uni.navigateTo({ url: '/pages/search/search' })
 			},

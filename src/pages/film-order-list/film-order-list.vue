@@ -19,7 +19,7 @@
 							{{ `${Math.floor(item.seat/10)}排${item.seat%10?item.seat%10: 10}座`  }}
 						</view>
 					</view>
-					<button class="cancel-ticket" @click.prevent="cancelTicket(item.id)">退票</button>
+					<button class="cancel-ticket" @click.prevent="cancelTicket(item)">退票</button>
 				</view>
 				<view class='order-more'>
 					<view>总价：{{ item.description.price }}元</view>
@@ -52,9 +52,16 @@
 		},
 		computed: {},
 		methods: {
-			async cancelTicket(id) {
+			async cancelTicket(item) {
+				if (item.time <= this.curTime) {
+					uni.showModal({
+						title: '提示',
+						content: '已过期的影票无法退款哦',
+					})
+					return
+				}
 				try {
-					await myRequest('/ticket/refund', 'POST', { ticketId: id })
+					await myRequest('/ticket/refund', 'POST', { ticketId: item.id })
 					uni.showToast({
 						title: '退票成功',
 						duration: 1000

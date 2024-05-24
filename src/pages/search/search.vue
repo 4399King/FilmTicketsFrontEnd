@@ -228,7 +228,7 @@
 		font-size: 14px;
 		background-color: #F1F1F1;
 		height: 60upx;
-		width: 650upx;
+		width: 685upx;
 	}
 
 	.search-block {

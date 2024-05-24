@@ -2,18 +2,18 @@
 	<view class="page">
 		<custom-nav-bar style="position: absolute; width: 100vw; z-index: 9999; height:200px;"></custom-nav-bar>
 		<!-- 首页轮播图  Begin-->
-		<swiper :indicator-dots="true" :autoplay="true" duration="1000" class="carousel">
-			<view>
-				<swiper-item v-for="(item, index) in 5" :key="index">
-					<div>
-						<image :src="SuperHotList[index]?.img" @click="goDetail(SuperHotList[index].id)" />
-					</div>
-				</swiper-item>
-			</view>
+		<swiper :indicator-dots="true" :autoplay="true" duration="1000" class="carousel" style="z-index:99">
+
+			<swiper-item v-for="(item, index) in 5" :key="index" @click="goDetail(SuperHotList[index].id)" style="z-index:99">
+				<div style="z-index:99">
+					<image :src="SuperHotList[index]?.img" />
+				</div>
+			</swiper-item>
+
 		</swiper>
 		<!--首页轮播图 End -->
 		<!-- 热门视频 Begin -->
-		<view class="page-block super-hot">
+		<view class="page-block super-hot" style="z-index:99">
 			<view class="hot-title-wapper">
 				<!-- <image src="../../static/super-hot/hot.png" class="hot-ico"></image> -->
 				<view class="hot-title"> 今日热映 </view>
@@ -357,6 +357,7 @@
 				this.refresh()
 			},
 			goDetail(movieid) {
+				console.log('进入详情了')
 				uni.navigateTo({ url: '../film-detail/film-detail?movieid=' + movieid })
 			},
 			goOldMovieDetail(movie, picIndex) {
